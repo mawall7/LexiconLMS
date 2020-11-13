@@ -1,4 +1,4 @@
-﻿@model LMS.Core.Entities.Activity
+﻿@model LMS.Core.Entities.Course
 
 @{
     ViewData["Title"] = "Details";
@@ -7,7 +7,7 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Activity</h4>
+    <h4>Course</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -23,28 +23,16 @@
             @Html.DisplayFor(model => model.Description)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StartTime)
+            @Html.DisplayNameFor(model => model.StartDate)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StartTime)
+            @Html.DisplayFor(model => model.StartDate)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EndTime)
+            @Html.DisplayNameFor(model => model.EndDate)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EndTime)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CourseId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CourseId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ActivityTypeId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ActivityTypeId)
+            @Html.DisplayFor(model => model.EndDate)
         </dd>
     </dl>
 </div>

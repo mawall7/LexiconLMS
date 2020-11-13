@@ -6,26 +6,26 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LMS.Core.Entities;
-using LMS.Web.Data;
+using LMS.Data.Data;
 
 namespace LMS.Web.Controllers
 {
-    public class ActivitiesController : Controller
+    public class CoursesController : Controller
     {
-        private readonly LMSWebContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public ActivitiesController(LMSWebContext context)
+        public CoursesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Activities
+        // GET: Courses
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Activity.ToListAsync());
+            return View(await _context.Course.ToListAsync());
         }
 
-        // GET: Activities/Details/5
+        // GET: Courses/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace LMS.Web.Controllers
                 return NotFound();
             }
 
-            var activity = await _context.Activity
+            var course = await _context.Course
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (activity == null)
+            if (course == null)
             {
                 return NotFound();
             }
 
-            return View(activity);
+            return View(course);
         }
 
-        // GET: Activities/Create
+        // GET: Courses/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Activities/Create
+        // POST: Courses/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,StartTime,EndTime,CourseId,ActivityTypeId")] Activity activity)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate")] Course course)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(activity);
+                _context.Add(course);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(activity);
+            return View(course);
         }
 
-        // GET: Activities/Edit/5
+        // GET: Courses/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace LMS.Web.Controllers
                 return NotFound();
             }
 
-            var activity = await _context.Activity.FindAsync(id);
-            if (activity == null)
+            var course = await _context.Course.FindAsync(id);
+            if (course == null)
             {
                 return NotFound();
             }
-            return View(activity);
+            return View(course);
         }
 
-        // POST: Activities/Edit/5
+        // POST: Courses/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartTime,EndTime,CourseId,ActivityTypeId")] Activity activity)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate")] Course course)
         {
-            if (id != activity.Id)
+            if (id != course.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace LMS.Web.Controllers
             {
                 try
                 {
-                    _context.Update(activity);
+                    _context.Update(course);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ActivityExists(activity.Id))
+                    if (!CourseExists(course.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace LMS.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(activity);
+            return View(course);
         }
 
-        // GET: Activities/Delete/5
+        // GET: Courses/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace LMS.Web.Controllers
                 return NotFound();
             }
 
-            var activity = await _context.Activity
+            var course = await _context.Course
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (activity == null)
+            if (course == null)
             {
                 return NotFound();
             }
 
-            return View(activity);
+            return View(course);
         }
 
-        // POST: Activities/Delete/5
+        // POST: Courses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var activity = await _context.Activity.FindAsync(id);
-            _context.Activity.Remove(activity);
+            var course = await _context.Course.FindAsync(id);
+            _context.Course.Remove(course);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ActivityExists(int id)
+        private bool CourseExists(int id)
         {
-            return _context.Activity.Any(e => e.Id == id);
+            return _context.Course.Any(e => e.Id == id);
         }
     }
 }
