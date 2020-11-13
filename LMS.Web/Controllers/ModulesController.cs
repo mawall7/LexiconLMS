@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LMS.Core.Entities;
 using LMS.Web.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LMS.Web.Controllers
 {
@@ -44,6 +45,7 @@ namespace LMS.Web.Controllers
         }
 
         // GET: Modules/Create
+        [Authorize(Roles = "Teacher")]
         public IActionResult Create()
         {
             return View();
