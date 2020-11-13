@@ -20,6 +20,6 @@ namespace LMS.Core.Entities
         public int CourseId { get; set; }
         //Navigation property
         public ICollection<Activity> Activities { get; set; }
-        public ICollection<Document> Documents { get; set; }
+        //public ICollection<Document> Documents { get; set; }
     }
 }
