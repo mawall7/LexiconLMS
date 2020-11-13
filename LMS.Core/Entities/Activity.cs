@@ -19,6 +19,6 @@ namespace LMS.Core.Entities
         public int CourseId { get; set; }
         public int ActivityTypeId { get; set; }
         // Navigation property
-        public Document Document { get; set; }
+       // public Document Document { get; set; }
     }
 }
