@@ -13,7 +13,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using LMS.Data.Data;
 using LMS.Core.Entities;
-using LMS.Web.Data;
 
 namespace LMS.Web
 {
@@ -32,14 +31,12 @@ namespace LMS.Web
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)//ApplicationUser
-                  .AddRoles<IdentityRole>()
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            services.AddDbContext<LMSWebContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("LMSWebContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
