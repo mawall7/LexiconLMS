@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using LMS.Core.Entities;
 using LMS.Web.Data;
 using Microsoft.AspNetCore.Authorization;
+using LMS.Web.Extensions;
 
 namespace LMS.Web.Controllers
 {
@@ -48,6 +49,8 @@ namespace LMS.Web.Controllers
         [Authorize(Roles = "Teacher")]
         public IActionResult Create()
         {
+            if (Request.IsAjax())
+                return PartialView("CreatePartial");
             return View();
         }
 
