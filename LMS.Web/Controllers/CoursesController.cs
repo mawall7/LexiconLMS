@@ -6,15 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LMS.Core.Entities;
-using LMS.Web.Data;
+using LMS.Data.Data;
 
 namespace LMS.Web.Controllers
 {
     public class CoursesController : Controller
     {
-        private readonly LMSWebContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public CoursesController(LMSWebContext context)
+        public CoursesController(ApplicationDbContext context)
         {
             _context = context;
         }
