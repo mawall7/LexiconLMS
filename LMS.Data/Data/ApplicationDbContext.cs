@@ -1,4 +1,5 @@
-﻿using LMS.Core.Entities;
+﻿using System;
+using LMS.Core.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

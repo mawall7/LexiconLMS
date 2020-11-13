@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using LMS.Data.Data;
 using LMS.Core.Entities;
+using LMS.Web.Data;
 
 namespace LMS.Web
 {
@@ -36,6 +37,9 @@ namespace LMS.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddDbContext<LMSWebContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("LMSWebContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
