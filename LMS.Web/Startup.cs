@@ -37,8 +37,7 @@ namespace LMS.Web
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            services.AddDbContext<LMSWebContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("LMSWebContext")));
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
