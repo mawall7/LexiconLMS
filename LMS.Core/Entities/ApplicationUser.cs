@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 
 
-namespace LMS.Core.Entities
-{
+namespace LMS.Core.Entities {
     public class ApplicationUser : IdentityUser
     {
        // public int Id { get; set; }

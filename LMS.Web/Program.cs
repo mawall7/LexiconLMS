@@ -19,7 +19,7 @@ namespace LMS.Web
         {
              var host = CreateHostBuilder(args).Build();
             using (var scope = host.Services.CreateScope())
-            {
+            { 
                 var services = scope.ServiceProvider;
                 var context = services.GetRequiredService<ApplicationDbContext>();
                 context.Database.Migrate();
@@ -27,11 +27,12 @@ namespace LMS.Web
                 var config = services.GetRequiredService<IConfiguration>();
 
                 //dotnet user-secrets set "AdminPW" "LexiconNET20!"
-                var teacher = config["teacher"];
+                var teacherPW = config["teacherPW"];
+                //teacherPW saved in user-secret teacherPW = LmsLexicon20?
 
                 try
-                {
-                   // SeedData.InitializeAsync(services, adminPW).Wait();
+                { 
+                    SeedData.InitializeAsync(services, teacherPW).Wait();
                 }
                 catch (Exception e)
                 {
