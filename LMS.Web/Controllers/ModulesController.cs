@@ -6,25 +6,45 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LMS.Core.Entities;
+using LMS.Core.ViewModels;
 using LMS.Web.Data;
 using Microsoft.AspNetCore.Authorization;
 using LMS.Web.Extensions;
+using Microsoft.AspNetCore.Identity;
 
 namespace LMS.Web.Controllers
 {
     public class ModulesController : Controller
     {
         private readonly LMSWebContext _context;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public ModulesController(LMSWebContext context)
+        public ModulesController(LMSWebContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            this.userManager = userManager;
         }
 
         // GET: Modules
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Module.ToListAsync());
+            var userId = userManager.GetUserId(User);
+            var model = new IndexViewModel
+            {
+                 Modules = await _context.Module.Include(g => g.AttendedMembers)
+                                       .Select(g => new ModulesViewModel
+                                       {
+                                           Id = g.Id,
+                                           Name = g.Name,
+                                           StartDate = g.StartDate,
+                                           EndDate = g.EndDate,
+                                           Attending=g.AttendedMembers.Any(m=>m.ApplicationUserId==userId)
+                                       }).ToListAsync()
+                                       
+            };
+
+
+            return View(model);
         }
 
         // GET: Modules/Details/5
@@ -59,12 +79,29 @@ namespace LMS.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
         public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate,CourseId")] Module @module)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(@module);
                 await _context.SaveChangesAsync();
+
+                if(Request.IsAjax())
+                {
+                    var model = new ModulesViewModel
+                    {
+                        Id = module.Id,
+                        Name = module.Name,
+                        StartDate = module.StartDate,
+                        EndDate = module.EndDate
+
+                    };
+
+                    return PartialView("ModulePartial", model);
+                }
+
+
                 return RedirectToAction(nameof(Index));
             }
             return View(@module);
