@@ -36,7 +36,6 @@ namespace LMS.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
-           
 
         }
 
