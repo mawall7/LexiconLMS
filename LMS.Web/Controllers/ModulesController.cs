@@ -27,25 +27,29 @@ namespace LMS.Web.Controllers
         }
 
         // GET: Modules
+        //public async Task<IActionResult> Index()
+        //{
+        //    var userId = userManager.GetUserId(User);
+        //    var model = new IndexViewModel
+        //    {
+        //         Modules = await _context.Modules.Include(g => g.AttendedMembers)
+        //                               .Select(g => new ModulesViewModel
+        //                               {
+        //                                   Id = g.Id,
+        //                                   Name = g.Name,
+        //                                   StartDate = g.StartDate,
+        //                                   EndDate = g.EndDate,
+        //                                   Attending=g.AttendedMembers.Any(m=>m.ApplicationUserId==userId)
+        //                               }).ToListAsync()
+
+        //    };
+
+
+        //    return View(model);
+        //}
         public async Task<IActionResult> Index()
         {
-            var userId = userManager.GetUserId(User);
-            var model = new IndexViewModel
-            {
-                 Modules = await _context.Modules.Include(g => g.AttendedMembers)
-                                       .Select(g => new ModulesViewModel
-                                       {
-                                           Id = g.Id,
-                                           Name = g.Name,
-                                           StartDate = g.StartDate,
-                                           EndDate = g.EndDate,
-                                           Attending=g.AttendedMembers.Any(m=>m.ApplicationUserId==userId)
-                                       }).ToListAsync()
-                                       
-            };
-
-
-            return View(model);
+            return View(await _context.Modules.ToListAsync());
         }
 
         // GET: Modules/Details/5
