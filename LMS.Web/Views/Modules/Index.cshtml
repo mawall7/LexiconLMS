@@ -11,9 +11,9 @@
 <p id="createajax"></p>
 @if (User.IsInRole("Teacher"))
 {
-    <p>
+    @*<p>
         <a asp-action="Create"> Create New</a>
-    </p>
+    </p>*@
     <p>
         <a asp-action="Create" class="btn btn-info"
            data-ajax="true"
@@ -25,32 +25,36 @@
 }
 
 
-@if (User.IsInRole("Student"))
+@*@if (User.IsInRole("Student"))
 {
     <form action="Index">
         <dl class="row">
             <dt class="col-sm-10">History</dt>
             <dd class="col-sm-2">
-                <input class="form-control" type="checkbox" @*asp-for="ShowHistory"*@ id="checkbox" />
+                <input class="form-control" type="checkbox" asp-for="ShowHistory" id="checkbox" />
             </dd>
         </dl>
     </form>
-}
+}*@
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.Modules.First().Name)
+                @*@Html.DisplayNameFor(model => model.Name)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.Modules.First().Description)
+                @*@Html.DisplayNameFor(model => model.Description)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StartDate)
+                @Html.DisplayNameFor(model => model.Modules.FirstOrDefault().StartDate)
+                @*@Html.DisplayNameFor(model => model.StartDate)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EndDate)
+                @Html.DisplayNameFor(model => model.Modules.First().EndDate)
+                @*@Html.DisplayNameFor(model => model.EndDate)*@
             </th>
             <th></th>
         </tr>
