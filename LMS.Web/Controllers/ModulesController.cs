@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LMS.Core.Entities;
 using LMS.Core.ViewModels;
-using LMS.Web.Data;
 using Microsoft.AspNetCore.Authorization;
 using LMS.Web.Extensions;
 using Microsoft.AspNetCore.Identity;
