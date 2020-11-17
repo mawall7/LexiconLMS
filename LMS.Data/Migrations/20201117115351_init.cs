@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LMS.Data.Migrations
 {
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -245,6 +245,32 @@ namespace LMS.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ApplicationUserModule",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ModuleId = table.Column<int>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ApplicationUserModule", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ApplicationUserModule_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ApplicationUserModule_Modules_ModuleId",
+                        column: x => x.ModuleId,
+                        principalTable: "Modules",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Activities_ActivityTypeId",
                 table: "Activities",
@@ -253,6 +279,16 @@ namespace LMS.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Activities_ModuleId",
                 table: "Activities",
+                column: "ModuleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApplicationUserModule_ApplicationUserId",
+                table: "ApplicationUserModule",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApplicationUserModule_ModuleId",
+                table: "ApplicationUserModule",
                 column: "ModuleId");
 
             migrationBuilder.CreateIndex(
@@ -309,6 +345,9 @@ namespace LMS.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Activities");
+
+            migrationBuilder.DropTable(
+                name: "ApplicationUserModule");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");

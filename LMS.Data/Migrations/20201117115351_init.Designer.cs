@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201117085512_test1")]
-    partial class test1
+    [Migration("20201117115351_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -52,7 +52,7 @@ namespace LMS.Data.Migrations
 
                     b.HasIndex("ModuleId");
 
-                    b.ToTable("Activity");
+                    b.ToTable("Activities");
                 });
 
             modelBuilder.Entity("LMS.Core.Entities.ActivityType", b =>
@@ -67,7 +67,7 @@ namespace LMS.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ActivityType");
+                    b.ToTable("ActivityTypes");
                 });
 
             modelBuilder.Entity("LMS.Core.Entities.ApplicationUser", b =>
@@ -84,6 +84,9 @@ namespace LMS.Data.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CourseId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(256)")
@@ -136,6 +139,8 @@ namespace LMS.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CourseId");
+
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
 
@@ -176,9 +181,6 @@ namespace LMS.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -193,9 +195,7 @@ namespace LMS.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
-
-                    b.ToTable("Course");
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("LMS.Core.Entities.Module", b =>
@@ -377,6 +377,13 @@ namespace LMS.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("LMS.Core.Entities.ApplicationUser", b =>
+                {
+                    b.HasOne("LMS.Core.Entities.Course", "Course")
+                        .WithMany("ApplicationUsers")
+                        .HasForeignKey("CourseId");
+                });
+
             modelBuilder.Entity("LMS.Core.Entities.ApplicationUserModule", b =>
                 {
                     b.HasOne("LMS.Core.Entities.ApplicationUser", "ApplicationUser")
@@ -390,16 +397,9 @@ namespace LMS.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("LMS.Core.Entities.Course", b =>
-                {
-                    b.HasOne("LMS.Core.Entities.ApplicationUser", null)
-                        .WithMany("Courses")
-                        .HasForeignKey("ApplicationUserId");
-                });
-
             modelBuilder.Entity("LMS.Core.Entities.Module", b =>
                 {
-                    b.HasOne("LMS.Core.Entities.Course", null)
+                    b.HasOne("LMS.Core.Entities.Course", "Course")
                         .WithMany("Modules")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)

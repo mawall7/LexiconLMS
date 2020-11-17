@@ -150,6 +150,28 @@ namespace LMS.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("LMS.Core.Entities.ApplicationUserModule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ModuleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("ModuleId");
+
+                    b.ToTable("ApplicationUserModule");
+                });
+
             modelBuilder.Entity("LMS.Core.Entities.Course", b =>
                 {
                     b.Property<int>("Id")
@@ -360,9 +382,22 @@ namespace LMS.Data.Migrations
                         .HasForeignKey("CourseId");
                 });
 
+            modelBuilder.Entity("LMS.Core.Entities.ApplicationUserModule", b =>
+                {
+                    b.HasOne("LMS.Core.Entities.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("LMS.Core.Entities.Module", "Module")
+                        .WithMany("AttendedMembers")
+                        .HasForeignKey("ModuleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("LMS.Core.Entities.Module", b =>
                 {
-                    b.HasOne("LMS.Core.Entities.Course", null)
+                    b.HasOne("LMS.Core.Entities.Course", "Course")
                         .WithMany("Modules")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)

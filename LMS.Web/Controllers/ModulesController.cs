@@ -67,7 +67,7 @@ namespace LMS.Web.Controllers
         }
 
         // GET: Modules/Create
-        //[Authorize(Roles = "Teacher")]
+        [Authorize(Roles = "Teacher")]
         public IActionResult Create()
         {
             if (Request.IsAjax())
@@ -80,7 +80,7 @@ namespace LMS.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Teacher")]
+        [Authorize(Roles = "Teacher")]
         public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate,CourseId")] Module @module)
         {
             if (ModelState.IsValid)
