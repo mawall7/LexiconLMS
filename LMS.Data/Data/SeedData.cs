@@ -25,7 +25,7 @@ namespace LMS.Data.Data {
                 // ---------------------------------------Courses  SeedData----------------------------------------
                 if (context.Courses.Any())
                 {
-                    context.ActivityTypes.RemoveRange(context.ActivityTypes);
+                    context.Courses.RemoveRange(context.Courses);
                     context.SaveChanges();
                 }
 
@@ -166,7 +166,7 @@ namespace LMS.Data.Data {
 
                 }
 
-                var teacherEmail = "teacher@lms.se";
+                var teacherEmail = "teacher@lms.se"; // LexiconLms20?
 
                 var foundUser = await userManger.FindByEmailAsync(teacherEmail);
 
