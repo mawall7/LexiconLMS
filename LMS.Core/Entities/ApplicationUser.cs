@@ -13,9 +13,9 @@ namespace LMS.Core.Entities {
         public string Address { get; set; }
         public string Phone { get; set; }
 
-
+        public int? CourseId { get; set; }
         //Navigation property
-        public ICollection<Course> Courses { get; set; }
+        public Course Course { get; set; }
        // public ICollection<Document> Documents { get; set; }
     }
 }

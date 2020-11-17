@@ -34,8 +34,8 @@
                             @if (User.Identity.IsAuthenticated)
                             {
                                 var result = "";
-                                { if (User.IsInRole("Teacher")) { result = "Teacher"; } else { result = "Student"; } }
-                                <p class="text-whit" >@result</p>
+                                { if (User.IsInRole("Teacher")) { result = "  Teacher"; } else { result = "Student"; } }
+                                <p class="text-light mt-2 mx-3  border" >@result</p>
 
                             }
 
