@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LMS.Core.Entities
+namespace LMS.Core.ViewModels
 {
-    public class Course
+    public class ModulesViewModel
     {
         public int Id { get; set; }
+
         public string Name { get; set; }
 
         public string Description { get; set; }
@@ -14,12 +15,6 @@ namespace LMS.Core.Entities
         public DateTime StartDate { get; set; }
 
         public DateTime EndDate { get; set; }
-
-        //Navigation Property
-        public  ICollection<ApplicationUser> ApplicationUsers { get; set; }
-        public ICollection<Module> Modules { get; set; }
-
-       // public ICollection<Document> Documents { get; set; }
-
+        public bool Attending { get; set; }
     }
 }

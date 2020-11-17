@@ -7,33 +7,30 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LMS.Core.Entities;
 using LMS.Data.Data;
+using Microsoft.AspNetCore.Identity;
 
-namespace LMS.Web.Controllers
-{
-    public class CoursesController : Controller
-    {
-        private readonly ApplicationDbContext _context;
+namespace LMS.Web.Controllers {
+    public class CoursesController : Controller {
+        private readonly ApplicationDbContext db;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public CoursesController(ApplicationDbContext context)
-        {
-            _context = context;
+        public CoursesController(ApplicationDbContext context) {
+            db = context;
         }
 
         // GET: Courses
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Course.ToListAsync());
+        public async Task<IActionResult> Index() {
+            return View(await db.Courses.ToListAsync());
         }
 
         // GET: Courses/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
+        public async Task<IActionResult> Details(int? id) {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var course = await _context.Course
+            var course = await db.Courses
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (course == null)
             {
@@ -44,8 +41,7 @@ namespace LMS.Web.Controllers
         }
 
         // GET: Courses/Create
-        public IActionResult Create()
-        {
+        public IActionResult Create() {
             return View();
         }
 
@@ -54,26 +50,24 @@ namespace LMS.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate")] Course course)
-        {
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate")] Course course) {
             if (ModelState.IsValid)
             {
-                _context.Add(course);
-                await _context.SaveChangesAsync();
+                db.Add(course);
+                await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(course);
         }
 
         // GET: Courses/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
+        public async Task<IActionResult> Edit(int? id) {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var course = await _context.Course.FindAsync(id);
+            var course = await db.Courses.FindAsync(id);
             if (course == null)
             {
                 return NotFound();
@@ -86,8 +80,7 @@ namespace LMS.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate")] Course course)
-        {
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate")] Course course) {
             if (id != course.Id)
             {
                 return NotFound();
@@ -97,8 +90,8 @@ namespace LMS.Web.Controllers
             {
                 try
                 {
-                    _context.Update(course);
-                    await _context.SaveChangesAsync();
+                    db.Update(course);
+                    await db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -117,14 +110,13 @@ namespace LMS.Web.Controllers
         }
 
         // GET: Courses/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
+        public async Task<IActionResult> Delete(int? id) {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var course = await _context.Course
+            var course = await db.Courses
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (course == null)
             {
@@ -137,17 +129,17 @@ namespace LMS.Web.Controllers
         // POST: Courses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var course = await _context.Course.FindAsync(id);
-            _context.Course.Remove(course);
-            await _context.SaveChangesAsync();
+        public async Task<IActionResult> DeleteConfirmed(int id) {
+            var course = await db.Courses.FindAsync(id);
+            db.Courses.Remove(course);
+            await db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CourseExists(int id)
-        {
-            return _context.Course.Any(e => e.Id == id);
+        private bool CourseExists(int id) {
+            return db.Courses.Any(e => e.Id == id);
         }
+
+      
     }
 }
