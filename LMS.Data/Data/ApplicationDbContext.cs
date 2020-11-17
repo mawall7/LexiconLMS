@@ -14,6 +14,6 @@ namespace LMS.Data.Data
         }
 
         public DbSet<Course> Course { get; set; }
-      
+        public DbSet<Module> Modules { get; set; }
     }
 }

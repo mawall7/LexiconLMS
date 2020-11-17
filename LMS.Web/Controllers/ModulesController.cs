@@ -11,15 +11,16 @@ using LMS.Web.Data;
 using Microsoft.AspNetCore.Authorization;
 using LMS.Web.Extensions;
 using Microsoft.AspNetCore.Identity;
+using LMS.Data.Data;
 
 namespace LMS.Web.Controllers
 {
     public class ModulesController : Controller
     {
-        private readonly LMSWebContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> userManager;
 
-        public ModulesController(LMSWebContext context, UserManager<ApplicationUser> userManager)
+        public ModulesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             this.userManager = userManager;
@@ -31,7 +32,7 @@ namespace LMS.Web.Controllers
             var userId = userManager.GetUserId(User);
             var model = new IndexViewModel
             {
-                 Modules = await _context.Module.Include(g => g.AttendedMembers)
+                 Modules = await _context.Modules.Include(g => g.AttendedMembers)
                                        .Select(g => new ModulesViewModel
                                        {
                                            Id = g.Id,
@@ -55,7 +56,7 @@ namespace LMS.Web.Controllers
                 return NotFound();
             }
 
-            var @module = await _context.Module
+            var @module = await _context.Modules
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (@module == null)
             {
@@ -66,7 +67,7 @@ namespace LMS.Web.Controllers
         }
 
         // GET: Modules/Create
-        [Authorize(Roles = "Teacher")]
+        //[Authorize(Roles = "Teacher")]
         public IActionResult Create()
         {
             if (Request.IsAjax())
@@ -79,7 +80,7 @@ namespace LMS.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Teacher")]
+        //[Authorize(Roles = "Teacher")]
         public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate,CourseId")] Module @module)
         {
             if (ModelState.IsValid)
@@ -115,7 +116,7 @@ namespace LMS.Web.Controllers
                 return NotFound();
             }
 
-            var @module = await _context.Module.FindAsync(id);
+            var @module = await _context.Modules.FindAsync(id);
             if (@module == null)
             {
                 return NotFound();
@@ -166,7 +167,7 @@ namespace LMS.Web.Controllers
                 return NotFound();
             }
 
-            var @module = await _context.Module
+            var @module = await _context.Modules
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (@module == null)
             {
@@ -181,15 +182,15 @@ namespace LMS.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var @module = await _context.Module.FindAsync(id);
-            _context.Module.Remove(@module);
+            var @module = await _context.Modules.FindAsync(id);
+            _context.Modules.Remove(@module);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ModuleExists(int id)
         {
-            return _context.Module.Any(e => e.Id == id);
+            return _context.Modules.Any(e => e.Id == id);
         }
     }
 }
