@@ -23,5 +23,6 @@ namespace LMS.Core.Entities
         public Course Course { get; set; }
 
         //public ICollection<Document> Documents { get; set; }
+        public ICollection<ApplicationUserModule> AttendedMembers { get; set; }
     }
 }
