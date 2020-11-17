@@ -6,6 +6,7 @@ namespace LMS.Core.Entities
 {
     public class ApplicationUserModule
     {
+        public int Id { get; set; }
         public int ModuleId { get; set; }
         public string ApplicationUserId { get; set; }
 

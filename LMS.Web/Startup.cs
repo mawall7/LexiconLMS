@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using LMS.Data.Data;
 using LMS.Core.Entities;
+using LMS.Web.Data;
 
 namespace LMS.Web
 {
@@ -36,6 +37,7 @@ namespace LMS.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+            //services.AddScoped<ILMSWebContext, LMSWebContext>();
 
         }
 

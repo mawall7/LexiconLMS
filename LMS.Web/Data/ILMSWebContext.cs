@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using LMS.Core.Entities;
 
-namespace LMS.Data.Data
+namespace LMS.Web.Data
 {
-    public class LMSWebContext : DbContext
+    public class ILMSWebContext : DbContext
     {
-        public LMSWebContext (DbContextOptions<LMSWebContext> options)
+        public ILMSWebContext (DbContextOptions<ILMSWebContext> options)
             : base(options)
         {
         }
