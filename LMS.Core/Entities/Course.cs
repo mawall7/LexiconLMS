@@ -36,6 +36,7 @@ namespace LMS.Core.Entities
         public ICollection<Activity> Activities { get; set; }
 
 
+        // public ICollection<Document> Documents { get; set; }
 
     }
 }

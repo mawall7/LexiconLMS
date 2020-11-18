@@ -154,8 +154,8 @@ namespace LMS.Web.Controllers
             {
                 try
                 {
-                    db.Update(course);
-                    await db.SaveChangesAsync();
+                    _context.Update(course);
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -180,7 +180,7 @@ namespace LMS.Web.Controllers
                 return NotFound();
             }
 
-            var course = await _context.Course
+            var course = await _context.Courses
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (course == null)
             {
@@ -193,17 +193,15 @@ namespace LMS.Web.Controllers
         // POST: Courses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var course = await _context.Course.FindAsync(id);
-            _context.Course.Remove(course);
+        public async Task<IActionResult> DeleteConfirmed(int id) {
+            var course = await _context.Courses.FindAsync(id);
+            _context.Courses.Remove(course);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CourseExists(int id)
-        {
-            return _context.Course.Any(e => e.Id == id);
+        private bool CourseExists(int id) {
+            return _context.Courses.Any(e => e.Id == id);
         }
 
       

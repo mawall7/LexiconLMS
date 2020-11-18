@@ -17,7 +17,17 @@ namespace LMS.Data.Data
         {
         }
 
+
+        protected override void OnModelCreating(ModelBuilder builder) {
+            base.OnModelCreating(builder);
+           
+
+        }
+       
+
+
         public DbSet<Course> Course { get; set; }
+        //public DbSet<Activity> Activities { get; set; }
       
     }
 }
