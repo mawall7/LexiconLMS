@@ -1,0 +1,79 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@model StudentCourseViewModel
+
+@{
+    ViewData["Title"] = "UserCourse";
+}
+
+<h1>Student Course Information</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Name) : @Html.DisplayFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Modules)
+        {
+            <tr>
+
+                <td>
+                    <p>
+                        <a class="btn btn-primary" data-toggle="collapse" href="#studentCourse-@item.Id" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            @Html.DisplayFor(modelItem => item.Name) : @Html.DisplayFor(modelItem => item.StartDate) - @Html.DisplayFor(modelItem => item.EndDate)
+                        </a>
+
+                    </p>
+                    <div class="row">
+                        <div class="col">
+                            <div class="collapse multi-collapse" id="studentCourse-@item.Id">
+
+                                <div class="card card-body">
+
+                                    @foreach (var moduleName in item.Activities)
+                                    {
+                                        @Html.DisplayFor(m => moduleName.Name)
+                                        <p class="text-black-50">Activity</p>
+                                    }
+
+
+
+                                </div>
+
+                            </div><!-- End collapse -->
+                        </div><!-- End col -->
+                        <div class="col">
+                            <div class="collapse multi-collapse" id="studentCourse-@item.Id">
+
+                                <div class="card card-body">
+
+                                    @foreach (var moduleName in item.Activities)
+                                    {
+                                        @Html.DisplayFor(m => moduleName.Description)
+                                        <p class="text-black-50">Description</p>
+                                    }
+
+
+                                </div>
+
+                            </div><!-- End collapse -->
+                        </div><!-- End col -->
+                    </div>
+
+
+                </td>
+                @*<td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </td>*@
+            </tr>
+        }
+    </tbody>
+</table>

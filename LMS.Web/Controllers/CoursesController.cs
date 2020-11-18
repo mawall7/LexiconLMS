@@ -43,22 +43,88 @@ namespace LMS.Web.Controllers
         public async Task<IActionResult> UserCourse()
         {
 
-            // //Get user
-            var userId = UserManager.GetUserId(User);
-            var model = await _context.Courses
-               .Include(c => c.Modules)
-              // .Include(c => c.Activities)
-               .Select(c => new StudentIndexViewModel
-               {
-                   Id = c.Id,
-                   Name = c.Name
+            //Get user
+            var user = await UserManager.GetUserAsync(User);
+            var modules = await _context.Modules
+                .Include(a => a.Activities)
+                .Include(a => a)
+                .Where(a => a.CourseId == user.CourseId)
+                .ToListAsync();
+            foreach (var mod in modules)
+            {
 
-               }).ToListAsync();
+            }
+            var activities = await _context.Activities
+               .Include(at => at.ActivityType)
+               .ToListAsync();
+
+            //var activityTypes = await _context.ActivityTypes
+            //    .Include(at => at.Activities)
+            //   .Where(at => at.Id == user.c)
+            //   .ToListAsync();
+            //Student course Information
+            var model = await _context.CourseForStudent
+               .Include(c => c.Modules)
+               .ThenInclude(c => c.Activities)
+               .Select(d => new StudentCourseViewModel
+               {
+                   Id = d.Id,
+                   Name = d.Name,
+                   Modules = modules,
+                   Activities = activities
+
+               })
+               //.OrderBy()
+               .FirstOrDefaultAsync(c => c.Id == user.CourseId);
+               
 
             return View(model);
 
     
         }
+
+        public async Task<IActionResult> UserCourseX()
+        {
+
+            //Get user
+            var userId = UserManager.GetUserId(User);
+            var Student = await OnGetAsync(2);
+            //Student course Information
+            var model = await _context.CourseForStudent
+               .Include(c => c.Modules)
+               .Include(c => c.Activities)
+               .Select(c => new StudentCourseViewModel
+               {
+                   Id = c.Id,
+                  // Name = c.Name,
+
+
+               }).ToListAsync();
+
+            return View(model);
+
+
+        }
+        public async Task<IActionResult> OnGetAsync(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+             var model = await _context.CourseForStudent
+            .Include(s => s.Modules)
+            .ThenInclude(e => e.Activities)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+            return View(model);
+        }
+
         // GET: CourseList
         public async Task<IActionResult> CourseList()
         {
