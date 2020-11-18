@@ -7,13 +7,13 @@ using System.Text;
 
 namespace LMS.Data.Data
 {
-    public class MapperProfile : Profile
+    public class MapperProfile:Profile
     {
         public MapperProfile()
         {
-            //CreateMap<CreateCourseViewModel, Course>();
-            //CreateMap<CourseDetailsViewModel, Course>();
-            //CreateMap<CourseListViewModel, Course>();
+            CreateMap<CreateCourseViewModel, Course>();
+            CreateMap<CourseDetailsViewModel, Course>();
+            CreateMap<CourseListViewModel, Course>();
         }
     }
 }

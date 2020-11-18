@@ -9,14 +9,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LMS.Data.Data
-{
-    public class SeedData
-    {
+namespace LMS.Data.Data {
+    public class SeedData {
 
 
-        public static async Task InitializeAsync(IServiceProvider services, string teacherPW)
-        {
+        public static async Task InitializeAsync(IServiceProvider services, string teacherPW) {
             using (var context = new ApplicationDbContext(services.GetRequiredService<DbContextOptions<ApplicationDbContext>>()))
             {
 
@@ -103,7 +100,7 @@ namespace LMS.Data.Data
                         Description = fake.Hacker.Verb(),
                         StartDate = DateTime.Now.AddDays(fake.Random.Int(-2, 2)),
                         EndDate = DateTime.Now.AddMonths(fake.Random.Int(3, 4)),
-                        CourseId = courses[fake.Random.Int(1, courses.Count) - 1].Id
+                        CourseId = courses[fake.Random.Int(1,courses.Count) - 1].Id
                     };
 
                     modules.Add(module);
@@ -206,5 +203,39 @@ namespace LMS.Data.Data
 
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }
+

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LMS.Core.Entities;
 using LMS.Data.Data;
@@ -88,27 +85,34 @@ namespace LMS.Web.Controllers
             return View(await _context.Courses.ToListAsync());
         }
 
+
         // GET: Courses/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
+        public async Task<IActionResult> Details(int? id) {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var course = await _context.Courses
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (course == null)
+            var courseModel = await _context.Course
+                .Select(c => new CourseDetailsViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Description = c.Description,
+                    StartDate = c.StartDate,
+                    EndDate = c.EndDate
+                })
+                .FirstOrDefaultAsync(c => c.Id == id);
+            if (courseModel == null)
             {
                 return NotFound();
             }
 
-            return View(course);
+            return View(courseModel);
         }
 
         // GET: Courses/Create
-        public IActionResult Create()
-        {
+        public IActionResult Create() {
             return View();
         }
 
@@ -117,26 +121,27 @@ namespace LMS.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate")] Course course)
+        public async Task<IActionResult> Create(CreateCourseViewModel createCourseViewModel)
         {
+
             if (ModelState.IsValid)
             {
+                var course = mapper.Map<Course>(createCourseViewModel);
                 _context.Add(course);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(course);
+            return View(createCourseViewModel);
         }
 
         // GET: Courses/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
+        public async Task<IActionResult> Edit(int? id) {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var course = await _context.Courses.FindAsync(id);
+            var course = await db.Courses.FindAsync(id);
             if (course == null)
             {
                 return NotFound();
@@ -149,8 +154,7 @@ namespace LMS.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate")] Course course)
-        {
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate")] Course course) {
             if (id != course.Id)
             {
                 return NotFound();
@@ -160,8 +164,8 @@ namespace LMS.Web.Controllers
             {
                 try
                 {
-                    _context.Update(course);
-                    await _context.SaveChangesAsync();
+                    db.Update(course);
+                    await db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -180,14 +184,13 @@ namespace LMS.Web.Controllers
         }
 
         // GET: Courses/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
+        public async Task<IActionResult> Delete(int? id) {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var course = await _context.Courses
+            var course = await db.Courses
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (course == null)
             {
@@ -200,17 +203,17 @@ namespace LMS.Web.Controllers
         // POST: Courses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var course = await _context.Courses.FindAsync(id);
-            _context.Courses.Remove(course);
-            await _context.SaveChangesAsync();
+        public async Task<IActionResult> DeleteConfirmed(int id) {
+            var course = await db.Courses.FindAsync(id);
+            db.Courses.Remove(course);
+            await db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CourseExists(int id)
-        {
-            return _context.Courses.Any(e => e.Id == id);
+        private bool CourseExists(int id) {
+            return db.Courses.Any(e => e.Id == id);
         }
+
+      
     }
 }

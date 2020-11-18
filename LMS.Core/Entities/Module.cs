@@ -20,8 +20,10 @@ namespace LMS.Core.Entities
         public int CourseId { get; set; }
         //Navigation property
         public ICollection<Activity> Activities { get; set; }
+        public Course Course { get; set; }
 
         //public ICollection<ApplicationUserModule> AttendedMembers { get; set; }
         //public ICollection<Document> Documents { get; set; }
+        public ICollection<ApplicationUserModule> AttendedMembers { get; set; }
     }
 }
