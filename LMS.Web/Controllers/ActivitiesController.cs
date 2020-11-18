@@ -36,7 +36,11 @@ namespace LMS.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Activities.ToListAsync());
+
+            var model = _context.Activities.Include(a => a.Module);
+
+            return View(await model.ToListAsync());
+           // return View(await _context.Activities.ToListAsync());
         }
 
 
