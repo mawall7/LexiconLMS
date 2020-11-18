@@ -7,22 +7,85 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LMS.Core.Entities;
 using LMS.Data.Data;
+using LMS.Core;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using LMS.Core.ViewModels;
+using AutoMapper;
 
 namespace LMS.Web.Controllers
 {
     public class CoursesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper mapper;
+        //Soile
+        //public property, UserManager is only a getter
+        public UserManager<ApplicationUser> UserManager { get; }
 
-        public CoursesController(ApplicationDbContext context)
+        public CoursesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IMapper mapper)
         {
             _context = context;
+            this.mapper = mapper;
+            //manage users and their roles
+            UserManager = userManager;
         }
 
         // GET: Courses
-        public async Task<IActionResult> Index()
+        [AllowAnonymous]
+        public async Task<IActionResult> Index(IndexViewModel viewModel = null)
         {
-            return View(await _context.Course.ToListAsync());
+            //Get user
+            var userId = UserManager.GetUserId(User);
+
+            var courses = _context.Courses
+           .Include(m => m.Modules)
+           .AsNoTracking();
+            return View(await courses.ToListAsync());
+           
+        }
+
+        //Get Student Course, modules and activities
+        public async Task<IActionResult> UserCourse()
+        {
+
+            // //Get user
+            var userId = UserManager.GetUserId(User);
+            var model = await _context.Course
+               .Include(c => c.Modules)
+               .Include(c => c.Activities)
+               .Select(c => new StudentIndexViewModel
+               {
+                   Id = c.Id,
+                   Name = c.Name
+
+               }).ToListAsync();
+
+            return View(model);
+           
+
+        }
+        // GET: CourseList
+        public async Task<IActionResult> CourseList()
+        {
+            var model = await _context.Course
+                .Include(c => c.Modules)
+                .Include(c => c.Activities)
+                .Select(c => new CourseListViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name
+
+                }).ToListAsync();
+
+            return View(model);
+        }
+
+        public async Task<IActionResult> Index2()
+        {
+            var userId = UserManager.GetUserId(User);
+
+            return View(await _context.Courses.ToListAsync());
         }
 
         // GET: Courses/Details/5
@@ -33,7 +96,7 @@ namespace LMS.Web.Controllers
                 return NotFound();
             }
 
-            var course = await _context.Course
+            var course = await _context.Courses
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (course == null)
             {
@@ -73,7 +136,7 @@ namespace LMS.Web.Controllers
                 return NotFound();
             }
 
-            var course = await _context.Course.FindAsync(id);
+            var course = await _context.Courses.FindAsync(id);
             if (course == null)
             {
                 return NotFound();
@@ -124,7 +187,7 @@ namespace LMS.Web.Controllers
                 return NotFound();
             }
 
-            var course = await _context.Course
+            var course = await _context.Courses
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (course == null)
             {
@@ -139,15 +202,15 @@ namespace LMS.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var course = await _context.Course.FindAsync(id);
-            _context.Course.Remove(course);
+            var course = await _context.Courses.FindAsync(id);
+            _context.Courses.Remove(course);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CourseExists(int id)
         {
-            return _context.Course.Any(e => e.Id == id);
+            return _context.Courses.Any(e => e.Id == id);
         }
     }
 }

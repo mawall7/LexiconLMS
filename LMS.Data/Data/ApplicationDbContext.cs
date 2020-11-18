@@ -13,7 +13,23 @@ namespace LMS.Data.Data
         {
         }
 
+        public DbSet<Course> Courses{ get; set; }
+        public DbSet<Module> Modules { get; set; }
+        public DbSet<Activity> Activities { get; set; }
+        public DbSet<ActivityType> ActivityTypes { get; set; }
+        //public DbSet<UserCourse> UserCourses { get; set; }
+
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            //filter
+            builder.Entity<Course>().HasQueryFilter(c => c.StartDate > DateTime.Now);
+
+        }
+
         public DbSet<Course> Course { get; set; }
-      
+
+
     }
 }

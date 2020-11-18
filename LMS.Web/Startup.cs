@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using LMS.Data.Data;
 using LMS.Core.Entities;
+using AutoMapper;
 
 namespace LMS.Web
 {
@@ -36,6 +37,9 @@ namespace LMS.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            // Add AutoMapper
+            services.AddAutoMapper(typeof(MapperProfile));
 
         }
 
@@ -65,7 +69,7 @@ namespace LMS.Web
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Courses}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }
