@@ -27,7 +27,7 @@ namespace LMS.Data.Data
 
 
         public DbSet<Course> Course { get; set; }
-        public DbSet<Activity> Activities { get; set; }
+        //public DbSet<Activity> Activities { get; set; }
       
     }
 }

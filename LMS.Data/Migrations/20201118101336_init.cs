@@ -35,19 +35,19 @@ namespace LMS.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Courses",
+                name: "Course",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    Description = table.Column<string>(maxLength: 250, nullable: false),
                     StartDate = table.Column<DateTime>(nullable: false),
                     EndDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Courses", x => x.Id);
+                    table.PrimaryKey("PK_Course", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -100,9 +100,9 @@ namespace LMS.Data.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_Courses_CourseId",
+                        name: "FK_AspNetUsers_Course_CourseId",
                         column: x => x.CourseId,
-                        principalTable: "Courses",
+                        principalTable: "Course",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -123,9 +123,9 @@ namespace LMS.Data.Migrations
                 {
                     table.PrimaryKey("PK_Modules", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Modules_Courses_CourseId",
+                        name: "FK_Modules_Course_CourseId",
                         column: x => x.CourseId,
-                        principalTable: "Courses",
+                        principalTable: "Course",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -226,7 +226,8 @@ namespace LMS.Data.Migrations
                     StartTime = table.Column<DateTime>(nullable: false),
                     EndTime = table.Column<DateTime>(nullable: false),
                     ModuleId = table.Column<int>(nullable: false),
-                    ActivityTypeId = table.Column<int>(nullable: false)
+                    ActivityTypeId = table.Column<int>(nullable: false),
+                    CourseId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -237,6 +238,12 @@ namespace LMS.Data.Migrations
                         principalTable: "ActivityTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Activities_Course_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Course",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Activities_Modules_ModuleId",
                         column: x => x.ModuleId,
@@ -275,6 +282,11 @@ namespace LMS.Data.Migrations
                 name: "IX_Activities_ActivityTypeId",
                 table: "Activities",
                 column: "ActivityTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Activities_CourseId",
+                table: "Activities",
+                column: "CourseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Activities_ModuleId",
@@ -377,7 +389,7 @@ namespace LMS.Data.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Courses");
+                name: "Course");
         }
     }
 }
