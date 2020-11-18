@@ -19,7 +19,7 @@ namespace LMS.Web.Controllers
         public ActivitiesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
-            UserManager = userManager;        
+            UserManager = userManager;
         }
 
         // GET: Activities
@@ -31,25 +31,53 @@ namespace LMS.Web.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Index(int? Id)//Index(int DropitemModuleId)
+        //public async Task<IActionResult> Index(int? Id)//Index(int DropitemModuleId)
+        //{
+
+        public async Task<IActionResult> Index()
         {
-
-            var userId = UserManager.GetUserId(User);
-            var allaKurser = _context.Course.ToList();
-            var  courseU = _context.Course.Find(userId,Id);//KursenFörAnvändaren
-
-
-            //var applicationDbContext = _context.Activity.Include(a => a.ActivityType).Include(a => a.Module);
-            //var model = _context.Activity.Include(a => a.Module) // lägga till db.set för Module istället?context.Course istället?
-
-            //.Where(a => a.ModuleId == DropitemModuleId); 
-
-
-            //.Where(a=> a.Module.Activities
-            return View();
+            return View(await _context.Activities.ToListAsync());
         }
 
+
+
+        /*var userId = UserManager.GetUserId(User);
+        var allaKurser = _context.Courses.ToList();
+        var  courseU = _context.Courses.Find(userId,Id);//KursenFörAnvändaren*/
+
+
+        //var applicationDbContext = _context.Activity.Include(a => a.ActivityType).Include(a => a.Module);
+        //var model = _context.Activity.Include(a => a.Module) // lägga till db.set för Module istället?context.Course istället?
+
+        //.Where(a => a.ModuleId == DropitemModuleId); 
+
+
+        //.Where(a=> a.Module.Activities
+        //return View();
+        //   }
+
         // GET: Activities/Details/5
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var activity = await _context.Activity
+        //        .Include(a => a.ActivityType)
+        //        .Include(a => a.Module)
+        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //    if (activity == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(activity);
+        //}
+
+        //// GET: Activities/Create
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -57,25 +85,22 @@ namespace LMS.Web.Controllers
                 return NotFound();
             }
 
-            var activity = await _context.Activity
-                .Include(a => a.ActivityType)
-                .Include(a => a.Module)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var @activity = await _context.Activities.FirstOrDefaultAsync(m => m.Id == id);
+            //.FirstorDefaultAsync(m => m.Id == id);
             if (activity == null)
             {
                 return NotFound();
             }
 
-            return View(activity);
-        }
+            return View(@activity);
 
-        // GET: Activities/Create
+        }
         public IActionResult Create()
         {
 
             /*ViewData["ActivityTypeId"] = new SelectList(_context.Set<ActivityType>(), "Id", "Id");
             ViewData["ModuleId"] = new SelectList(_context.Set<Module>(), "Id", "Id");*/
-            
+
             return View();
         }
 
@@ -85,12 +110,12 @@ namespace LMS.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Description,StartTime,EndTime,ModuleId,ActivityTypeId")] Activity activity)
-        {   
+        {
 
             if (ModelState.IsValid)
             {
                 _context.Add(activity);
-                
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -107,7 +132,7 @@ namespace LMS.Web.Controllers
                 return NotFound();
             }
 
-            var activity = await _context.Activity.FindAsync(id);
+            var activity = await _context.Activities.FindAsync(id);
             if (activity == null)
             {
                 return NotFound();
@@ -162,7 +187,7 @@ namespace LMS.Web.Controllers
                 return NotFound();
             }
 
-            var activity = await _context.Activity
+            var activity = await _context.Activities
                 .Include(a => a.ActivityType)
                 .Include(a => a.Module)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -179,15 +204,15 @@ namespace LMS.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var activity = await _context.Activity.FindAsync(id);
-            _context.Activity.Remove(activity);
+            var activity = await _context.Activities.FindAsync(id);
+            _context.Activities.Remove(activity);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ActivityExists(int id)
         {
-            return _context.Activity.Any(e => e.Id == id);
+            return _context.Activities.Any(e => e.Id == id);
         }
     }
 }
