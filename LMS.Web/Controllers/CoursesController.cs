@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LMS.Core.Entities;
 using LMS.Data.Data;
+using LMS.Core;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using LMS.Core.ViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
@@ -20,14 +23,22 @@ namespace LMS.Web.Controllers
         {
             _context = context;
             this.mapper = mapper;
-            
-
+            //manage users and their roles
+            UserManager = userManager;
         }
 
         // GET: Courses
-        public async Task<IActionResult> Index()
+        [AllowAnonymous]
+        public async Task<IActionResult> Index(IndexViewModel viewModel = null)
         {
-            return View(await _context.Courses.ToListAsync());
+            //Get user
+            var userId = UserManager.GetUserId(User);
+
+            var courses = _context.Courses
+           .Include(m => m.Modules)
+           .AsNoTracking();
+            return View(await courses.ToListAsync());
+           
         }
         //Get Student Course, modules and activities
         public async Task<IActionResult> UserCourse()
@@ -65,36 +76,31 @@ namespace LMS.Web.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> Index2()
+        {
+            return View(await _context.Course.ToListAsync());
+        }
+
 
         // GET: Courses/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
+        public async Task<IActionResult> Details(int? id) {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var courseModel = await _context.Course
-                .Select(c => new CourseDetailsViewModel
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    Description = c.Description,
-                    StartDate = c.StartDate,
-                    EndDate = c.EndDate
-                })
-                .FirstOrDefaultAsync(c => c.Id == id);
-            if (courseModel == null)
+            var course = await _context.Course
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (course == null)
             {
                 return NotFound();
             }
 
-            return View(courseModel);
+            return View(course);
         }
 
         // GET: Courses/Create
-        public IActionResult Create()
-        {
+        public IActionResult Create() {
             return View();
         }
 
@@ -117,14 +123,13 @@ namespace LMS.Web.Controllers
         }
 
         // GET: Courses/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
+        public async Task<IActionResult> Edit(int? id) {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var course = await _context.Courses.FindAsync(id);
+            var course = await _context.Course.FindAsync(id);
             if (course == null)
             {
                 return NotFound();
@@ -137,8 +142,7 @@ namespace LMS.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate")] Course course)
-        {
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate")] Course course) {
             if (id != course.Id)
             {
                 return NotFound();
@@ -168,8 +172,7 @@ namespace LMS.Web.Controllers
         }
 
         // GET: Courses/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
+        public async Task<IActionResult> Delete(int? id) {
             if (id == null)
             {
                 return NotFound();
@@ -188,19 +191,17 @@ namespace LMS.Web.Controllers
         // POST: Courses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
+        public async Task<IActionResult> DeleteConfirmed(int id) {
             var course = await _context.Courses.FindAsync(id);
             _context.Courses.Remove(course);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CourseExists(int id)
-        {
+        private bool CourseExists(int id) {
             return _context.Courses.Any(e => e.Id == id);
         }
 
-
+      
     }
 }
