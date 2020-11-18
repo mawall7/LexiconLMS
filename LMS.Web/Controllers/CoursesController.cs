@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using LMS.Core.ViewModels;
 using AutoMapper;
-using Microsoft.AspNetCore.Identity;
 
 namespace LMS.Web.Controllers
 {
@@ -19,7 +18,7 @@ namespace LMS.Web.Controllers
         private readonly IMapper mapper;
         public UserManager<ApplicationUser> UserManager { get; }
 
-        public CoursesController(ApplicationDbContext context, UserManager<ApplicationUser> UserManager, IMapper mapper)
+        public CoursesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IMapper mapper)
         {
             _context = context;
             this.mapper = mapper;
@@ -58,7 +57,7 @@ namespace LMS.Web.Controllers
 
             return View(model);
 
-
+    
         }
         // GET: CourseList
         public async Task<IActionResult> CourseList()
