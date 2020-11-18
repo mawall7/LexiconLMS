@@ -6,6 +6,7 @@ using LMS.Core.Entities;
 using LMS.Data.Data;
 using LMS.Core.ViewModels;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 
 namespace LMS.Web.Controllers
 {
@@ -13,11 +14,14 @@ namespace LMS.Web.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper mapper;
+        public UserManager<ApplicationUser> UserManager { get; }
 
-        public CoursesController(ApplicationDbContext context, IMapper mapper)
+        public CoursesController(ApplicationDbContext context, UserManager<ApplicationUser> UserManager, IMapper mapper)
         {
             _context = context;
             this.mapper = mapper;
+            
+
         }
 
         // GET: Courses
@@ -25,7 +29,26 @@ namespace LMS.Web.Controllers
         {
             return View(await _context.Courses.ToListAsync());
         }
+        //Get Student Course, modules and activities
+        public async Task<IActionResult> UserCourse()
+        {
 
+            // //Get user
+            var userId = UserManager.GetUserId(User);
+            var model = await _context.Courses
+               .Include(c => c.Modules)
+              // .Include(c => c.Activities)
+               .Select(c => new StudentIndexViewModel
+               {
+                   Id = c.Id,
+                   Name = c.Name
+
+               }).ToListAsync();
+
+            return View(model);
+
+
+        }
         // GET: CourseList
         public async Task<IActionResult> CourseList()
         {
