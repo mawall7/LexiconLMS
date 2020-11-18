@@ -29,6 +29,9 @@ namespace LMS.Data.Migrations
                     b.Property<int>("ActivityTypeId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CourseId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -47,6 +50,8 @@ namespace LMS.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ActivityTypeId");
+
+                    b.HasIndex("CourseId");
 
                     b.HasIndex("ModuleId");
 
@@ -180,20 +185,24 @@ namespace LMS.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(250);
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Course");
                 });
 
             modelBuilder.Entity("LMS.Core.Entities.Module", b =>
@@ -367,6 +376,10 @@ namespace LMS.Data.Migrations
                         .HasForeignKey("ActivityTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("LMS.Core.Entities.Course", null)
+                        .WithMany("Activities")
+                        .HasForeignKey("CourseId");
 
                     b.HasOne("LMS.Core.Entities.Module", "Module")
                         .WithMany("Activities")
