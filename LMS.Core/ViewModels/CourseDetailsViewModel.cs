@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LMS.Core.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -26,6 +27,8 @@ namespace LMS.Core.ViewModels
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
+
+        public ICollection<Module> Modules { get; set; }
 
 
     }
