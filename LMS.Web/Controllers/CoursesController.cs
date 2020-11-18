@@ -98,7 +98,7 @@ namespace LMS.Web.Controllers
                 return NotFound();
             }
 
-            return View(courseModel);
+            return View(course);
         }
 
         // GET: Courses/Create
