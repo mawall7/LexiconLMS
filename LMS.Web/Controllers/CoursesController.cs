@@ -1,22 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LMS.Core.Entities;
 using LMS.Data.Data;
+using LMS.Core.ViewModels;
+using AutoMapper;
 
 namespace LMS.Web.Controllers
 {
     public class CoursesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper mapper;
 
-        public CoursesController(ApplicationDbContext context)
+        public CoursesController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            this.mapper = mapper;
         }
 
         // GET: Courses
@@ -24,6 +25,23 @@ namespace LMS.Web.Controllers
         {
             return View(await _context.Course.ToListAsync());
         }
+
+        // GET: CourseList
+        public async Task<IActionResult> CourseList()
+        {
+            var model = await _context.Course
+                .Include(c => c.Modules)
+                .Include(c => c.Activities)
+                .Select(c => new CourseListViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name
+
+                }).ToListAsync();
+
+            return View(model);
+        }
+
 
         // GET: Courses/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -33,14 +51,22 @@ namespace LMS.Web.Controllers
                 return NotFound();
             }
 
-            var course = await _context.Course
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (course == null)
+            var courseModel = await _context.Course
+                .Select(c => new CourseDetailsViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Description = c.Description,
+                    StartDate = c.StartDate,
+                    EndDate = c.EndDate
+                })
+                .FirstOrDefaultAsync(c => c.Id == id);
+            if (courseModel == null)
             {
                 return NotFound();
             }
 
-            return View(course);
+            return View(courseModel);
         }
 
         // GET: Courses/Create
@@ -54,15 +80,17 @@ namespace LMS.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate")] Course course)
+        public async Task<IActionResult> Create(CreateCourseViewModel createCourseViewModel)
         {
+
             if (ModelState.IsValid)
             {
+                var course = mapper.Map<Course>(createCourseViewModel);
                 _context.Add(course);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(course);
+            return View(createCourseViewModel);
         }
 
         // GET: Courses/Edit/5
