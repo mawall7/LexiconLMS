@@ -101,6 +101,8 @@ namespace LMS.Web.Controllers
             /*ViewData["ActivityTypeId"] = new SelectList(_context.Set<ActivityType>(), "Id", "Id");
             ViewData["ModuleId"] = new SelectList(_context.Set<Module>(), "Id", "Id");*/
 
+
+
             return View();
         }
 
