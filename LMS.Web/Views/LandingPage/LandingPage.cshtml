@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - LEXICON LMS</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,900;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body class="bodyColor">
+    <div class="container textCenter">
+        <h1 class="h1Home">Welcome to Garage 3</h1>
+
+        <hr /><br />
+        <img src="~/Images/courses.png" class="iconSize" alt="Courses icon" />
+        <p class="pHome">
+            <a class="btn btn-primary" href="../Views/Courses/CourseList.cshtml">Courses</a>
+        </p>
+
+        <img src="~/Images/register.png" class="iconSize" alt="Register icon" />
+        <p class="pHome">
+            <a class="btn btn-primary" href="../Areas/Identity/Pages/Account/Register.cshtml">Register as a Student</a>
+        </p>
+    </div>
+    <footer class="border-top footer text-muted centerItemVertical footerBg">
+        <div class="container">
+            LEXICON LMS - Grupp 3 || Webmasters Soile, Fatma, Jansan, Ivan, Mattias &#169; 2020
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

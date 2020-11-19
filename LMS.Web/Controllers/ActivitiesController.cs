@@ -23,13 +23,13 @@ namespace LMS.Web.Controllers
         }
 
         // GET: Activities
-        public async Task<IActionResult> Index2()
-        {
+        //public async Task<IActionResult> Index2()
+        //{
 
-            //var applicationDbContext = _context.Activity.Include(a => a.ActivityType).Include(a => a.Module);
-            //applicationDbContext.Select()
-            return View();
-        }
+        //    //var applicationDbContext = _context.Activity.Include(a => a.ActivityType).Include(a => a.Module);
+        //    //applicationDbContext.Select()
+        //    return View();
+        //}
 
         //public async Task<IActionResult> Index(int? Id)//Index(int DropitemModuleId)
         //{
