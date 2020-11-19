@@ -53,6 +53,33 @@ namespace LMS.Data.Data {
 
 
 
+                // ---------------------------------------Users  SeedData----------------------------------------
+               
+
+
+                var users = new List<ApplicationUser>();
+
+                for (int i = 0; i < 3; i++)
+                {
+                    var user = new ApplicationUser
+                    {
+
+                        FirstName = fake.Name.FirstName(),
+                        LastName = fake.Name.LastName(),
+                        Address = fake.Address.FullAddress() ,
+                        Phone = fake.Phone.PhoneNumber(),
+                        CourseId = courses[fake.Random.Int(1, courses.Count) - 1].Id,
+                        
+                    };
+
+                    users.Add(user);
+                }
+
+
+
+                await context.AddRangeAsync(users);
+                await context.SaveChangesAsync();
+
 
                 // ---------------------------------------ActivityType  SeedData----------------------------------------
                 if (context.ActivityTypes.Any())
