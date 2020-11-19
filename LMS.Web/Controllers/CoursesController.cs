@@ -137,13 +137,14 @@ namespace LMS.Web.Controllers
         // GET: CourseList
         public async Task<IActionResult> CourseList()
         {
-            var model = await _context.Course
+            var model = await _context.Courses
                 .Include(c => c.Modules)
                 .Include(c => c.Activities)
                 .Select(c => new CourseListViewModel
                 {
                     Id = c.Id,
                     Name = c.Name
+                    
 
                 }).ToListAsync();
 
@@ -163,9 +164,18 @@ namespace LMS.Web.Controllers
                 return NotFound();
             }
 
-            var course = await _context.Course
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (course == null)
+            var courseModel = await _context.Courses
+                .Select(c => new CourseDetailsViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Description = c.Description,
+                    StartDate = c.StartDate,
+                    EndDate = c.EndDate,
+                    Modules=c.Modules
+                })
+                .FirstOrDefaultAsync(c => c.Id == id);
+            if (courseModel == null)
             {
                 return NotFound();
             }
