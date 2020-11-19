@@ -31,7 +31,7 @@ namespace LMS.Web.Controllers
         public async Task<IActionResult> Index(IndexViewModel viewModel = null)
         {
             //Get user
-            var userId = UserManager.GetUserId(User);
+            var user = UserManager.GetUserId(User);
 
             var courses = _context.Courses
            .Include(m => m.Modules)
@@ -45,6 +45,15 @@ namespace LMS.Web.Controllers
 
             //Get user
             var user = await UserManager.GetUserAsync(User);
+            if (user is null)
+            {
+                //redirect to a "Login or reister"-page if not logged in
+                return RedirectToAction(nameof(Index));
+                //return BadRequest();
+            
+            }
+                
+
             var modules = await _context.Modules
                 .Include(a => a.Activities)
                 .Include(a => a)

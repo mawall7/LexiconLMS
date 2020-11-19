@@ -32,4 +32,8 @@
     <ProjectReference Include="..\LMS.Data\LMS.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\LandingPage\" />
+  </ItemGroup>
+
 </Project>
