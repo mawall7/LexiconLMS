@@ -153,7 +153,7 @@ namespace LMS.Web.Controllers
 
         public async Task<IActionResult> Index2()
         {
-            return View(await _context.Course.ToListAsync());
+            return View(await _context.Courses.ToListAsync());
         }
 
 
@@ -213,7 +213,7 @@ namespace LMS.Web.Controllers
                 return NotFound();
             }
 
-            var course = await _context.Course.FindAsync(id);
+            var course = await _context.Courses.FindAsync(id);
             if (course == null)
             {
                 return NotFound();
