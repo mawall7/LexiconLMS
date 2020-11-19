@@ -35,6 +35,7 @@ namespace LMS.Web.Controllers
                 {
                     Id = c.Id,
                     Name = c.Name
+                    
 
                 }).ToListAsync();
 
@@ -56,7 +57,8 @@ namespace LMS.Web.Controllers
                     Name = c.Name,
                     Description = c.Description,
                     StartDate = c.StartDate,
-                    EndDate = c.EndDate
+                    EndDate = c.EndDate,
+                    Modules=c.Modules
                 })
                 .FirstOrDefaultAsync(c => c.Id == id);
             if (courseModel == null)

@@ -19,6 +19,7 @@
                 <th></th>
             </tr>
         </thead>
+
         <tbody>
             @foreach (var item in Model) {
             <tr>
@@ -37,11 +38,22 @@
                                 <div class="card card-body">
 
                                     @*@foreach (var module in item.Modules)
-                    {
-                    @Html.DisplayFor(m => module.Name)
-                    }*@
+        {
+        @Html.DisplayFor(m => module.Name)
+        }*@
                                     <p class="text-black-50">Modules</p>
+                                    @*@foreach (var modules in item.Modules)
+                                    {
+                                        <dl class="row">
+                                            <dt class="col-sm-3">
 
+                                                @Html.DisplayFor(v => modules.Name)
+
+                                            </dt>
+
+                                        </dl>
+
+                                    }*@
 
                                 </div>
 
