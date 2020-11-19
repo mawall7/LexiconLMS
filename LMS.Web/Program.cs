@@ -32,7 +32,7 @@ namespace LMS.Web
 
                 try
                 { 
-                    SeedData.InitializeAsync(services, teacherPW).Wait();
+                    //SeedData.InitializeAsync(services, teacherPW).Wait();
                 }
                 catch (Exception e)
                 {
