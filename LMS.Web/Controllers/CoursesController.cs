@@ -6,6 +6,7 @@ using LMS.Core.Entities;
 using LMS.Data.Data;
 using LMS.Core.ViewModels;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LMS.Web.Controllers
 {
@@ -68,6 +69,7 @@ namespace LMS.Web.Controllers
         }
 
         // GET: Courses/Create
+        [Authorize(Roles = "Teacher")]
         public IActionResult Create() {
             return View();
         }
@@ -91,6 +93,7 @@ namespace LMS.Web.Controllers
         }
 
         // GET: Courses/Edit/5
+        [Authorize(Roles = "Teacher")]
         public async Task<IActionResult> Edit(int? id) {
             if (id == null)
             {
@@ -110,6 +113,7 @@ namespace LMS.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate")] Course course) {
             if (id != course.Id)
             {
@@ -159,6 +163,7 @@ namespace LMS.Web.Controllers
         // POST: Courses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
         public async Task<IActionResult> DeleteConfirmed(int id) {
             var course = await _context.Courses.FindAsync(id);
             _context.Courses.Remove(course);
