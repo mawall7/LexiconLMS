@@ -72,7 +72,7 @@ namespace LMS.Web.Controllers
             //   .Where(at => at.Id == user.c)
             //   .ToListAsync();
             //Student course Information
-            var model = await _context.CourseForStudent
+            var model = await _context.Courses
                .Include(c => c.Modules)
                .ThenInclude(c => c.Activities)
                .Select(d => new StudentCourseViewModel
@@ -99,7 +99,7 @@ namespace LMS.Web.Controllers
             var userId = UserManager.GetUserId(User);
             var Student = await OnGetAsync(2);
             //Student course Information
-            var model = await _context.CourseForStudent
+            var model = await _context.Courses
                .Include(c => c.Modules)
                .Include(c => c.Activities)
                .Select(c => new StudentCourseViewModel
@@ -121,7 +121,7 @@ namespace LMS.Web.Controllers
                 return NotFound();
             }
 
-             var model = await _context.CourseForStudent
+             var model = await _context.Courses
             .Include(s => s.Modules)
             .ThenInclude(e => e.Activities)
             .AsNoTracking()
