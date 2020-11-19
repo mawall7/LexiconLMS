@@ -180,7 +180,7 @@ namespace LMS.Web.Controllers
                 return NotFound();
             }
 
-            return View(course);
+            return View(courseModel);
         }
 
         // GET: Courses/Create
