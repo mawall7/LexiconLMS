@@ -28,7 +28,7 @@ namespace LMS.Web.Controllers
         // GET: CourseList
         public async Task<IActionResult> CourseList()
         {
-            var model = await _context.Course
+            var model = await _context.Courses
                 .Include(c => c.Modules)
                 .Include(c => c.Activities)
                 .Select(c => new CourseListViewModel
@@ -50,7 +50,7 @@ namespace LMS.Web.Controllers
                 return NotFound();
             }
 
-            var courseModel = await _context.Course
+            var courseModel = await _context.Courses
                 .Select(c => new CourseDetailsViewModel
                 {
                     Id = c.Id,
