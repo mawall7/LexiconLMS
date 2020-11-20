@@ -1,15 +1,15 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
-@model StudentCourseViewModel
+@model TeacherCourseViewModel
 
 @{
-    ViewData["Title"] = "UserCourse";
+    ViewData["Title"] = "TeacherCourse";
 }
 
 
 @if (SignInManager.IsSignedIn(User))
 {
-<h1>Course information for:  @User.Identity.Name!</h1>
+    <h1>Course information for:  @User.Identity.Name!</h1>
 }
 else
 {
@@ -33,17 +33,18 @@ else
     }
 </style>
 <table class="table">
-    <thead>
-        <tr>
+    @*<thead>
+            <tr>
 
-            <th>
-                @Html.DisplayNameFor(model => model.Name) : @Html.DisplayFor(model => model.Name)
-            </th>
-            <th>@Html.DisplayFor(model => model.ApplicationUser.FullName)</th>
-        </tr>
-    </thead>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name) : @Html.DisplayFor(model => model.Name)
+                </th>
+                <th>@Html.DisplayFor(model => model.ApplicationUser.FullName)</th>
+            </tr>
+        </thead>*@
     <tbody>
-        @foreach (var item in Model.Modules)
+
+        @foreach (var item in Model.Courses)
         {
             <tr>
 
@@ -60,16 +61,19 @@ else
 
 
 
-                                @foreach (var moduleName in item.Activities)
+                                @foreach (var moduleName in item.Modules)
                                 {
 
                                     <div class="card card-body">
-                                        <p class="text-black-50">Activity:</p>
+                                        <p class="text-black-50">Module:</p>
                                         @Html.DisplayFor(m => moduleName.Name) ||
 
                                         <br />
-                                        @Html.DisplayFor(m => moduleName.StartTime) - @Html.DisplayFor(m => moduleName.EndTime)
-
+                                        @Html.DisplayFor(m => moduleName.StartDate) - @Html.DisplayFor(m => moduleName.EndDate)
+                                        @*@Html.ActionLink("See Module", "ModuleDetails", new { id = moduleName.Id })*@
+                                        <p>
+                                            <a  asp-area="" asp-controller="Modules" asp-action="Details" asp-route-id="@moduleName.Id">See Module</a>
+                                        </p>
                                     </div>
                                     <br />
 
@@ -83,17 +87,17 @@ else
 
 
 
-                                @foreach (var moduleName in item.Activities)
-                                {
-                                    <div class="card card-body">
-                                        <p class="text-black-50">Description:</p>
-                                        @Html.DisplayFor(m => moduleName.Description)
+                                @*@foreach (var moduleName in item.Activities)
+                                    {
+                                        <div class="card card-body">
+                                            <p class="text-black-50">Description:</p>
+                                            @Html.DisplayFor(m => moduleName.Description)
 
-                                    </div>
+                                        </div>
 
-                                    <br />
+                                        <br />
 
-                                }
+                                    }*@
 
 
 
@@ -110,6 +114,7 @@ else
                         @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                     </td>*@
             </tr>
+
         }
     </tbody>
 </table>

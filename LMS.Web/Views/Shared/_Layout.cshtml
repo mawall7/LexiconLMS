@@ -37,6 +37,9 @@
                             <a class="nav-link text-white" asp-area="" asp-controller="Activities" asp-action="Index">Activity</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Courses" asp-action="TeacherCourse">Teacher</a>
+                        </li>
+                        <li class="nav-item">
                             @if (User.Identity.IsAuthenticated)
                             {
                                 var result = "";
