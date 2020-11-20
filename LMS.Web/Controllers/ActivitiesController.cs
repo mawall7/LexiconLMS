@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using LMS.Core.Entities;
 using LMS.Data.Data;
 using Microsoft.AspNetCore.Identity;
+using LMS.Core.ViewModels;
 
 namespace LMS.Web.Controllers
 {
@@ -34,12 +35,28 @@ namespace LMS.Web.Controllers
         //public async Task<IActionResult> Index(int? Id)//Index(int DropitemModuleId)
         //{
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? Id) // Erase! = 1 when theres a link from CourseListView for a modules 
         {
+            if (Id == null)
+                return NotFound();
 
-            var model = _context.Activities.Include(a => a.Module);
+            var model = await _context.Activities
+                .Where(a => a.ModuleId == Id)
+                .Select(b => new ActivitiesViewModel
+                {
+                    Name = b.Name,
+                    Id = b.Id,
+                    StartTime = b.StartTime,
+                    EndTime = b.EndTime,
+                    Description = b.Description
 
-            return View(await model.ToListAsync());
+                }).ToListAsync();
+            //.FirstOrDefaultAsync(a => a.ModuleId == Id)//.Where(a => a.ModuleId == Id)
+
+            //.FirstOrDefaultAsync();//Include(a => a.Activities.Where(a => a.ModuleId == Id))
+            //.Select(a => new ActivitiesViewModel {Activities = a. })
+
+            return  View(model);
            // return View(await _context.Activities.ToListAsync());
         }
 
