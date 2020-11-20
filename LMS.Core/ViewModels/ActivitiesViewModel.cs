@@ -8,8 +8,16 @@ namespace LMS.Core.ViewModels
 {
     public class ActivitiesViewModel
     {
-        public ICollection<Module> Modules;
-        public ICollection<Activity> Activities;
+        public int Id { get; set; }
+        public String Name { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
+        public String Description { get; set; }
+
+        
+
+        public ICollection<Activity> Activities{ get; set; }
+
 
     }
 }
