@@ -1,5 +1,4 @@
-﻿using LMS.Core.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +6,7 @@ using System.Text;
 
 namespace LMS.Core.ViewModels
 {
-    public class CreateCourseViewModel
+    public class EditCourseViewModel
     {
         public int Id { get; set; }
 
@@ -23,15 +22,12 @@ namespace LMS.Core.ViewModels
         [Required]
         [DisplayName("Start Date")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy:MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
 
         [Required]
         [DataType(DataType.Date)]
         [DisplayName("End Date")]
-        [DisplayFormat(DataFormatString = "{0:yyyy:MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
 
-        public ICollection<Module> Modules { get; set; }
     }
 }
