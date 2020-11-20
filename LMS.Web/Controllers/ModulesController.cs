@@ -17,12 +17,13 @@ namespace LMS.Web.Controllers
     public class ModulesController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<ApplicationUser> userManager;
+        //private readonly UserManager<ApplicationUser> userManager;
+        public UserManager<ApplicationUser> UserManager { get; }
 
         public ModulesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
-            this.userManager = userManager;
+            this.UserManager = userManager;
         }
 
         // GET: Modules
@@ -91,7 +92,7 @@ namespace LMS.Web.Controllers
                 _context.Add(@module);
                 await _context.SaveChangesAsync();
 
-                if(Request.IsAjax())
+                if (Request.IsAjax())
                 {
                     var model = new ModulesViewModel
                     {
@@ -199,5 +200,100 @@ namespace LMS.Web.Controllers
         {
             return _context.Modules.Any(e => e.Id == id);
         }
+
+        public async Task<IActionResult> UserCourse()
+        {
+
+            //Get user
+            var user = await UserManager.GetUserAsync(User);
+            if (user is null)
+            {
+                //redirect to a "Login or reister"-page if not logged in
+                return RedirectToAction(nameof(Index));
+                //return BadRequest();
+
+            }
+
+
+            var modules = await _context.Modules
+                .Include(a => a.Activities)
+                .Include(a => a)
+                //.Where(a => a.CourseId == user.CourseId)
+                .ToListAsync();
+            foreach (var mod in modules)
+            {
+
+            }
+            var activities = await _context.Activities
+               .Include(at => at.ActivityType)
+               .ToListAsync();
+
+            //var activityTypes = await _context.ActivityTypes
+            //    .Include(at => at.Activities)
+            //   .Where(at => at.Id == user.c)
+            //   .ToListAsync();
+            //Student course Information
+            var model = await _context.Courses
+               .Include(c => c.Modules)
+               .ThenInclude(c => c.Activities)
+               .Select(d => new ModulesViewModel
+               {
+                   Id = d.Id,
+                   Name = d.Name,
+                   Modules = modules,
+                   Activities = activities
+
+               })
+               //.OrderBy()
+               .FirstOrDefaultAsync(c => c.Id == user.CourseId);
+
+
+            return View(model);
+
+
+        }
+
+        public async Task<IActionResult> UserCourseX()
+        {
+
+            //Get user
+            var userId = UserManager.GetUserId(User);
+            var Student = await OnGetAsync(2);
+            //Student course Information
+            var model = await _context.Courses
+               .Include(c => c.Modules)
+               .Include(c => c.Activities)
+               .Select(c => new ModulesViewModel
+               {
+                   Id = c.Id,
+                   // Name = c.Name,
+
+
+               }).ToListAsync();
+
+            return View(model);
+
+
+        }
+        public async Task<IActionResult> OnGetAsync(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var model = await _context.Courses
+           .Include(s => s.Modules)
+           .ThenInclude(e => e.Activities)
+           .AsNoTracking()
+           .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+            return View(model);
+        }
+
     }
 }

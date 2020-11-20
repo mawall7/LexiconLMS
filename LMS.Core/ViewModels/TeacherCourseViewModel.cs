@@ -9,7 +9,7 @@ namespace LMS.Core.ViewModels
     public class TeacherCourseViewModel
     {
         public int Id { get; set; }
-        public int? CourseId { get; set; }
+       // public int? CourseId { get; set; }
         public Course Course { get; set; }
 
         [DisplayName("Course Name")]

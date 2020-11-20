@@ -310,20 +310,12 @@ namespace LMS.Web.Controllers
             var courses = await _context.Courses
                 .Include(a => a.Modules)
                 .Include(a => a)
-                //.Where(a => a.CourseId == user.CourseId)
                 .ToListAsync();
             foreach (var cor in courses)
             {
 
             };
-            //var activities = await _context.Activities
-            //   .Include(at => at.ActivityType)
-            //   .ToListAsync();
-
-            //var activityTypes = await _context.ActivityTypes
-            //    .Include(at => at.Activities)
-            //   .Where(at => at.Id == user.c)
-            //   .ToListAsync();
+            
             //Student course Information
             var model = await _context.Courses
                .Include(c => c.Modules)
