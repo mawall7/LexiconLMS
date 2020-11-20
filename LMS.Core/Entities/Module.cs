@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace LMS.Core.Entities
@@ -12,8 +14,15 @@ namespace LMS.Core.Entities
 
         public string Description { get; set; }
 
+        [DisplayName("Start Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
 
+
+        [DisplayName("End Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
 
         //Foreign Key
@@ -22,6 +31,7 @@ namespace LMS.Core.Entities
         public ICollection<Activity> Activities { get; set; }
         public Course Course { get; set; }
 
+        //public ICollection<ApplicationUserModule> AttendedMembers { get; set; }
         //public ICollection<Document> Documents { get; set; }
         public ICollection<ApplicationUserModule> AttendedMembers { get; set; }
     }

@@ -91,7 +91,7 @@ namespace LMS.Data.Data {
 
                 var modules = new List<Module>();
 
-                for (int i = 0; i < 2; i++)
+                for (int i = 0; i < 4; i++)
                 {
                     var module = new Module
                     {
