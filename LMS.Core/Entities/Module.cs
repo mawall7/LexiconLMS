@@ -15,13 +15,13 @@ namespace LMS.Core.Entities
         public DateTime StartDate { get; set; }
 
         public DateTime EndDate { get; set; }
+        public Course Course { get; set; }
 
         //Foreign Key
         public int CourseId { get; set; }
         //Navigation property
         public ICollection<Activity> Activities { get; set; }
-        public Course Course { get; set; }
 
-        //public ICollection<Document> Documents { get; set; }
+        public ICollection<Document> Dokuments { get; set; }
     }
 }

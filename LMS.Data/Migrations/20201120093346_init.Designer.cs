@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201117092923_Init")]
-    partial class Init
+    [Migration("20201120093346_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -174,6 +174,47 @@ namespace LMS.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("LMS.Core.Entities.Document", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("ActivityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ModuleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActivityId");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("ModuleId");
+
+                    b.ToTable("Documents");
                 });
 
             modelBuilder.Entity("LMS.Core.Entities.Module", b =>
@@ -362,9 +403,28 @@ namespace LMS.Data.Migrations
                         .HasForeignKey("CourseId");
                 });
 
+            modelBuilder.Entity("LMS.Core.Entities.Document", b =>
+                {
+                    b.HasOne("LMS.Core.Entities.Activity", "Activity")
+                        .WithMany("Dokuments")
+                        .HasForeignKey("ActivityId");
+
+                    b.HasOne("LMS.Core.Entities.ApplicationUser", "ApplicationUser")
+                        .WithMany("Dokuments")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("LMS.Core.Entities.Course", "Course")
+                        .WithMany("Dokuments")
+                        .HasForeignKey("CourseId");
+
+                    b.HasOne("LMS.Core.Entities.Module", "Module")
+                        .WithMany("Dokuments")
+                        .HasForeignKey("ModuleId");
+                });
+
             modelBuilder.Entity("LMS.Core.Entities.Module", b =>
                 {
-                    b.HasOne("LMS.Core.Entities.Course", null)
+                    b.HasOne("LMS.Core.Entities.Course", "Course")
                         .WithMany("Modules")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)

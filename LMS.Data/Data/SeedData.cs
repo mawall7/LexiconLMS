@@ -23,8 +23,8 @@ namespace LMS.Data.Data {
 
 
                 // ---------------------------------------Courses  SeedData----------------------------------------
-                if (context.Courses.Any())
-                {
+                if (context.Courses.Any()) //return;
+               {
                     context.Courses.RemoveRange(context.Courses);
                     context.SaveChanges();
                 }
@@ -38,7 +38,7 @@ namespace LMS.Data.Data {
                     {
 
                         Name = fake.Music.Genre(),
-                        Description = fake.Hacker.Verb(),
+                        Description = fake.Lorem.Sentence(),
                         StartDate = DateTime.Now.AddDays(fake.Random.Int(-2, 2)),
                         EndDate = DateTime.Now.AddMonths(fake.Random.Int(2, 1))
                     };
@@ -54,14 +54,15 @@ namespace LMS.Data.Data {
 
 
                 // ---------------------------------------Users  SeedData----------------------------------------
-               
+
+              
 
 
-                var users = new List<ApplicationUser>();
+                var AppUsersList = new List<ApplicationUser>();
 
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 1; i++)
                 {
-                    var user = new ApplicationUser
+                    var APPUser = new ApplicationUser
                     {
 
                         FirstName = fake.Name.FirstName(),
@@ -72,12 +73,12 @@ namespace LMS.Data.Data {
                         
                     };
 
-                    users.Add(user);
+                    AppUsersList.Add(APPUser);
                 }
 
 
 
-                await context.AddRangeAsync(users);
+                await context.AddRangeAsync(AppUsersList);
                 await context.SaveChangesAsync();
 
 
@@ -124,7 +125,7 @@ namespace LMS.Data.Data {
                     {
 
                         Name = fake.Music.Genre(),
-                        Description = fake.Hacker.Verb(),
+                        Description = fake.Lorem.Sentence(),
                         StartDate = DateTime.Now.AddDays(fake.Random.Int(-2, 2)),
                         EndDate = DateTime.Now.AddMonths(fake.Random.Int(3, 4)),
                         CourseId = courses[fake.Random.Int(1,courses.Count) - 1].Id
@@ -154,7 +155,7 @@ namespace LMS.Data.Data {
                     {
 
                         Name = fake.Music.Genre(),
-                        Description = fake.Hacker.Verb(),
+                        Description = fake.Lorem.Sentence(),
                         StartTime = DateTime.Now.AddDays(fake.Random.Int(0, 2)),
                         EndTime = DateTime.Now.AddDays(fake.Random.Int(2, 4)),
                         ActivityTypeId = activityTypes[fake.Random.Int(1, activityTypes.Count) - 1].Id,
@@ -171,6 +172,38 @@ namespace LMS.Data.Data {
                 await context.AddRangeAsync(activities);
                 await context.SaveChangesAsync();
 
+                // ---------------------------------------Dokument  SeedData----------------------------------------
+                if (context.Documents.Any())
+                {
+                    context.Documents.RemoveRange(context.Documents);
+                    context.SaveChanges();
+                }
+
+
+                var documents = new List<Document>();
+
+                for (int i = 0; i < 2; i++)
+                {
+                    var document = new Document
+                    {
+
+                        Name = fake.Music.Genre(),
+                        Description = fake.Lorem.Sentence() ,
+                        DateCreated = DateTime.Now.AddDays(fake.Random.Int(-2, 2)),
+                        CourseId = courses[fake.Random.Int(1, courses.Count) - 1].Id,
+                        ApplicationUserId = AppUsersList[fake.Random.Int(1, AppUsersList.Count) - 1].Id,
+                        ActivityId = activities[fake.Random.Int(1, activities.Count) - 1].Id,
+                        ModuleId = modules[fake.Random.Int(1, modules.Count) - 1].Id
+
+                    };
+
+                    documents.Add(document);
+                }
+
+
+
+                await context.AddRangeAsync(documents);
+                await context.SaveChangesAsync();
 
 
 
