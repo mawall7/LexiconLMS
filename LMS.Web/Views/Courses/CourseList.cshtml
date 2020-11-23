@@ -1,6 +1,5 @@
 ﻿@model IEnumerable<CourseListViewModel>
 
-
 @{
     ViewData["Title"] = "Courses";
 
@@ -60,26 +59,23 @@
 
                                 <div class="card card-body">
 
-                                    <p class="text-black-50">Details</p>
-                                    @*<partial name="DetailsPartial"/>*@
+                                    <p class="text-dark">Course Details</p>
+                                    <partial name="DetailsPartial" model="@item.CourseDetails" />
+
+
+
 
                                 </div>
+                            </div>
+                        </div>
 
-                            </div><!-- End collapse -->
-                        </div><!-- End col -->
                     </div>
 
 
 
 
-
-
                 </td>
-                @*<td>
-                        @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                        @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id=item.Id})
-                    </td>*@
+
             </tr>
         }
 

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using LMS.Core.ViewModels;
 using AutoMapper;
+using LMS.Web.Extensions;
 
 namespace LMS.Web.Controllers
 {
@@ -138,6 +139,8 @@ namespace LMS.Web.Controllers
         // GET: CourseList
         public async Task<IActionResult> CourseList()
         {
+            
+
             var model = await _context.Courses
                 .Include(c => c.Modules)
                 .ThenInclude(c => c.Activities)
@@ -146,7 +149,14 @@ namespace LMS.Web.Controllers
                     Id = c.Id,
                     Name = c.Name,
                     Modules = c.Modules,
-                    Activities = c.Activities
+                    Activities = c.Activities,
+                    CourseDetails = new CourseDetailsViewModel
+                    {
+                        Description = c.Description,
+                        StartDate = c.StartDate,
+                        EndDate = c.EndDate
+                    }
+
                     
 
                 }).ToListAsync();

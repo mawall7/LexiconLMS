@@ -27,9 +27,10 @@ namespace LMS.Core.ViewModels
         public DateTime EndDate { get; set; }
 
 
-        //Navigation Property
+ 
 
         public ICollection<Module> Modules { get; set; }
         public ICollection<Activity> Activities { get; set; }
+        public CourseDetailsViewModel CourseDetails { get; set; }
     }
 }
