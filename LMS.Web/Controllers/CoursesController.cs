@@ -145,7 +145,8 @@ namespace LMS.Web.Controllers
                 {
                     Id = c.Id,
                     Name = c.Name,
-                    Modules = c.Modules
+                    Modules = c.Modules,
+                    Activities = c.Activities
                     
 
                 }).ToListAsync();
