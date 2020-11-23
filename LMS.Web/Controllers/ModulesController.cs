@@ -201,7 +201,7 @@ namespace LMS.Web.Controllers
             return _context.Modules.Any(e => e.Id == id);
         }
 
-        public async Task<IActionResult> UserCourse()
+        public async Task<IActionResult> CourseModule()
         {
 
             //Get user
@@ -218,30 +218,24 @@ namespace LMS.Web.Controllers
             var modules = await _context.Modules
                 .Include(a => a.Activities)
                 .Include(a => a)
-                //.Where(a => a.CourseId == user.CourseId)
                 .ToListAsync();
             foreach (var mod in modules)
             {
 
-            }
-            var activities = await _context.Activities
-               .Include(at => at.ActivityType)
-               .ToListAsync();
+            };
 
             //var activityTypes = await _context.ActivityTypes
             //    .Include(at => at.Activities)
             //   .Where(at => at.Id == user.c)
             //   .ToListAsync();
             //Student course Information
-            var model = await _context.Courses
-               .Include(c => c.Modules)
-               .ThenInclude(c => c.Activities)
+            var model = await _context.Modules
+               .Include(c => c.Activities)
                .Select(d => new ModulesViewModel
                {
                    Id = d.Id,
                    Name = d.Name,
-                   Modules = modules,
-                   Activities = activities
+                   Modules = modules
 
                })
                //.OrderBy()
@@ -253,15 +247,14 @@ namespace LMS.Web.Controllers
 
         }
 
-        public async Task<IActionResult> UserCourseX()
+        public async Task<IActionResult> CourseModuleX()
         {
 
             //Get user
             var userId = UserManager.GetUserId(User);
-            var Student = await OnGetAsync(2);
+            var Student = await OnGetAsync(1);
             //Student course Information
-            var model = await _context.Courses
-               .Include(c => c.Modules)
+            var model = await _context.Modules
                .Include(c => c.Activities)
                .Select(c => new ModulesViewModel
                {
@@ -282,9 +275,8 @@ namespace LMS.Web.Controllers
                 return NotFound();
             }
 
-            var model = await _context.Courses
-           .Include(s => s.Modules)
-           .ThenInclude(e => e.Activities)
+            var model = await _context.Modules
+           .Include(s => s.Activities)
            .AsNoTracking()
            .FirstOrDefaultAsync(m => m.Id == id);
 
@@ -294,6 +286,30 @@ namespace LMS.Web.Controllers
             }
             return View(model);
         }
+        public async Task<IActionResult> Details2(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            var courseModel = await _context.Modules
+                .Select(c => new ModuleDetailsViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Description = c.Description,
+                    StartDate = c.StartDate,
+                    EndDate = c.EndDate,
+                    Activities = c.Activities
+                })
+                .FirstOrDefaultAsync(c => c.Id == id);
+            if (courseModel == null)
+            {
+                return NotFound();
+            }
+
+            return View(courseModel);
+        }
     }
 }

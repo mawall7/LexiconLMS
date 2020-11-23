@@ -1,7 +1,7 @@
 ﻿
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
-@model TeacherCourseViewModel
+@model ModuleDetailsViewModel
 @{
     ViewData["Title"] = "Details2";
 }
@@ -27,49 +27,79 @@
     }
 </style>
 <table class="table">
-
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+    </dl>
     <tbody>
-        @foreach (var item in Model.Modules)
+        @foreach (var item in Model.Activities)
         {
             <tr>
 
                 <td>
                     @*<p>
-                        <a class="btn btn-primary" data-toggle="collapse" href="#studentCourse-@item.Id" role="button" aria-expanded="false" aria-controls="collapseExample">
-                            @Html.DisplayFor(modelItem => item.Name) : @Html.DisplayFor(modelItem => item.StartDate) - @Html.DisplayFor(modelItem => item.EndDate)
-                        </a>
+                            <a class="btn btn-primary" data-toggle="collapse" href="#studentCourse-@item.Id" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                @Html.DisplayFor(modelItem => item.Name) : @Html.DisplayFor(modelItem => item.StartDate) - @Html.DisplayFor(modelItem => item.EndDate)
+                            </a>
 
-                    </p>*@
+                        </p>*@
                     <div class="row">
                         <div class="col">
-                            <div class="collapse multi-collapse" id="studentCourse-@item.Id">
+                            @*<div class="collapse multi-collapse" id="studentCourse-@item.Id">*@
+                               
 
 
 
-                                @foreach (var moduleName in item.Activities)
-                                {
 
-                                    <div class="card card-body">
-                                        <p class="text-black-50">Activity:</p>
-                                        @Html.DisplayFor(m => moduleName.Name) ||
+                                @*@foreach (var moduleName in item.Activities)
+                                {*@
 
-                                        <br />
-                                        @Html.DisplayFor(m => moduleName.StartTime) - @Html.DisplayFor(m => moduleName.EndTime)
+                            <div class="card card-body">
+                                <p class="text-black-50">Activity:</p>
+                                @Html.DisplayFor(m => item.Name) ||
 
-                                    </div>
-                                    <br />
+                                <br />
+                                @Html.DisplayFor(m => item.StartTime) - @Html.DisplayFor(m => item.EndTime)
+                                <br />
+                                <p>
+                                    <a asp-area="" asp-controller="Activities" asp-action="Details" asp-route-id="@item.Id">See Activity</a>
+                                </p>
+                            </div>
+                                    
 
-                                }
+                                @*}*@
 
 
-                            </div><!-- End collapse -->
+                            @*</div>*@<!-- End collapse -->
                         </div><!-- End col -->
                         <div class="col">
                             <div class="collapse multi-collapse" id="studentCourse-@item.Id">
 
 
 
-                                @foreach (var moduleName in item.Activities)
+                                @*@foreach (var moduleName in item.Activities)
                                 {
                                     <div class="card card-body">
                                         <p class="text-black-50">Description:</p>
@@ -79,7 +109,7 @@
 
                                     <br />
 
-                                }
+                                }*@
 
 
 
