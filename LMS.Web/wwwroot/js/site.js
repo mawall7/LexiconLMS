@@ -14,3 +14,16 @@ function clearForm() {
 function remoteForm() {
     $('#createForm').remove();
 }
+
+
+$(document).ready(function () {
+    $(".course-section").mouseover(function () {
+        $(".course-btn-ed").show();
+    });
+});
+$(document).ready(function () {
+    $(".course-section").mouseout(function () {
+        $(".course-btn-ed").hide();
+    });
+});
+

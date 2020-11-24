@@ -21,17 +21,34 @@ a {
 .course-btn .btn-primary {
     width: 50% !important;
 }
-
+.course-btn-ed .btn-warning, .course-btn-ed .btn-danger {
+    background-color: lightblue !important;
+    border-color: lightblue !important;
+    color: black !important;
+}
+.course-btn-ed{
+    display: none;
+}
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     color: #fff;
     background-color: #1b6ec2;
     border-color: #1861ac;
 }
-
+.course-section {
+    position: relative;
+       
+}
+.course-btn-ed {
+    position: absolute;
+    top: 0px;
+    right: 320px;
+    
+    
+}
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 @media (min-width: 768px) {
   html {
