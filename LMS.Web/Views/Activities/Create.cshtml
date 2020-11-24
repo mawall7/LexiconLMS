@@ -4,9 +4,9 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Activities</h1>
 
-<h4>Activity</h4>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -40,13 +40,15 @@
                 
             <div>   </div>
          
-            <div class="form-group">
+            <div class="form-group ">
 
                 <label asp-for="ActivityTypeId" class="control-label"></label>
                 <select asp-for="ActivityTypeId" class="form-control" asp-items="ViewBag.ActivityTypeName"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary bg-transparent text-dark" style="border-color:transparent" />
+                <h6 class="d-inline-block">|</h6>
+                <input type="button" value="Cancel" onclick="location.href='@Url.Action("Index", "Activities")'" class="btn btn-primary bg-transparent text-dark" style="border-color:transparent"  />
             </div>
         </form>
     </div>
