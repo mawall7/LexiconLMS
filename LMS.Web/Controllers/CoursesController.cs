@@ -28,8 +28,8 @@ namespace LMS.Web.Controllers
 
         // GET: Courses
         [AllowAnonymous]
-        //public async Task<IActionResult> Index(IndexViewModel viewModel = null)
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> 
+            Index(IndexViewModel viewModel = null)
         {
             //Get user
             var user = UserManager.GetUserId(User);
@@ -38,40 +38,26 @@ namespace LMS.Web.Controllers
            .Include(m => m.Modules)
            .AsNoTracking();
             return View(await courses.ToListAsync());
-           
+
         }
         //Get Student Course, modules and activities
+
+
+
         public async Task<IActionResult> UserCourse()
         {
 
             //Get user
             var user = await UserManager.GetUserAsync(User);
+
             if (user is null)
             {
                 //redirect to a "Login or reister"-page if not logged in
                 return RedirectToAction(nameof(Index));
                 //return BadRequest();
-            
-            }
-                
-
-            var modules = await _context.Modules
-                .Include(a => a.Activities)
-                .Include(a => a)
-                .Where(a => a.CourseId == user.CourseId)
-                .ToListAsync();
-            foreach (var mod in modules)
-            {
 
             }
-            var activities = await _context.Activities
-               .Include(at => at.ActivityType)
-               .ToListAsync();
 
-            //var activityTypes = await _context.ActivityTypes
-            //    .Include(at => at.Activities)
-            //   .Where(at => at.Id == user.c)
-            //   .ToListAsync();
             //Student course Information
             var model = await _context.Courses
                .Include(c => c.Modules)
@@ -80,59 +66,27 @@ namespace LMS.Web.Controllers
                {
                    Id = d.Id,
                    Name = d.Name,
-                   Modules = modules,
-                   Activities = activities
+                   StartDate = d.StartDate,
+                   EndDate = d.EndDate,
+                   Modules = d.Modules,
+                   Activities = d.Activities,
+                   AttendingStudents = d.ApplicationUsers
 
                })
                //.OrderBy()
                .FirstOrDefaultAsync(c => c.Id == user.CourseId);
-               
 
-            return View(model);
-
-    
-        }
-
-        public async Task<IActionResult> UserCourseX()
-        {
-
-            //Get user
-            var userId = UserManager.GetUserId(User);
-            var Student = await OnGetAsync(2);
-            //Student course Information
-            var model = await _context.Courses
-               .Include(c => c.Modules)
-               .Include(c => c.Activities)
-               .Select(c => new StudentCourseViewModel
-               {
-                   Id = c.Id,
-                  // Name = c.Name,
-
-
-               }).ToListAsync();
-
-            return View(model);
-
-
-        }
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-             var model = await _context.Courses
-            .Include(s => s.Modules)
-            .ThenInclude(e => e.Activities)
-            .AsNoTracking()
-            .FirstOrDefaultAsync(m => m.Id == id);
 
             if (model == null)
             {
-                return NotFound();
+                //redirect to a "Welcome Student"-page if not logged in
+                return RedirectToAction(nameof(Index));
+                //return BadRequest();
+
             }
             return View(model);
+
+
         }
 
         // GET: CourseList
@@ -145,7 +99,7 @@ namespace LMS.Web.Controllers
                 {
                     Id = c.Id,
                     Name = c.Name
-                    
+
 
                 }).ToListAsync();
 
@@ -159,7 +113,8 @@ namespace LMS.Web.Controllers
 
 
         // GET: Courses/Details/5
-        public async Task<IActionResult> Details(int? id) {
+        public async Task<IActionResult> Details(int? id)
+        {
             if (id == null)
             {
                 return NotFound();
@@ -173,7 +128,7 @@ namespace LMS.Web.Controllers
                     Description = c.Description,
                     StartDate = c.StartDate,
                     EndDate = c.EndDate,
-                    Modules=c.Modules
+                    Modules = c.Modules
                 })
                 .FirstOrDefaultAsync(c => c.Id == id);
             if (courseModel == null)
@@ -185,7 +140,8 @@ namespace LMS.Web.Controllers
         }
 
         // GET: Courses/Create
-        public IActionResult Create() {
+        public IActionResult Create()
+        {
             return View();
         }
 
@@ -208,7 +164,8 @@ namespace LMS.Web.Controllers
         }
 
         // GET: Courses/Edit/5
-        public async Task<IActionResult> Edit(int? id) {
+        public async Task<IActionResult> Edit(int? id)
+        {
             if (id == null)
             {
                 return NotFound();
@@ -227,7 +184,8 @@ namespace LMS.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate")] Course course) {
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate")] Course course)
+        {
             if (id != course.Id)
             {
                 return NotFound();
@@ -257,7 +215,8 @@ namespace LMS.Web.Controllers
         }
 
         // GET: Courses/Delete/5
-        public async Task<IActionResult> Delete(int? id) {
+        public async Task<IActionResult> Delete(int? id)
+        {
             if (id == null)
             {
                 return NotFound();
@@ -276,17 +235,19 @@ namespace LMS.Web.Controllers
         // POST: Courses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id) {
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
             var course = await _context.Courses.FindAsync(id);
             _context.Courses.Remove(course);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CourseExists(int id) {
+        private bool CourseExists(int id)
+        {
             return _context.Courses.Any(e => e.Id == id);
         }
 
-      
+
     }
 }
