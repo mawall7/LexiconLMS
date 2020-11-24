@@ -6,30 +6,9 @@
     ViewData["Title"] = "UserCourse";
 }
 
-
-@if (SignInManager.IsSignedIn(User))
-{
-<h1>Course information for:  @User.Identity.Name!</h1>
-}
-else
-{
-    <h1>Please login!</h1>
-}
-
-
 <style>
-    .btn-primary {
-        color: #fff;
-        background-color: #1b6ec2;
-        border-color: #1861ac;
-        width: 100%;
-    }
-
-    a.btn.btn-primary {
-        color: #fff;
-        background-color: #1b6ec2;
-        border-color: #1861ac;
-        width: 100%;
+    .h5{
+        font-size:smaller;
     }
 </style>
 <table class="table">
@@ -37,79 +16,69 @@ else
         <tr>
 
             <th>
-                @Html.DisplayNameFor(model => model.Name) : @Html.DisplayFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.Name) : <h4> @Html.DisplayFor(model => model.Name) </h4>
+                <h5>@Html.DisplayFor(model => model.StartDate) - @Html.DisplayFor(model => model.EndDate)</h5>
             </th>
-            <th>@Html.DisplayFor(model => model.ApplicationUser.FullName)</th>
+            <th class="text-dark">@Html.DisplayFor(model => model.ApplicationUser.FullName)   </th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Modules)
-        {
-            <tr>
+        <tr>
+            <td>
+                <div class="row">
+                    <div class="col-sm-10">
+                        @foreach (var item in Model.Modules)
+                        {
 
-                <td>
-                    <p>
-                        <a class="btn btn-primary" data-toggle="collapse" href="#studentCourse-@item.Id" role="button" aria-expanded="false" aria-controls="collapseExample">
-                            @Html.DisplayFor(modelItem => item.Name) : @Html.DisplayFor(modelItem => item.StartDate) - @Html.DisplayFor(modelItem => item.EndDate)
-                        </a>
+                            <p>
+                                <a class="btn btn-primary  w-100 p3" data-toggle="collapse" href="#studentCourse-@item.Id" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    @Html.DisplayFor(modelItem => item.Name) : @Html.DisplayFor(modelItem => item.StartDate) - @Html.DisplayFor(modelItem => item.EndDate)
+                                </a>
 
-                    </p>
-                    <div class="row">
-                        <div class="col">
-                            <div class="collapse multi-collapse" id="studentCourse-@item.Id">
+                            </p>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="collapse multi-collapse" id="studentCourse-@item.Id">
 
+                                        @foreach (var moduleName in item.Activities)
+                                        {
 
+                                            <div class="card card-body">
+                                                <p class="text-black-50">Activity:</p>
+                                                <h4> @Html.DisplayFor(m => moduleName.Name)</h4>
 
-                                @foreach (var moduleName in item.Activities)
-                                {
+                                                @Html.DisplayFor(m => moduleName.StartTime) - @Html.DisplayFor(m => moduleName.EndTime)
 
-                                    <div class="card card-body">
-                                        <p class="text-black-50">Activity:</p>
-                                        @Html.DisplayFor(m => moduleName.Name) ||
+                                                <p class="text-black-50">Description:</p>
+                                                @Html.DisplayFor(m => moduleName.Description)
 
-                                        <br />
-                                        @Html.DisplayFor(m => moduleName.StartTime) - @Html.DisplayFor(m => moduleName.EndTime)
+                                            </div>
 
-                                    </div>
-                                    <br />
+                                            <br />
 
-                                }
-
-
-                            </div><!-- End collapse -->
-                        </div><!-- End col -->
-                        <div class="col">
-                            <div class="collapse multi-collapse" id="studentCourse-@item.Id">
+                                        }
 
 
+                                    </div><!-- End collapse -->
+                                </div><!-- End col -->
 
-                                @foreach (var moduleName in item.Activities)
-                                {
-                                    <div class="card card-body">
-                                        <p class="text-black-50">Description:</p>
-                                        @Html.DisplayFor(m => moduleName.Description)
+                            </div>
 
-                                    </div>
-
-                                    <br />
-
-                                }
-
-
-
-
-                            </div><!-- End collapse -->
-                        </div><!-- End col -->
+                        }
                     </div>
+                    <div class="col.sm-2">
+                        <div class="card card-body w-100 p3">
+                            <p class="text-black-50">CLASSMATES:</p>
+                            @foreach (var student in Model.AttendingStudents)
+                            {
+                                @Html.DisplayFor(s => student.FullName) <br />
+                            }
 
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
 
-                </td>
-                @*<td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                    </td>*@
-            </tr>
-        }
     </tbody>
 </table>
