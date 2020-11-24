@@ -7,7 +7,7 @@ using System.Text;
 
 namespace LMS.Core.ViewModels
 {
-    public class CourseDetailsViewModel
+    public class ModuleDetailsViewModel
     {
         public int Id { get; set; }
 
@@ -28,9 +28,6 @@ namespace LMS.Core.ViewModels
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
 
-        public ICollection<Module> Modules { get; set; }
-
         public ICollection<Activity> Activities { get; set; }
-
     }
 }
