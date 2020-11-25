@@ -1,0 +1,84 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@model StudentCourseViewModel
+
+@{
+    ViewData["Title"] = "UserCourse";
+}
+
+<style>
+    .h5{
+        font-size:smaller;
+    }
+</style>
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Name) : <h4> @Html.DisplayFor(model => model.Name) </h4>
+                <h5>@Html.DisplayFor(model => model.StartDate) - @Html.DisplayFor(model => model.EndDate)</h5>
+            </th>
+            <th class="text-dark">@Html.DisplayFor(model => model.ApplicationUser.FullName)   </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <div class="row">
+                    <div class="col-sm-10">
+                        @foreach (var item in Model.Modules)
+                        {
+
+                            <p>
+                                <a class="btn btn-primary  w-100 p3" data-toggle="collapse" href="#studentCourse-@item.Id" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    @Html.DisplayFor(modelItem => item.Name) : @Html.DisplayFor(modelItem => item.StartDate) - @Html.DisplayFor(modelItem => item.EndDate)
+                                </a>
+
+                            </p>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="collapse multi-collapse" id="studentCourse-@item.Id">
+
+                                        @foreach (var moduleName in item.Activities)
+                                        {
+
+                                            <div class="card card-body">
+                                                <p class="text-black-50">Activity:</p>
+                                                <h4> @Html.DisplayFor(m => moduleName.Name)</h4>
+
+                                                @Html.DisplayFor(m => moduleName.StartTime) - @Html.DisplayFor(m => moduleName.EndTime)
+
+                                                <p class="text-black-50">Description:</p>
+                                                @Html.DisplayFor(m => moduleName.Description)
+
+                                            </div>
+
+                                            <br />
+
+                                        }
+
+
+                                    </div><!-- End collapse -->
+                                </div><!-- End col -->
+
+                            </div>
+
+                        }
+                    </div>
+                    <div class="col.sm-2">
+                        <div class="card card-body w-100 p3">
+                            <p class="text-black-50">CLASSMATES:</p>
+                            @foreach (var student in Model.AttendingStudents)
+                            {
+                                @Html.DisplayFor(s => student.FullName) <br />
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+    </tbody>
+</table>

@@ -29,6 +29,9 @@ namespace LMS.Data.Migrations
                     b.Property<int>("ActivityTypeId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CourseId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -47,6 +50,8 @@ namespace LMS.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ActivityTypeId");
+
+                    b.HasIndex("CourseId");
 
                     b.HasIndex("ModuleId");
 
@@ -105,6 +110,9 @@ namespace LMS.Data.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<int?>("ModuleId")
+                        .HasColumnType("int");
+
                     b.Property<string>("NormalizedEmail")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
@@ -139,6 +147,8 @@ namespace LMS.Data.Migrations
 
                     b.HasIndex("CourseId");
 
+                    b.HasIndex("ModuleId");
+
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
 
@@ -150,6 +160,28 @@ namespace LMS.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("LMS.Core.Entities.ApplicationUserModule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ModuleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("ModuleId");
+
+                    b.ToTable("ApplicationUserModule");
+                });
+
             modelBuilder.Entity("LMS.Core.Entities.Course", b =>
                 {
                     b.Property<int>("Id")
@@ -158,13 +190,17 @@ namespace LMS.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(250);
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
@@ -390,6 +426,10 @@ namespace LMS.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("LMS.Core.Entities.Course", null)
+                        .WithMany("Activities")
+                        .HasForeignKey("CourseId");
+
                     b.HasOne("LMS.Core.Entities.Module", "Module")
                         .WithMany("Activities")
                         .HasForeignKey("ModuleId")
@@ -402,6 +442,23 @@ namespace LMS.Data.Migrations
                     b.HasOne("LMS.Core.Entities.Course", "Course")
                         .WithMany("ApplicationUsers")
                         .HasForeignKey("CourseId");
+
+                    b.HasOne("LMS.Core.Entities.Module", null)
+                        .WithMany("ApplicationUsers")
+                        .HasForeignKey("ModuleId");
+                });
+
+            modelBuilder.Entity("LMS.Core.Entities.ApplicationUserModule", b =>
+                {
+                    b.HasOne("LMS.Core.Entities.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("LMS.Core.Entities.Module", "Module")
+                        .WithMany("AttendedMembers")
+                        .HasForeignKey("ModuleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LMS.Core.Entities.Document", b =>

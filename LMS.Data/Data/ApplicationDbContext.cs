@@ -3,6 +3,7 @@ using LMS.Core.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using LMS.Core.ViewModels;
 
 namespace LMS.Data.Data
 {
@@ -21,11 +22,12 @@ namespace LMS.Data.Data
 
         protected override void OnModelCreating(ModelBuilder builder) {
             base.OnModelCreating(builder);
-           
 
         }
        
 
 
+       
+      
     }
 }

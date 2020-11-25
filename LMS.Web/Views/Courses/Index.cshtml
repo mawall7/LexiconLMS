@@ -1,4 +1,6 @@
-﻿@model IEnumerable<LMS.Core.Entities.Course>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@model IEnumerable<LMS.Core.Entities.Course>
 
 @{
     ViewData["Title"] = "Index";
@@ -7,6 +9,7 @@
 <h1>Index</h1>
 
 <p>
+    
     <a asp-action="Create">Create New</a>
 </p>
 @*<a id="CourseDocumentButton" class="btn btn-primary text-light border border-dark float-right" asp-action="CourseMainPageDocument" asp-controller="Documents" asp-route-id="@item.Id">Documents</a>*@
@@ -58,3 +61,4 @@
         }
     </tbody>
 </table>
+

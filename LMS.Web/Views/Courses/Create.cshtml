@@ -1,47 +1,51 @@
-﻿@model LMS.Core.Entities.Course
+﻿@model LMS.Core.ViewModels.CreateCourseViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Course";
 }
 
-<h1>Create</h1>
 
 <h4>Course</h4>
-<hr />
+
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <form asp-action="Create">
                     
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+            <div class="form-group row">
+                <label asp-for="Name" class="control-label col-md-3"></label>
+                <input asp-for="Name" class="form-control col-md-9" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="StartDate" class="control-label"></label>
-                <input asp-for="StartDate" class="form-control" />
+            <div class="form-group row">
+                <label asp-for="StartDate" class="control-label col-md-3"></label>
+                <input asp-for="StartDate" class="form-control col-md-9" />
                 <span asp-validation-for="StartDate" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="EndDate" class="control-label"></label>
-                <input asp-for="EndDate" class="form-control" />
+            <div class="form-group row">
+                <label asp-for="EndDate" class="control-label col-md-3"></label>
+                <input asp-for="EndDate" class="form-control col-md-9" />
                 <span asp-validation-for="EndDate" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="form-group row">
+                <label asp-for="Description" class="control-label col-md-3"></label>
+                <textarea asp-for="Description" class="form-control col-md-9" rows="5"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
             </div>
+            <div class="form-group row">
+                <input type="submit" value="Save" class="btn btn-success offset-6" />
+            </div>
+            <div class="form-group row">
+                <input type="button" value="+ Add modules" class="text-black-50 offset-5" />
+            </div>
+
         </form>
     </div>
+            
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="CourseList" class="offset-11">Cancel</a>
 </div>
 
 @section Scripts {

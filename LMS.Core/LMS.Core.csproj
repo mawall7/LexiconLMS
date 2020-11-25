@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Entities\Document.cs" />
+    <Compile Remove="Entities\UserCourse.cs" />
+    <Compile Remove="ViewModels\ApplicationUserCourseViewModel.cs" />
+    <Compile Remove="ViewModels\AttendingStudentsViewModel.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="5.0.0" />
   </ItemGroup>
 

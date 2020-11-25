@@ -6,37 +6,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\Document Material\ArtMusic - Copy (10).txt" />
-    <Content Remove="wwwroot\Document Material\ArtMusic - Copy (11).txt" />
-    <Content Remove="wwwroot\Document Material\ArtMusic - Copy (2).txt" />
-    <Content Remove="wwwroot\Document Material\ArtMusic - Copy (3).txt" />
-    <Content Remove="wwwroot\Document Material\ArtMusic - Copy (4).txt" />
-    <Content Remove="wwwroot\Document Material\Folk.txt" />
-    <Content Remove="wwwroot\Document Material\Jazz.txt" />
-    <Content Remove="wwwroot\Document Material\Latin.txt" />
-    <Content Remove="wwwroot\Document Material\Latin2.txt" />
-    <Content Remove="wwwroot\Document Material\Non Music.txt" />
-    <Content Remove="wwwroot\Document Material\Poems.txt" />
+    <Compile Remove="Views\Student\**" />
+    <Content Remove="Views\Student\**" />
+    <EmbeddedResource Remove="Views\Student\**" />
+    <None Remove="Views\Student\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\Document Material\ArtMusic - Copy (10).txt" />
-    <None Include="wwwroot\Document Material\ArtMusic - Copy (11).txt" />
-    <None Include="wwwroot\Document Material\ArtMusic - Copy (2).txt" />
-    <None Include="wwwroot\Document Material\ArtMusic - Copy (3).txt" />
-    <None Include="wwwroot\Document Material\ArtMusic - Copy (4).txt" />
-    <None Include="wwwroot\Document Material\Folk.txt" />
-    <None Include="wwwroot\Document Material\Latin2.txt" />
-    <None Include="wwwroot\Document Material\Latin.txt" />
-    <None Include="wwwroot\Document Material\Jazz.txt" />
-    <None Include="wwwroot\Document Material\Poems.txt" />
-    <None Include="wwwroot\Document Material\Non Music.txt" />
-    <None Include="wwwroot\Document Material\ArtMusic.txt" />
-    <None Include="wwwroot\Document Material\PopularMusic.txt" />
+    <Content Remove="Views\Courses\AttendingStudentsPartialView.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Grpc.Core" Version="2.33.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.9" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.9" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.9" />

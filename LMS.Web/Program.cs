@@ -26,13 +26,12 @@ namespace LMS.Web
 
                 var config = services.GetRequiredService<IConfiguration>();
 
-                //dotnet user-secrets set "AdminPW" "LexiconNET20!"
-                var teacherPW = config["teacherPW"];
+               // var teacherPW = "LmsLexicon20?";//config["teacherPW"];
                 //teacherPW saved in user-secret teacherPW = LmsLexicon20?
 
                 try
                 { 
-                    SeedData.InitializeAsync(services, teacherPW).Wait();
+                  // SeedData.InitializeAsync(services, "teacherPW").Wait();
                 }
                 catch (Exception e)
                 {

@@ -1,13 +1,13 @@
-﻿@model LMS.Core.Entities.Course
+﻿@model LMS.Core.ViewModels.CourseDetailsViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Course Details";
 }
 
-<h1>Details</h1>
+
 
 <div>
-    <h4>Course</h4>
+    <h4>Course Details</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -36,7 +36,29 @@
         </dd>
     </dl>
 </div>
+<head>
+    Modules in this course
+</head>
+<div>
+    @foreach (var modules in Model.Modules)
+    {
+        <dl class="row">
+            <dt class="col-sm-3">
+
+                @Html.DisplayFor(v => modules.Name)
+
+            </dt>
+            
+        </dl>
+
+    }
+
+
+
+</div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="CourseList">Back to List</a>|
+
+    <a asp-controller="Modules" asp-action="Create">Add new module</a>
 </div>

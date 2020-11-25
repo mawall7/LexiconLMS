@@ -1,0 +1,90 @@
+﻿@model IEnumerable<CourseListViewModel>
+
+@{
+    ViewData["Title"] = "Courses";
+
+}
+
+<h1>Courses</h1>
+
+<p class="offset-10">
+    <a asp-action="Create" class="btn btn-success">Add Course</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+
+            <td>
+                <div class="course-section">
+                    <p class="course-btn">
+
+                        <a class="btn btn-primary courseBtn" data-toggle="collapse" href="#courseList-@item.Id" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </a>
+
+                    <div class="course-btn-ed">
+                        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </div>
+                    </p>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="collapse multi-collapse" id="courseList-@item.Id">
+
+                            <div class="card card-body">
+                                @foreach (var modules in item.Modules)
+                                {
+                                    <dl class="row">
+                                        <dt class="col-sm-12 btn btn-secondary">
+
+                                            @Html.DisplayFor(v => modules.Name)
+                                            @Html.DisplayFor(m => modules.StartDate) - @Html.DisplayFor(m => modules.EndDate)
+                                            <p>
+                                                <a asp-area="" asp-controller="Modules" asp-action="Details2" asp-route-id="@modules.Id">See Module</a>
+                                            </p>
+                                        </dt>
+
+                                    </dl>
+
+                                }
+
+                            </div>
+
+                        </div><!-- End collapse -->
+                    </div><!-- End col -->
+                    <div class="col">
+                        <div class="collapse multi-collapse" id="courseList-@item.Id">
+
+                            <div class="card card-body">
+
+                                <p class="text-dark">Course Details</p>
+                                <partial name="DetailsPartial" model="@item.CourseDetails" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </td>
+            
+               
+            
+
+        </tr>
+        }
+
+    </tbody>
+</table>

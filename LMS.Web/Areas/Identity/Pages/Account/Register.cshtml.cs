@@ -46,6 +46,12 @@ namespace LMS.Web.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            //Soile
+            //Add Firstname and lastname to the Register page
+            [Required]
+            public string FirstName { get; set; }
+            [Required]
+            public string LastName { get; set; }
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
