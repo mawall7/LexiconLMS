@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 namespace LMS.Web.Controllers {
     public class CoursesController : Controller {
         private readonly ApplicationDbContext db;
+
         private readonly UserManager<ApplicationUser> userManager;
 
         public CoursesController(ApplicationDbContext context) {
@@ -140,6 +141,8 @@ namespace LMS.Web.Controllers {
             return db.Courses.Any(e => e.Id == id);
         }
 
-      
+
+
+
     }
 }

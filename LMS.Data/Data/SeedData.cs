@@ -23,7 +23,8 @@ namespace LMS.Data.Data {
 
 
                 // ---------------------------------------Courses  SeedData----------------------------------------
-                if (context.Courses.Any()) //return;
+                if (context.Courses.Any()) return;
+                else
                {
                     context.Courses.RemoveRange(context.Courses);
                     context.SaveChanges();
@@ -32,7 +33,7 @@ namespace LMS.Data.Data {
 
                 var courses = new List<Course>();
 
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 5; i++)
                 {
                     var course = new Course
                     {
@@ -58,9 +59,9 @@ namespace LMS.Data.Data {
               
 
 
-                var AppUsersList = new List<ApplicationUser>();
+                var aspNetUsers = new List<ApplicationUser>();
 
-                for (int i = 0; i < 1; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     var APPUser = new ApplicationUser
                     {
@@ -68,17 +69,18 @@ namespace LMS.Data.Data {
                         FirstName = fake.Name.FirstName(),
                         LastName = fake.Name.LastName(),
                         Address = fake.Address.FullAddress() ,
+                      
                         Phone = fake.Phone.PhoneNumber(),
                         CourseId = courses[fake.Random.Int(1, courses.Count) - 1].Id,
                         
                     };
 
-                    AppUsersList.Add(APPUser);
+                    aspNetUsers.Add(APPUser);
                 }
 
 
 
-                await context.AddRangeAsync(AppUsersList);
+                await context.AddRangeAsync(aspNetUsers);
                 await context.SaveChangesAsync();
 
 
@@ -182,7 +184,7 @@ namespace LMS.Data.Data {
 
                 var documents = new List<Document>();
 
-                for (int i = 0; i < 2; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     var document = new Document
                     {
@@ -191,7 +193,7 @@ namespace LMS.Data.Data {
                         Description = fake.Lorem.Sentence() ,
                         DateCreated = DateTime.Now.AddDays(fake.Random.Int(-2, 2)),
                         CourseId = courses[fake.Random.Int(1, courses.Count) - 1].Id,
-                        ApplicationUserId = AppUsersList[fake.Random.Int(1, AppUsersList.Count) - 1].Id,
+                        ApplicationUserId = aspNetUsers[fake.Random.Int(1, aspNetUsers.Count) - 1].Id,
                         ActivityId = activities[fake.Random.Int(1, activities.Count) - 1].Id,
                         ModuleId = modules[fake.Random.Int(1, modules.Count) - 1].Id
 
