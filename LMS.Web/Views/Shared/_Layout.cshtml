@@ -23,22 +23,31 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
+                        @if (User.IsInRole("Teacher"))
+                        {
 
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Courses" asp-action="CourseList">Course</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Modules" asp-action="Index">Module</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Courses" asp-action="UserCourse">Student</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Activities" asp-action="Index">Activity</a>
-                        </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Courses" asp-action="CourseList">Course</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Modules" asp-action="Index">Module</a>
+                            </li>
+
+
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Activities" asp-action="Index">Activity</a>
+                            </li>
+                        }
+
+                       
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Courses" asp-action="UserCourse">Student</a>
+                            </li>
+                        
                         @*<li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Courses" asp-action="TeacherCourse">Teacher</a>
-                        </li>*@
+                                <a class="nav-link text-white" asp-area="" asp-controller="Courses" asp-action="TeacherCourse">Teacher</a>
+                            </li>*@
                         <li class="nav-item">
                             @if (User.Identity.IsAuthenticated)
                             {
