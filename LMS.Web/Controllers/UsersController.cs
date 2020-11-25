@@ -57,8 +57,10 @@ namespace LMS.Web.Controllers
                 // ApplicationDbContext context = new ApplicationDbContext();
                 //UserManager<ApplicationUser> UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
                 //var s = UserManager.OnGetAsync(userId);
-                var s = UserManager.OnGetAsync(1);
-                if (s[0]== "Teacher")
+                //var s = UserManager.OnGetAsync(1);
+                //var s = UserManager.GetUsersInRoleAsync("Teacher");
+                var s = UserManager.GetUsersInRoleAsync("Teacher");
+                if (s.ToString()== "Teacher")
                 {
                     return true;
                 }
@@ -69,20 +71,20 @@ namespace LMS.Web.Controllers
             }
             return false;
         }
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> OnGetAsync(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var model = await _context.UserRoles;
+        //    var model = await _context.UserRoles;
 
-            if (model == null)
-            {
-                return NotFound();
-            }
-            return View(model);
-        }
+        //    if (model == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(model);
+        //}
     }
 }
