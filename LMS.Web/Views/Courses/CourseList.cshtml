@@ -54,7 +54,10 @@
                                             @Html.DisplayFor(m => modules.StartDate) - @Html.DisplayFor(m => modules.EndDate)
                                             <p>
                                                 <a asp-area="" asp-controller="Modules" asp-action="Details2" asp-route-id="@modules.Id">See Module</a>
+                                                <a asp-area="" asp-controller="Modules" asp-action="Edit" asp-route-id="@modules.Id">Edit</a>
+                                                <a asp-area="" asp-controller="Modules" asp-action="Delete" asp-route-id="@modules.Id">Delete</a>
                                             </p>
+
                                         </dt>
 
                                     </dl>
