@@ -171,14 +171,16 @@ namespace LMS.Web.Controllers
                     return RedirectToAction("Index", new {id=activity.ModuleId }); //returns to Index with moduleid to show activities in the module
                 }
             }
-            ViewData["ActivityTypeId"] = new SelectList(_context.Set<ActivityType>(), "Id", "Id", activity.ActivityTypeId);
+            //if an activity allready exist
+            // ViewData["ActivityTypeId"] = new SelectList(_context.Set<ActivityType>(), "Id", "Id", activity.ActivityTypeId);
+            ViewData["ActivityTypeName"] = new SelectList(_context.Set<ActivityType>(), "Id", "Name"); //don't remove            
             ViewData["ModuleId"] = new SelectList(_context.Set<Module>(), "Id", "Id", activity.ModuleId);
-            ViewData["Exists"] = "This Activity allready exists!";
-            return RedirectToAction(nameof(Create));//return View(activity);
+            ViewData["Exists"] = "This Activity allready exists!"; //Use Remote istället? 
+             return View(activity);//return RedirectToAction(nameof(Create));<p>@Html.Raw(ViewData["Exists"])</p>
         }
 
         // GET: Activities/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)  //activity id
         {
             if (id == null)
             {
@@ -186,19 +188,15 @@ namespace LMS.Web.Controllers
             }
 
             var activity = await _context.Activities.FindAsync(id);
-            var ActivityTypes = _context.ActivityTypes.ToList();
+            
             if (activity == null)
             {
                 return NotFound();
             }
 
-            var ViewModel = new ActivityAndTypesViewModel
-                          {
-                              Activity = activity,
-                              ActivityTypes = ActivityTypes
-                          };
-                
-              return View(ViewModel);
+            ViewData["ActivityTypeName"] = new SelectList(_context.Set<ActivityType>(), "Id", "Name"); //don't remove
+            
+            return View(activity);
         }
 
         // POST: Activities/Edit/5
@@ -206,43 +204,25 @@ namespace LMS.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(/*[Bind("Activity.Id,Activity.ActivityTypeId, Activity.ModuleId, Activity.Name,Activity.Description,Activity.StartTime,Ativity.EndTime")] */ActivityAndTypesViewModel currentActivity)
+        public async Task<IActionResult> Edit(int id,[Bind("Id, Name,Description,StartTime,EndTime,ModuleId,ActivityTypeId")] Activity activity)
         {
-
-            //var currentActivity = await _context.Activities
-            // .FirstOrDefaultAsync(a => a.Id == id);
-            var hit = _context.Activities.FirstOrDefaultAsync(a => a.Id == currentActivity.Activity.Id);
-
-            var x = currentActivity.Activity;
-            //    var activity = new Activity
-            //{
+           
+            bool hit = _context.Activities.Any(a => a.Id == id);
                 
-            //    Name = currentActivity.Activity.Name,
-            //    StartTime = currentActivity.Activity.StartTime,
-            //    EndTime = currentActivity.Activity.EndTime,
-            //    ModuleId = currentActivity.Activity.ModuleId,
-            //    ActivityTypeId = currentActivity.Activity.ActivityTypeId,
-            //    Description = currentActivity.Activity.Description
-                
-            //};
-            //currentActivity.Activity.Name,
-            //currentActivity.Activity.Name,
-            //int? id = currentActivity.Activity.Id;
-                
-            if (currentActivity.Activity.Id == null)
+            if (id == null)
             {
                 return NotFound();
             }
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && hit == true)
             {
                 try
                 {
-                    _context.Update(x);
+                    _context.Activities.Update(activity);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ActivityExists(currentActivity.Activity.Id))
+                    if (!ActivityExists(activity.Id))
                     {
                         return NotFound();
                     }
@@ -251,14 +231,13 @@ namespace LMS.Web.Controllers
                         throw;
                     }
                 }
-                //var a = _context.Activities
-                  //  .FirstOrDefault(a => a.Id == id).ModuleId;
+                
                     
                 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", new { id = activity.ModuleId });
             }
-            
-            return View(currentActivity);
+            ViewData["ActivityTypeName"] = new SelectList(_context.Set<ActivityType>(), "Id", "Name");
+            return RedirectToAction("Edit", new { id = activity.Id });//return View(activity);
             //return View();// View(currentActivity);
         }
 

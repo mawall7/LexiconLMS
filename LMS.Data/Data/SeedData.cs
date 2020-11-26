@@ -21,7 +21,7 @@ namespace LMS.Data.Data {
                 var fake = new Faker("sv");
 
 
-
+                 
                 // ---------------------------------------Courses  SeedData----------------------------------------
                 if (context.Courses.Any())
                 {

@@ -14,10 +14,13 @@ namespace LMS.Core.ViewModels
         public DateTime EndTime { get; set; }
         public String Description { get; set; }
 
+        public int ModuleId { get; set; }
         
+        public string ActivityTypeName { get; set; }
+        //public int ActivityTypeId { get; set; }
 
         public ICollection<Activity> Activities{ get; set; }
 
-
+        //public ICollection <ActivityType> ActivityTypesList{ get; set; }
     }
 }
