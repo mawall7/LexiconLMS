@@ -61,9 +61,19 @@
                                         </dt>
 
                                     </dl>
+                                  
+
 
                                 }
+                                <p id="createajax"></p>
 
+                                <p >
+                                    <a   asp-controller="Modules" asp-action="Create" class="btn btn-info"
+                                       data-ajax="true"
+                                       data-ajax-method="GET"
+                                       data-ajax-update="#createajax"
+                                       data-ajax-mode="replace"> Add new module</a>
+                                </p>
                             </div>
 
                         </div><!-- End collapse -->
