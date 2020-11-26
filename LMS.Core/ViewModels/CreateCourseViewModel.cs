@@ -29,6 +29,7 @@ namespace LMS.Core.ViewModels
         [Required]
         [DataType(DataType.Date)]
         [DisplayName("End Date")]
+        [DisplayFormat(DataFormatString = "{0:yyyy:MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
 
         public ICollection<Module> Modules { get; set; }

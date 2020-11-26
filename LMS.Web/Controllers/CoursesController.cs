@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using LMS.Core.ViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using LMS.Web.Extensions;
 
 namespace LMS.Web.Controllers
 {
@@ -91,16 +92,28 @@ namespace LMS.Web.Controllers
         }
 
         // GET: CourseList
+        //[Authorize(Roles = "Teacher")]
         public async Task<IActionResult> CourseList()
         {
+            
+
             var model = await _context.Courses
                 .Include(c => c.Modules)
                 .ThenInclude(c => c.Activities)
                 .Select(c => new CourseListViewModel
                 {
                     Id = c.Id,
-                    Name = c.Name
+                    Name = c.Name,
+                    Modules = c.Modules,
+                    Activities = c.Activities,
+                    CourseDetails = new CourseDetailsViewModel
+                    {
+                        Description = c.Description,
+                        StartDate = c.StartDate,
+                        EndDate = c.EndDate
+                    }
 
+                    
 
                 }).ToListAsync();
 
@@ -114,24 +127,15 @@ namespace LMS.Web.Controllers
 
 
         // GET: Courses/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
+      //  [Authorize(Roles = "Teacher")]
+        public async Task<IActionResult> Details(int? id) {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var courseModel = await _context.Courses
-                .Select(c => new CourseDetailsViewModel
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    Description = c.Description,
-                    StartDate = c.StartDate,
-                    EndDate = c.EndDate,
-                    Modules = c.Modules
-                })
-                .FirstOrDefaultAsync(c => c.Id == id);
+            var courseModel = await mapper.ProjectTo<CourseDetailsViewModel>(_context.Courses).FirstOrDefaultAsync(c => c.Id == id);
+            
             if (courseModel == null)
             {
                 return NotFound();
@@ -141,7 +145,7 @@ namespace LMS.Web.Controllers
         }
 
         // GET: Courses/Create
-        [Authorize(Roles = "Teacher")]
+       // [Authorize(Roles ="Teacher")]
         public IActionResult Create() {
             return View();
         }
@@ -151,6 +155,7 @@ namespace LMS.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+       // [Authorize(Roles ="Teacher")]
         public async Task<IActionResult> Create(CreateCourseViewModel createCourseViewModel)
         {
 
@@ -165,19 +170,19 @@ namespace LMS.Web.Controllers
         }
 
         // GET: Courses/Edit/5
-        [Authorize(Roles = "Teacher")]
+      // [Authorize(Roles ="Teacher")]
         public async Task<IActionResult> Edit(int? id) {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var course = await _context.Courses.FindAsync(id);
-            if (course == null)
+            var model = mapper.Map<EditCourseViewModel>(await _context.Courses.FindAsync(id));
+            if (model == null)
             {
                 return NotFound();
             }
-            return View(course);
+            return View(model);
         }
 
         // POST: Courses/Edit/5
@@ -185,15 +190,16 @@ namespace LMS.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Teacher")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate")] Course course) {
-            if (id != course.Id)
+      //  [Authorize(Roles ="Teacher")]
+        public async Task<IActionResult> Edit(int id, EditCourseViewModel viewModel) {
+            if (id != viewModel.Id)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
+                var course = mapper.Map<Course>(viewModel);
                 try
                 {
                     _context.Update(course);
@@ -201,7 +207,7 @@ namespace LMS.Web.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CourseExists(course.Id))
+                    if (!CourseExists(viewModel.Id))
                     {
                         return NotFound();
                     }
@@ -212,12 +218,12 @@ namespace LMS.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(course);
+            return View(viewModel);
         }
 
         // GET: Courses/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
+      //  [Authorize(Roles ="Teacher")]
+        public async Task<IActionResult> Delete(int? id) {
             if (id == null)
             {
                 return NotFound();
@@ -236,7 +242,7 @@ namespace LMS.Web.Controllers
         // POST: Courses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Teacher")]
+       // [Authorize(Roles ="Teacher")]
         public async Task<IActionResult> DeleteConfirmed(int id) {
             var course = await _context.Courses.FindAsync(id);
             _context.Courses.Remove(course);
