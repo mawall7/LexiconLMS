@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
-
+using System.ComponentModel.DataAnnotations;
 
 namespace LMS.Core.Entities {
     public class ApplicationUser : IdentityUser
     {
-       
+        [Display(Name = "Created by")]
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string FullName => $"{FirstName} {LastName}";

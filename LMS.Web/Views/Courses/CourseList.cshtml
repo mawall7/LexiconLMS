@@ -71,9 +71,11 @@
                             <div class="card card-body">
 
                                 <p class="text-dark">Course Details</p>
-                                <partial name="DetailsPartial" model="@item.CourseDetails" />
+                                <div class="partialViewWrapper">
+                                    <partial name="DetailsPartial" model="@item.CourseDetails" />
+                                    
+                                </div>
                             </div>
-                        </div>
                     </div>
 
                 </div>

@@ -23,8 +23,8 @@ namespace LMS.Data.Data {
 
 
                 // ---------------------------------------Courses  SeedData----------------------------------------
-                if (context.Courses.Any()) return;
-                else
+                if (context.Courses.Any()) 
+              
                {
                     context.Courses.RemoveRange(context.Courses);
                     context.SaveChanges();
@@ -195,6 +195,7 @@ namespace LMS.Data.Data {
                         CourseId = courses[fake.Random.Int(1, courses.Count) - 1].Id,
                         ApplicationUserId = aspNetUsers[fake.Random.Int(1, aspNetUsers.Count) - 1].Id,
                         ActivityId = activities[fake.Random.Int(1, activities.Count) - 1].Id,
+                        Path = fake.Image.PicsumUrl(),
                         ModuleId = modules[fake.Random.Int(1, modules.Count) - 1].Id
 
                     };

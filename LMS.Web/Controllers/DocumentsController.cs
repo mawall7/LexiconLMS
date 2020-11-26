@@ -13,6 +13,8 @@ using System.IO;
 using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LMS.Web.Controllers {
     public class DocumentsController : Controller {
@@ -101,22 +103,25 @@ namespace LMS.Web.Controllers {
         }
 
         // GET: Documents/Create
-        public IActionResult Create(int id ) {
+        //[Authorize(Roles = "Teacher")]
+        public IActionResult Create(int? param ) {
             ViewData["ActivityId"] = new SelectList(db.Activities, "Id", "Id");
             ViewData["ApplicationUserId"] = new SelectList(db.Users, "Id", "Id");
+            ViewData["ApplicationUserFirstName"] = new SelectList(db.Users, "FirstName", "FirstName");
             ViewData["CourseId"] = new SelectList(db.Courses, "Id", "Id");
             ViewData["ModuleId"] = new SelectList(db.Modules, "Id", "Id");
-            var model = new Document { CourseId = id };
+            
+            var model = new Document { CourseId = param };
             return View(model);
         }
 
         // POST: Documents/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,DateCreated,ApplicationUserId,CourseId,ActivityId,ModuleId,Path,Files")] Document document, List<IFormFile> files) {
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,DateCreated,ApplicationUserId,CourseId,ActivityId,ModuleId,Path,Files")] Document document,  List<IFormFile> files) {
             document.DateCreated = DateTime.Now;
 
            
@@ -132,7 +137,7 @@ namespace LMS.Web.Controllers {
 
 
             long size = files.Sum(f => f.Length);
-
+            var stringPath = "";
             var filePaths = new List<string>();
                     var fileName = document.Name;
             foreach (var formFile in files)
@@ -141,6 +146,7 @@ namespace LMS.Web.Controllers {
                 {
                     // full path to file in temp location
                   var FullFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Document Material/" + fileName);
+                    stringPath = FullFilePath;
                     var filePath = Path.GetTempFileName(); //we are using Temp file name just for the example. Add your own file path.
                     filePaths.Add(FullFilePath);
 
@@ -158,19 +164,24 @@ namespace LMS.Web.Controllers {
                 document.ApplicationUserId = userId;
                 document.Path = filePaths.First();
                 document.Name = fileName;
+                //document.CourseId = id;
                 //ToDo Save path 
                 //Lägg till pathen till dokumentet vart vi kan hitta det på servern
+
+                //SET IDENTITY_INSERT db.Documents ON
+                
                 db.Add(document);
                 await db.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
 
-            //process uploaded files
-            //Don't rely on or trust the FileName property without validation.
+               
+                
 
-            //return Ok(new { count = files.Count, size, filePaths });
-            return View(document);
+
+                return  RedirectToAction("CourseList", "Courses");
             }
+            // return View(document);
+            return RedirectToAction("Index", "Home");
+        }
         
 
 

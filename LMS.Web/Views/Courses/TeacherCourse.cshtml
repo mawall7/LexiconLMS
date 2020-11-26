@@ -46,74 +46,74 @@ else
 
         @foreach (var item in Model.Courses)
         {
-            <tr>
+        <tr>
 
-                <td>
-                    <p>
-                        <a class="btn btn-primary" data-toggle="collapse" href="#studentCourse-@item.Id" role="button" aria-expanded="false" aria-controls="collapseExample">
-                            @Html.DisplayFor(modelItem => item.Name) : @Html.DisplayFor(modelItem => item.StartDate) - @Html.DisplayFor(modelItem => item.EndDate)
-                        </a>
+            <td>
+                <p>
+                    <a class="btn btn-primary" data-toggle="collapse" href="#studentCourse-@item.Id" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        @Html.DisplayFor(modelItem => item.Name) : @Html.DisplayFor(modelItem => item.StartDate) - @Html.DisplayFor(modelItem => item.EndDate)
+                    </a>
 
-                    </p>
-                    <div class="row">
-                        <div class="col">
-                            <div class="collapse multi-collapse" id="studentCourse-@item.Id">
+                </p>
+                <div class="row">
+                    <div class="col">
+                        <div class="collapse multi-collapse" id="studentCourse-@item.Id">
 
 
 
-                                @foreach (var moduleName in item.Modules)
-                                {
+                            @foreach (var moduleName in item.Modules)
+                            {
 
-                                    <div class="card card-body">
-                                        <p class="text-black-50">Module:</p>
-                                        @Html.DisplayFor(m => moduleName.Name) ||
+                                <div class="card card-body">
+                                    <p class="text-black-50">Module:</p>
+                                    @Html.DisplayFor(m => moduleName.Name) ||
 
-                                        <br />
-                                        @Html.DisplayFor(m => moduleName.StartDate) - @Html.DisplayFor(m => moduleName.EndDate)
-                                        @*@Html.ActionLink("See Module", "ModuleDetails", new { id = moduleName.Id })*@
-                                        <p>
-                                            <a  asp-area="" asp-controller="Modules" asp-action="Details2" asp-route-id="@moduleName.Id">See Module</a>
-                                        </p>
-                                    </div>
                                     <br />
+                                    @Html.DisplayFor(m => moduleName.StartDate) - @Html.DisplayFor(m => moduleName.EndDate)
+                                    @*@Html.ActionLink("See Module", "ModuleDetails", new { id = moduleName.Id })*@
+                                    <p>
+                                        <a asp-area="" asp-controller="Modules" asp-action="Details2" asp-route-id="@moduleName.Id">See Module</a>
+                                    </p>
+                                </div>
+                                <br />
 
-                                }
+                            }
 
 
-                            </div><!-- End collapse -->
-                        </div><!-- End col -->
-                        <div class="col">
-                            <div class="collapse multi-collapse" id="studentCourse-@item.Id">
-
-
-
-                                @*@foreach (var moduleName in item.Activities)
-                                    {
-                                        <div class="card card-body">
-                                            <p class="text-black-50">Description:</p>
-                                            @Html.DisplayFor(m => moduleName.Description)
-
-                                        </div>
-
-                                        <br />
-
-                                    }*@
+                        </div><!-- End collapse -->
+                    </div><!-- End col -->
+                    <div class="col">
+                        <div class="collapse multi-collapse" id="studentCourse-@item.Id">
 
 
 
+                            @*@foreach (var moduleName in item.Activities)
+                        {
+                            <div class="card card-body">
+                                <p class="text-black-50">Description:</p>
+                                @Html.DisplayFor(m => moduleName.Description)
 
-                            </div><!-- End collapse -->
-                        </div><!-- End col -->
-                    </div>
+                            </div>
+
+                            <br />
+
+                        }*@
 
 
-                </td>
-                @*<td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                    </td>*@
-            </tr>
+
+
+                        </div><!-- End collapse -->
+                    </div><!-- End col -->
+                </div>
+
+
+            </td>
+            @*<td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </td>*@
+        </tr>
 
         }
     </tbody>

@@ -40,8 +40,8 @@ namespace LMS.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    Description = table.Column<string>(maxLength: 250, nullable: false),
                     StartDate = table.Column<DateTime>(nullable: false),
                     EndDate = table.Column<DateTime>(nullable: false)
                 },
@@ -72,6 +72,66 @@ namespace LMS.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Modules",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    StartDate = table.Column<DateTime>(nullable: false),
+                    EndDate = table.Column<DateTime>(nullable: false),
+                    CourseId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Modules", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Modules_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Activities",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    StartTime = table.Column<DateTime>(nullable: false),
+                    EndTime = table.Column<DateTime>(nullable: false),
+                    ModuleId = table.Column<int>(nullable: false),
+                    ActivityTypeId = table.Column<int>(nullable: false),
+                    CourseId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Activities", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Activities_ActivityTypes_ActivityTypeId",
+                        column: x => x.ActivityTypeId,
+                        principalTable: "ActivityTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Activities_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Activities_Modules_ModuleId",
+                        column: x => x.ModuleId,
+                        principalTable: "Modules",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new
                 {
@@ -94,7 +154,8 @@ namespace LMS.Data.Migrations
                     LastName = table.Column<string>(nullable: true),
                     Address = table.Column<string>(nullable: true),
                     Phone = table.Column<string>(nullable: true),
-                    CourseId = table.Column<int>(nullable: true)
+                    CourseId = table.Column<int>(nullable: true),
+                    ModuleId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -105,27 +166,36 @@ namespace LMS.Data.Migrations
                         principalTable: "Courses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Modules_ModuleId",
+                        column: x => x.ModuleId,
+                        principalTable: "Modules",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Modules",
+                name: "ApplicationUserModule",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    StartDate = table.Column<DateTime>(nullable: false),
-                    EndDate = table.Column<DateTime>(nullable: false),
-                    CourseId = table.Column<int>(nullable: false)
+                    ModuleId = table.Column<int>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Modules", x => x.Id);
+                    table.PrimaryKey("PK_ApplicationUserModule", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Modules_Courses_CourseId",
-                        column: x => x.CourseId,
-                        principalTable: "Courses",
+                        name: "FK_ApplicationUserModule_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ApplicationUserModule_Modules_ModuleId",
+                        column: x => x.ModuleId,
+                        principalTable: "Modules",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -216,42 +286,13 @@ namespace LMS.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Activities",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    StartTime = table.Column<DateTime>(nullable: false),
-                    EndTime = table.Column<DateTime>(nullable: false),
-                    ModuleId = table.Column<int>(nullable: false),
-                    ActivityTypeId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Activities", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Activities_ActivityTypes_ActivityTypeId",
-                        column: x => x.ActivityTypeId,
-                        principalTable: "ActivityTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Activities_Modules_ModuleId",
-                        column: x => x.ModuleId,
-                        principalTable: "Modules",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Documents",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
+                    Path = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     ApplicationUserId = table.Column<string>(nullable: true),
@@ -294,8 +335,23 @@ namespace LMS.Data.Migrations
                 column: "ActivityTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Activities_CourseId",
+                table: "Activities",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Activities_ModuleId",
                 table: "Activities",
+                column: "ModuleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApplicationUserModule_ApplicationUserId",
+                table: "ApplicationUserModule",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApplicationUserModule_ModuleId",
+                table: "ApplicationUserModule",
                 column: "ModuleId");
 
             migrationBuilder.CreateIndex(
@@ -329,6 +385,11 @@ namespace LMS.Data.Migrations
                 name: "IX_AspNetUsers_CourseId",
                 table: "AspNetUsers",
                 column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_ModuleId",
+                table: "AspNetUsers",
+                column: "ModuleId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
@@ -370,6 +431,9 @@ namespace LMS.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ApplicationUserModule");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 

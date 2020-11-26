@@ -108,6 +108,7 @@ namespace LMS.Web.Controllers
                     Activities = c.Activities,
                     CourseDetails = new CourseDetailsViewModel
                     {
+                        Id = c.Id,
                         Description = c.Description,
                         StartDate = c.StartDate,
                         EndDate = c.EndDate

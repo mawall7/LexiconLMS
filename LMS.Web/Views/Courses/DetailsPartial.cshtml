@@ -1,9 +1,15 @@
 ﻿@model LMS.Core.ViewModels.CourseDetailsViewModel
 
+
+<a class="documentLink m-auto btn btn-primary text-light border border-dark float-right" asp-action="CourseMainPageDocument" asp-controller="Documents" asp-route-id="@Model.Id"  >Document</a><br /><br />
+<a asp-action="Create" asp-controller="Documents" asp-route-param="@Model.Id" class="float-right m-auto">Add New Document</a>
+<br />
 <table class="table">
+
+
     <thead>
         <tr>
-            
+
             <th>@Html.DisplayNameFor(model => model.Description)</th>
             <th>@Html.DisplayNameFor(model => model.StartDate)</th>
             <th>@Html.DisplayNameFor(model => model.EndDate)</th>
@@ -12,7 +18,7 @@
     <tbody>
 
         <tr>
-            
+
             <td>@Html.DisplayFor(model => model.Description)</td>
             <td>@Html.DisplayFor(model => model.StartDate)</td>
             <td>@Html.DisplayFor(model => model.EndDate)</td>

@@ -464,7 +464,7 @@ namespace LMS.Data.Migrations
             modelBuilder.Entity("LMS.Core.Entities.Document", b =>
                 {
                     b.HasOne("LMS.Core.Entities.Activity", "Activity")
-                        .WithMany("Dokuments")
+                        .WithMany("Documents")
                         .HasForeignKey("ActivityId");
 
                     b.HasOne("LMS.Core.Entities.ApplicationUser", "ApplicationUser")
@@ -472,11 +472,11 @@ namespace LMS.Data.Migrations
                         .HasForeignKey("ApplicationUserId");
 
                     b.HasOne("LMS.Core.Entities.Course", "Course")
-                        .WithMany("Dokuments")
+                        .WithMany()
                         .HasForeignKey("CourseId");
 
                     b.HasOne("LMS.Core.Entities.Module", "Module")
-                        .WithMany("Dokuments")
+                        .WithMany()
                         .HasForeignKey("ModuleId");
                 });
 

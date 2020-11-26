@@ -10,18 +10,13 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create" method="post" enctype="multipart/form-data">
-           
-
-            <input type="hidden" asp-for="Id" />
-
+        <form asp-action="Create" method="post" enctype="multipart/form-data" >
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ModuleId" />
-            <input type="hidden" asp-for="CourseId" />
-            <input type="hidden" asp-for="ActivityId" />
-           
-            
+            <input type="hidden" />
+
+
+
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -32,44 +27,62 @@
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            @*             ,llllllllllllllllllllll*@
+           
 
             <div class="form-group">
-                <label asp-for="DateCreated" class="control-label"></label>
-                <input asp-for="DateCreated" class="form-control" />
+                <input  type="hidden" asp-for="DateCreated" class="form-control" />
                 <span asp-validation-for="DateCreated" class="text-danger"></span>
             </div>
 
             <div class="form-group">
 
-
+                
                 <label asp-for="ApplicationUser.FirstName" class="control-label"></label>
-                <input asp-for="ApplicationUser.FirstName" class="form-control" asp-items="ViewBag.ApplicationUserFirstName"> />
+                <input asp-for="ApplicationUser.FirstName" class="form-control" asp-items="ViewBag.ApplicationUserFirstName">
                 <span asp-validation-for="ApplicationUser.FirstName" class="text-danger"></span>
 
             </div>
 
-            <div class="form-group">
-                <label asp-for="ApplicationUserId" class="control-label"></label>
-                <select asp-for="ApplicationUserId"  type="hidden" class="form-control" asp-items="ViewBag.ApplicationUserId"></select>
-            </div>
 
             <div class="form-group">
-                <label asp-for="CourseId" class="control-label"></label>
-                <select asp-for="CourseId" class="form-control" asp-items="ViewBag.CourseId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ActivityId" class="control-label"></label>
-                <select asp-for="ActivityId" class="form-control" asp-items="ViewBag.ActivityId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModuleId" class="control-label"></label>
-                <select asp-for="ModuleId" class="form-control" asp-items="ViewBag.ModuleId"></select>
+                <input type="hidden" asp-for="ApplicationUserId" class="form-control" asp-items="ViewBag.ApplicationUserId">
+                <span asp-validation-for="ApplicationUser.FirstName" class="text-danger"></span>
             </div>
 
 
             <div class="form-group">
-                <label class="control-label">Choose file</label>
+                <input type="hidden" asp-for="CourseId" class="form-control" asp-items="ViewBag.CourseId">
+                <span asp-validation-for="CourseId" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <input type="hidden" asp-for="ActivityId" class="form-control" asp-items="ViewBag.ActivityId">
+                <span asp-validation-for="ActivityId" class="text-danger"></span>
+            </div>
+
+
+
+            <div class="form-group">
+                <input type="hidden" asp-for="ModuleId" class="form-control" asp-items="ViewBag.ModuleId">
+                <span asp-validation-for="ModuleId" class="text-danger"></span>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+            
+
+            <div class="form-group">
+                <label type="hidden" class="control-label">Choose file</label>
                 <input type="file" class="form-control btn btn-primary" name="files" multiple />
             </div>
 

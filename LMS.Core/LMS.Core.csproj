@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Entities\Document.cs" />
     <Compile Remove="Entities\UserCourse.cs" />
     <Compile Remove="ViewModels\ApplicationUserCourseViewModel.cs" />
     <Compile Remove="ViewModels\AttendingStudentsViewModel.cs" />
