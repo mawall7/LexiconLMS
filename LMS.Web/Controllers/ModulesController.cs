@@ -17,12 +17,13 @@ namespace LMS.Web.Controllers
     public class ModulesController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<ApplicationUser> userManager;
+        //private readonly UserManager<ApplicationUser> userManager;
+        public UserManager<ApplicationUser> UserManager { get; }
 
         public ModulesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
-            this.userManager = userManager;
+            this.UserManager = userManager;
         }
 
         // GET: Modules
@@ -91,7 +92,7 @@ namespace LMS.Web.Controllers
                 _context.Add(@module);
                 await _context.SaveChangesAsync();
 
-                if(Request.IsAjax())
+                if (Request.IsAjax())
                 {
                     var model = new ModulesViewModel
                     {
@@ -112,6 +113,7 @@ namespace LMS.Web.Controllers
         }
 
         // GET: Modules/Edit/5
+        [Authorize(Roles = "Teacher")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -132,6 +134,7 @@ namespace LMS.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate,CourseId")] Module @module)
         {
             if (id != @module.Id)
@@ -163,6 +166,7 @@ namespace LMS.Web.Controllers
         }
 
         // GET: Modules/Delete/5
+        [Authorize(Roles = "Teacher")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -183,6 +187,7 @@ namespace LMS.Web.Controllers
         // POST: Modules/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var @module = await _context.Modules.FindAsync(id);
@@ -194,6 +199,117 @@ namespace LMS.Web.Controllers
         private bool ModuleExists(int id)
         {
             return _context.Modules.Any(e => e.Id == id);
+        }
+
+        public async Task<IActionResult> CourseModule()
+        {
+
+            //Get user
+            var user = await UserManager.GetUserAsync(User);
+            if (user is null)
+            {
+                //redirect to a "Login or reister"-page if not logged in
+                return RedirectToAction(nameof(Index));
+                //return BadRequest();
+
+            }
+
+
+            var modules = await _context.Modules
+                .Include(a => a.Activities)
+                .Include(a => a)
+                .ToListAsync();
+            foreach (var mod in modules)
+            {
+
+            };
+
+            //var activityTypes = await _context.ActivityTypes
+            //    .Include(at => at.Activities)
+            //   .Where(at => at.Id == user.c)
+            //   .ToListAsync();
+            //Student course Information
+            var model = await _context.Modules
+               .Include(c => c.Activities)
+               .Select(d => new ModulesViewModel
+               {
+                   Id = d.Id,
+                   Name = d.Name,
+                   Modules = modules
+
+               })
+               //.OrderBy()
+               .FirstOrDefaultAsync(c => c.Id == user.CourseId);
+
+
+            return View(model);
+
+
+        }
+
+        public async Task<IActionResult> CourseModuleX()
+        {
+
+            //Get user
+            var userId = UserManager.GetUserId(User);
+            var Student = await OnGetAsync(1);
+            //Student course Information
+            var model = await _context.Modules
+               .Include(c => c.Activities)
+               .Select(c => new ModulesViewModel
+               {
+                   Id = c.Id,
+                   // Name = c.Name,
+
+
+               }).ToListAsync();
+
+            return View(model);
+
+
+        }
+        public async Task<IActionResult> OnGetAsync(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var model = await _context.Modules
+           .Include(s => s.Activities)
+           .AsNoTracking()
+           .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+            return View(model);
+        }
+        public async Task<IActionResult> Details2(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var courseModel = await _context.Modules
+                .Select(c => new ModuleDetailsViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Description = c.Description,
+                    StartDate = c.StartDate,
+                    EndDate = c.EndDate,
+                    Activities = c.Activities
+                })
+                .FirstOrDefaultAsync(c => c.Id == id);
+            if (courseModel == null)
+            {
+                return NotFound();
+            }
+
+            return View(courseModel);
         }
     }
 }

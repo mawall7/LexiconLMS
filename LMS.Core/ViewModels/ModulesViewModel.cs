@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LMS.Core.Entities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -16,5 +17,8 @@ namespace LMS.Core.ViewModels
 
         public DateTime EndDate { get; set; }
         public bool Attending { get; set; }
+        public ICollection<ApplicationUser> ApplicationUsers { get; set; }
+        public ICollection<Module> Modules { get; set; }
+        public ICollection<Activity> Activities { get; set; }
     }
 }

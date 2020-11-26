@@ -13,10 +13,6 @@ namespace LMS.Data.Data
         public DbSet<Activity> Activities { get; set; }
         public DbSet<ActivityType> ActivityTypes { get; set; }
 
-        //Soile Test
-        public DbSet<ApplicationUser> Student { get; set; }
-        public DbSet<LMS.Core.Entities.Course> CourseForStudent { get; set; }
-    
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -26,9 +22,6 @@ namespace LMS.Data.Data
         protected override void OnModelCreating(ModelBuilder builder) {
             base.OnModelCreating(builder);
 
-            //specar att detta är primärnyckeln - PK, en Kompositnykel av k.ApplicationUserId, k.GymClassId, som är unik kombo i kopplingstbl
-            base.OnModelCreating(builder);
-            //builder.Entity<UserCourse>().HasKey(k => new { k.ApplicationUserId, k.CourseID });
         }
        
 

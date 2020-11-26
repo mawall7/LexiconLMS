@@ -112,6 +112,9 @@ namespace LMS.Data.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<int?>("ModuleId")
+                        .HasColumnType("int");
+
                     b.Property<string>("NormalizedEmail")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
@@ -145,6 +148,8 @@ namespace LMS.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
+
+                    b.HasIndex("ModuleId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -204,7 +209,7 @@ namespace LMS.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Course");
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("LMS.Core.Entities.Module", b =>
@@ -395,6 +400,10 @@ namespace LMS.Data.Migrations
                     b.HasOne("LMS.Core.Entities.Course", "Course")
                         .WithMany("ApplicationUsers")
                         .HasForeignKey("CourseId");
+
+                    b.HasOne("LMS.Core.Entities.Module", null)
+                        .WithMany("ApplicationUsers")
+                        .HasForeignKey("ModuleId");
                 });
 
             modelBuilder.Entity("LMS.Core.Entities.ApplicationUserModule", b =>
