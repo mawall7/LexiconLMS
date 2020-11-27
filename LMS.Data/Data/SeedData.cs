@@ -23,13 +23,13 @@ namespace LMS.Data.Data {
 
 
                 // ---------------------------------------Courses  SeedData----------------------------------------
-                if (context.Courses.Any()) return;
+               if (context.Courses.Any()) return;
               
                {
                     context.Courses.RemoveRange(context.Courses);
                     context.SaveChanges();
                 }
-
+            
 
                 var courses = new List<Course>();
 
@@ -69,7 +69,7 @@ namespace LMS.Data.Data {
                         FirstName = fake.Name.FirstName(),
                         LastName = fake.Name.LastName(),
                         Address = fake.Address.FullAddress() ,
-                      
+                        Email = fake.Internet.Email(),
                         Phone = fake.Phone.PhoneNumber(),
                         CourseId = courses[fake.Random.Int(1, courses.Count) - 1].Id,
                         

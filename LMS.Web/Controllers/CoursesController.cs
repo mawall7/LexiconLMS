@@ -346,6 +346,18 @@ namespace LMS.Web.Controllers
 
 
 
+        public async Task<IActionResult> Select() {
+            var courses = await _context.Courses.Select(p => new Course { Name = p.Name }).ToListAsync();
+            ViewBag.CourseName = courses;
+                return View(courses);
+
+        }
+
+
+
+
+
+
 
     }
 }
