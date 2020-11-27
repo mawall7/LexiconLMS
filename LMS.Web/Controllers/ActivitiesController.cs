@@ -133,10 +133,12 @@ namespace LMS.Web.Controllers
         }
         public IActionResult Create()
         {
-
+            //for now it creates only for first module in modules table EF 
+            var ModuleId = _context.Modules.Select(a=> a.Id).FirstOrDefault();
+            
 
             ViewData["ActivityTypeName"] = new SelectList(_context.Set<ActivityType>(), "Id", "Name"); //don't remove
-            var model = new Activity { ModuleId = 27 };
+            var model = new Activity { ModuleId = ModuleId };
 
             return View(model);
         }

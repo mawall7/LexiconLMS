@@ -4,15 +4,16 @@
 }
 
 <h1>Activities</h1>
-@*@if (User.IsInRole("Teacher"))
-    {
+@if (User.IsInRole("Teacher"))
+{
 
 <p>
-    <a class="btn btn-primary float-right" asp-action="Create">Add Activity</a>
+    <a class="btn btn-primary float-right" asp-action="Create" asp-route-id="">Add Activity</a>
 
 </p>
-@*}*@
-<a asp-action="Create" asp-route-id="item.id" class=" button-btn-primary"></a>
+}
+
+<a asp-action="Create" asp-route-id="item.id" class=" button-btn-success"></a>
 <table class="table">
     <thead>
         
