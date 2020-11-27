@@ -146,7 +146,7 @@ namespace LMS.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Description,StartTime,EndTime,ModuleId,ActivityTypeId")] Activity activity)
+        public async Task<IActionResult> Create(int?id,[Bind("Name,Description,StartTime,EndTime,ModuleId,ActivityTypeId")] Activity activity)
         {
 
             if (_context.Activities.Any(a => a.Name == activity.Name && a.ModuleId == activity.ModuleId && a.StartTime == activity.StartTime) == false)
@@ -165,7 +165,7 @@ namespace LMS.Web.Controllers
                         ModuleId = activity.ModuleId,
                         // ActivityType =
                     };
-                    _context.Add(activity);
+                    _context.Activities.Add(activity);
 
                     await _context.SaveChangesAsync();
                     return RedirectToAction("Index", new {id=activity.ModuleId }); //returns to Index with moduleid to show activities in the module
@@ -204,7 +204,7 @@ namespace LMS.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id,[Bind("Id, Name,Description,StartTime,EndTime,ModuleId,ActivityTypeId")] Activity activity)
+        public async Task<IActionResult> Edit(int? id,[Bind("Id, Name,Description,StartTime,EndTime,ModuleId,ActivityTypeId")] Activity activity)
         {
            
             bool hit = _context.Activities.Any(a => a.Id == id);
@@ -231,10 +231,11 @@ namespace LMS.Web.Controllers
                         throw;
                     }
                 }
-                
-                    
-                
+
+
+
                 return RedirectToAction("Index", new { id = activity.ModuleId });
+                return RedirectToAction(nameof(Index));
             }
             ViewData["ActivityTypeName"] = new SelectList(_context.Set<ActivityType>(), "Id", "Name");
             return RedirectToAction("Edit", new { id = activity.Id });//return View(activity);
