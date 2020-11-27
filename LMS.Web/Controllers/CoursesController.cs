@@ -4,13 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LMS.Core.Entities;
 using LMS.Data.Data;
-using LMS.Core;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using LMS.Core.ViewModels;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using LMS.Web.Extensions;
 
 namespace LMS.Web.Controllers
 {
@@ -30,8 +27,8 @@ namespace LMS.Web.Controllers
 
         // GET: Courses
         [AllowAnonymous]
-        public async Task<IActionResult> 
-            Index(IndexViewModel viewModel = null)
+        //  Index(IndexViewModel viewModel = null)
+        public async Task<IActionResult> Index(IndexViewModel viewModel = null)
         {
             //Get user
             var user = UserManager.GetUserId(User);

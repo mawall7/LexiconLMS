@@ -35,6 +35,9 @@ namespace LMS.Core.Entities
         public ICollection<Module> Modules { get; set; }
         public ICollection<Activity> Activities { get; set; }
 
+        // AttendedCourse
+        public ICollection<ApplicationUserCourse> AttendedCourse { get; set; }
+
         //Navigation property
         // kopplingstabell i UserCourse, vilka studenter deltar i kursen
         //public ICollection<UserCourse> AttendingStudents { get; set; }
