@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using LMS.Core.Entities;
 using LMS.Data.Data;
 using Microsoft.AspNetCore.Identity;
+using LMS.Core.ViewModels;
+
 
 namespace LMS.Web.Controllers
 {
@@ -20,8 +22,9 @@ namespace LMS.Web.Controllers
         {
             _context = context;
             UserManager = userManager;
-        }
-
+            
+         }
+        //public int SaveTest { get; set; }
         // GET: Activities
         //public async Task<IActionResult> Index2()
         //{
@@ -34,9 +37,34 @@ namespace LMS.Web.Controllers
         //public async Task<IActionResult> Index(int? Id)//Index(int DropitemModuleId)
         //{
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? Id) // Erase! = 1 when theres a link from CourseListView for a modules 
         {
-            return View(await _context.Activities.ToListAsync());
+           // SaveTest = 1;
+            if (Id == null)
+                return NotFound();
+
+
+            var model = _context.Activities
+                .Where(a => a.ModuleId == Id)
+                .Select(a => new ActivitiesViewModel
+                {
+                    Name = a.Name,
+                    Id = a.Id,
+                    StartTime = a.StartTime,
+                    EndTime = a.EndTime,
+                    Description = a.Description,
+                    //ModuleId = a.ModuleId, ?
+                    //ActivityTypeId = a.ActivityTypeId,
+                    ActivityTypeName = a.ActivityType.Name
+                }).ToList();
+                
+                
+            
+             
+            
+
+            return View(model);
+          
         }
 
 
@@ -80,10 +108,18 @@ namespace LMS.Web.Controllers
 
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+          /*  try
+            {
+                var x = SaveTest / 2;
+            }
+            catch (DivideByZeroException x)
             {
                 return NotFound();
             }
+            if (id == null)
+            {
+                return NotFound();
+            }*/
 
             var @activity = await _context.Activities.FirstOrDefaultAsync(m => m.Id == id);
             //.FirstorDefaultAsync(m => m.Id == id);
@@ -98,12 +134,11 @@ namespace LMS.Web.Controllers
         public IActionResult Create()
         {
 
-            /*ViewData["ActivityTypeId"] = new SelectList(_context.Set<ActivityType>(), "Id", "Id");
-            ViewData["ModuleId"] = new SelectList(_context.Set<Module>(), "Id", "Id");*/
 
+            ViewData["ActivityTypeName"] = new SelectList(_context.Set<ActivityType>(), "Id", "Name"); //don't remove
+            var model = new Activity { ModuleId = 4 };
 
-
-            return View();
+            return View(model);
         }
 
         // POST: Activities/Create
@@ -111,23 +146,41 @@ namespace LMS.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,StartTime,EndTime,ModuleId,ActivityTypeId")] Activity activity)
+        public async Task<IActionResult> Create([Bind("Name,Description,StartTime,EndTime,ModuleId,ActivityTypeId")] Activity activity)
         {
 
-            if (ModelState.IsValid)
-            {
-                _context.Add(activity);
+            if (_context.Activities.Any(a => a.Name == activity.Name && a.ModuleId == activity.ModuleId && a.StartTime == activity.StartTime) == false)
+                {
 
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    /* var activity = new Activity {
+                         Description = Description}*/
+                    activity = new Activity {
+                        Name = activity.Name,
+                        ActivityTypeId = activity.ActivityTypeId,
+                        Description = activity.Description,
+                        StartTime = activity.StartTime,
+                        EndTime = activity.EndTime,
+                        ModuleId = activity.ModuleId,
+                        // ActivityType =
+                    };
+                    _context.Add(activity);
+
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Index", new {id=activity.ModuleId }); //returns to Index with moduleid to show activities in the module
+                }
             }
-            ViewData["ActivityTypeId"] = new SelectList(_context.Set<ActivityType>(), "Id", "Id", activity.ActivityTypeId);
+            //if an activity allready exist
+            // ViewData["ActivityTypeId"] = new SelectList(_context.Set<ActivityType>(), "Id", "Id", activity.ActivityTypeId);
+            ViewData["ActivityTypeName"] = new SelectList(_context.Set<ActivityType>(), "Id", "Name"); //don't remove            
             ViewData["ModuleId"] = new SelectList(_context.Set<Module>(), "Id", "Id", activity.ModuleId);
-            return View(activity);
+            ViewData["Exists"] = "This Activity allready exists!"; //Use Remote istället? 
+             return View(activity);//return RedirectToAction(nameof(Create));<p>@Html.Raw(ViewData["Exists"])</p>
         }
 
         // GET: Activities/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)  //activity id
         {
             if (id == null)
             {
@@ -135,12 +188,14 @@ namespace LMS.Web.Controllers
             }
 
             var activity = await _context.Activities.FindAsync(id);
+            
             if (activity == null)
             {
                 return NotFound();
             }
-            ViewData["ActivityTypeId"] = new SelectList(_context.Set<ActivityType>(), "Id", "Id", activity.ActivityTypeId);
-            ViewData["ModuleId"] = new SelectList(_context.Set<Module>(), "Id", "Id", activity.ModuleId);
+
+            ViewData["ActivityTypeName"] = new SelectList(_context.Set<ActivityType>(), "Id", "Name"); //don't remove
+            
             return View(activity);
         }
 
@@ -149,18 +204,20 @@ namespace LMS.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartTime,EndTime,ModuleId,ActivityTypeId")] Activity activity)
+        public async Task<IActionResult> Edit(int id,[Bind("Id, Name,Description,StartTime,EndTime,ModuleId,ActivityTypeId")] Activity activity)
         {
-            if (id != activity.Id)
+           
+            bool hit = _context.Activities.Any(a => a.Id == id);
+                
+            if (id == null)
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && hit == true)
             {
                 try
                 {
-                    _context.Update(activity);
+                    _context.Activities.Update(activity);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -174,11 +231,14 @@ namespace LMS.Web.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                
+                    
+                
+                return RedirectToAction("Index", new { id = activity.ModuleId });
             }
-            ViewData["ActivityTypeId"] = new SelectList(_context.Set<ActivityType>(), "Id", "Id", activity.ActivityTypeId);
-            ViewData["ModuleId"] = new SelectList(_context.Set<Module>(), "Id", "Id", activity.ModuleId);
-            return View(activity);
+            ViewData["ActivityTypeName"] = new SelectList(_context.Set<ActivityType>(), "Id", "Name");
+            return RedirectToAction("Edit", new { id = activity.Id });//return View(activity);
+            //return View();// View(currentActivity);
         }
 
         // GET: Activities/Delete/5

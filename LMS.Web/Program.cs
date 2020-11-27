@@ -26,8 +26,9 @@ namespace LMS.Web
 
                 var config = services.GetRequiredService<IConfiguration>();
 
-               // var teacherPW = "LmsLexicon20?";//config["teacherPW"];
+                // var teacherPW = "LmsLexicon20?";//config["teacherPW"];
                 //teacherPW saved in user-secret teacherPW = LmsLexicon20?
+                var teacherPW = config["teacherPW"];
 
                 try
                 { 
