@@ -22,63 +22,71 @@
     </thead>
 
     <tbody>
+               
         @foreach (var item in Model)
         {
         <tr>
 
             <td>
-                <div class="course-section">
-                    <p class="course-btn">
-
-                        <a class="btn btn-primary courseBtn" data-toggle="collapse" href="#courseList-@item.Id" role="button" aria-expanded="false" aria-controls="collapseExample">
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </a>
-
-                    <div class="course-btn-ed">
-                        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    </div>
-                    </p>
-                </div>
                 <div class="row">
-                    <div class="col">
-                        <div class="collapse multi-collapse" id="courseList-@item.Id">
+                    <div class="col-4">
+                        <div class="course-section ">
+                            <p class="course-btn">
 
-                            <div class="card card-body">
-                                @foreach (var modules in item.Modules)
-                                {
-                                    <dl class="row">
-                                        <dt class="col-sm-12 btn btn-secondary">
+                                <a class="btn btn-primary courseBtn" data-toggle="collapse" href="#courseList-@item.Id" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </a>
 
-                                            @Html.DisplayFor(v => modules.Name)
-                                            @Html.DisplayFor(m => modules.StartDate) - @Html.DisplayFor(m => modules.EndDate)
-                                            <p>
-                                                <a asp-area="" asp-controller="Modules" asp-action="Details2" asp-route-id="@modules.Id">See Module</a>
-                                            </p>
-                                        </dt>
+                                <div class="course-btn-ed">
+                                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                </div>
+                            </p>
+                        </div>
 
-                                    </dl>
 
-                                }
+                        <div class="col-4">
+                            <div class="collapse multi-collapse" id="courseList-@item.Id">
 
-                            </div>
+                                <div class="">
+                                    @foreach (var modules in item.Modules)
+                                    {
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <dt class=" btn btn-secondary my-1 px-4 " >
 
-                        </div><!-- End collapse -->
-                    </div><!-- End col -->
-                    <div class="col">
-                        <div class="collapse multi-collapse" id="courseList-@item.Id">
+                                                    @Html.DisplayFor(v => modules.Name)
+                                                    @*@Html.DisplayFor(m => modules.StartDate) - @Html.DisplayFor(m => modules.EndDate)*@
+                                                    @*<p>
+                                        <a asp-area="" asp-controller="Modules" asp-action="Details2" asp-route-id="@modules.Id">See Module</a>
+                                    </p>*@
+                                                </dt>
+                                            </div>
+                                        </div>
 
-                            <div class="card card-body">
+
+
+                                    }
+
+
+                                </div>
+
+                            </div><!-- End collapse -->
+                        </div><!-- End col -->
+                        </div>
+                        <div class="collapse multi-collapse col-8" id="courseList-@item.Id">
+
+                            <div class="">
 
                                 <p class="text-dark">Course Details</p>
                                 <div class="partialViewWrapper">
                                     <partial name="DetailsPartial" model="@item.CourseDetails" />
-                                    
+
                                 </div>
                             </div>
+                        </div>
                     </div>
-
-                </div>
+                
 
             </td>
             

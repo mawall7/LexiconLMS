@@ -23,7 +23,7 @@ namespace LMS.Data.Data {
 
 
                 // ---------------------------------------Courses  SeedData----------------------------------------
-                if (context.Courses.Any()) 
+                if (context.Courses.Any()) return;
               
                {
                     context.Courses.RemoveRange(context.Courses);
