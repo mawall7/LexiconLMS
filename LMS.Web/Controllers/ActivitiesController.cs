@@ -136,7 +136,7 @@ namespace LMS.Web.Controllers
 
 
             ViewData["ActivityTypeName"] = new SelectList(_context.Set<ActivityType>(), "Id", "Name"); //don't remove
-            var model = new Activity { ModuleId = 4 };
+            var model = new Activity { ModuleId = 27 };
 
             return View(model);
         }
@@ -146,7 +146,7 @@ namespace LMS.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int?id,[Bind("Name,Description,StartTime,EndTime,ModuleId,ActivityTypeId")] Activity activity)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,StartTime,EndTime,ModuleId,ActivityTypeId")] Activity activity)
         {
 
             if (_context.Activities.Any(a => a.Name == activity.Name && a.ModuleId == activity.ModuleId && a.StartTime == activity.StartTime) == false)
