@@ -103,7 +103,7 @@ namespace LMS.Web.Controllers
                         Id = module.Id,
                         Name = module.Name,
                         StartDate = module.StartDate,
-                        EndDate = module.EndDate,
+                        EndDate = module.EndDate,  
                         
 
                     };

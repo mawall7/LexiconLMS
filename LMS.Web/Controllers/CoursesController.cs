@@ -161,7 +161,7 @@ namespace LMS.Web.Controllers
                 var course = mapper.Map<Course>(createCourseViewModel);
                 _context.Add(course);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(CourseList));
             }
             return View(createCourseViewModel);
         }
