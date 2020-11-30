@@ -112,6 +112,12 @@ namespace LMS.Web.Controllers
                         Description = c.Description,
                         StartDate = c.StartDate,
                         EndDate = c.EndDate
+                    },
+                    ModuleDetails=new ModuleDetailsViewModel
+                    {
+                        Description = c.Description,
+                        StartDate = c.StartDate,
+                        EndDate = c.EndDate
                     }
 
                     
@@ -308,7 +314,6 @@ namespace LMS.Web.Controllers
             //Get user
             var userId = UserManager.GetUserId(User);
             var Student = await OnGetAsyncT(1);
-            //Student course Information
             var model = await _context.Courses
                .Include(c => c.Modules)
                .Include(c => c.Activities)

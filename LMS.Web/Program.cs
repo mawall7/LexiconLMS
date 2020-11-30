@@ -28,6 +28,7 @@ namespace LMS.Web
                 //var teacherPW = "LmsLexicon20?";
                 var teacherPW = config["teacherPW"];
                 //teacherPW saved in user-secret teacherPW = LmsLexicon20?
+                var teacherPW = config["teacherPW"];
 
                 try
                 { 

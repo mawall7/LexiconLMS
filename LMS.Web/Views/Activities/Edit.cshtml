@@ -4,67 +4,124 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
-<h4>Activity</h4>
-<hr />
+<div class="row">
+    <div class="col-sm-1"></div>
+    <div id="segoe" class="col-sm-2 pl-5"><h4>Activities</h4></div>
+</div>
+<br />
 <div class="row">
     <div class="col-md-4">
+
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+            <div class="form-group form-inline ">
+                <label asp-for="Name" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <input type="text" asp-for="Name" class="form-control" />
+                </div>
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+
+            <div class="form-group form-inline">
+                <label asp-for="Description" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <input type="text" asp-for="Description" id="FormDescription" class="form-control" />
+                </div>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="StartTime" class="control-label"></label>
-                <input asp-for="StartTime" class="form-control" />
+
+            <div class="form-group form-inline">
+                <label asp-for="StartTime" class="col-sm-2  col-form-label"></label>
+                <div class="col-sm-10">
+                    <input type="text" asp-for="StartTime" class="form-control" />
+                </div>
                 <span asp-validation-for="StartTime" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="EndTime" class="control-label"></label>
-                <input asp-for="EndTime" class="form-control" />
+
+            <div class="form-group form-inline">
+                <label asp-for="EndTime" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <input type="text" asp-for="EndTime" class="form-control" />
+                </div>
                 <span asp-validation-for="EndTime" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-            <label asp-for="ModuleId" class="control-label"></label>
-            <select asp-for="ModuleId" class="form-control" asp-items="ViewBag.ModuleId"></select>
-            <span asp-validation-for="ModuleId" class="text-danger"></span>
-        </div>
+            <div class="form-group form-inline">
+                <input type="hidden" asp-for="Id" />
+                @*<input type="hidden" name="Id" value="@Model.Id" />*@
+            </div>
+            <div class="form-group form-inline">
+                <input type="hidden" name="ModuleId" value="@Model.ModuleId" />
+            </div>
 
-        <div class="form-group">
-            <label asp-for="ActivityTypeId" class="control-label"></label>
-            <select asp-for="ActivityTypeId" class="form-control" asp-items="ViewBag.ActivityTypeId"></select>
-            <span asp-validation-for="ActivityTypeId" class="text-danger"></span>
-        </div>*@
-            <div class="form-group">
-                <label asp-for="ModuleId" class="control-label"></label>
-                <input asp-for="ModuleId" class="form-control" />
-                <span asp-validation-for="ModuleId" class="text-danger"></span>
+            <div>   </div>
+
+            <div class="form-group form-inline ">
+
+                <label class="col-sm-2 col-form-label">ActivityType</label>
+                <div class="col-sm-10">
+                    <select type="text" asp-for="ActivityTypeId" class="form-control" asp-items="ViewBag.ActivityTypeName"></select>
+                </div>
             </div>
             <div class="form-group">
-                <label asp-for="ActivityTypeId" class="control-label"></label>
-                <input asp-for="ActivityTypeId" class="form-control" />
-                <span asp-validation-for="ActivityTypeId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary bg-transparent text-dark" style="border-color:transparent" />
+                <h6 class="d-inline-block">|</h6>
+                <input type="button" value="Cancel" onclick="location.href='@Url.Action("Index", "Activities", new {Id=Model.ModuleId })'" class="btn btn-primary bg-transparent text-dark" style="border-color:transparent" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+@*<h1>Edit</h1>
+
+    <h4>Activity</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="ModuleId" />
+
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="StartTime" class="control-label"></label>
+                    <input asp-for="StartTime" class="form-control" />
+                    <span asp-validation-for="StartTime" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="EndTime" class="control-label"></label>
+                    <input asp-for="EndTime" class="form-control" />
+                    <span asp-validation-for="EndTime" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+
+        <a asp-controller="Activities" asp-action="Index" asp-route-id="Activity.ModuleId">Back to List</a>
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }*@

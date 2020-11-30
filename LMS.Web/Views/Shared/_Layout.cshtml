@@ -5,11 +5,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - LEXICON LMS</title>
+    <style>
+        body {
+            /* Margin bottom by footer height */
+            margin-bottom: 60px;
+            font-family: "Segoe UI", "Arial", "Helvetica", "sans-serif" !important;
+        }
+    </style>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+
 </head>
 <body>
     <header>
@@ -30,20 +39,27 @@
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-controller="Courses" asp-action="CourseList">Course</a>
                             </li>
-                            <li class="nav-item">
+                            @*<li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-controller="Modules" asp-action="Index">Module</a>
-                            </li>
+                            </li>*@
 
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Activities" asp-action="Index">Activity</a>
-                            </li>
+
+                            @*<li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Activities" asp-action="Edit">Activity</a>
+                            </li>*@
                         }
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Courses" asp-action="UserCourse">Courses</a>
-                        </li>
+
+                       
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Courses" asp-action="UserCourse">Courses</a>
+                            </li>
+                        
                         @*<li class="nav-item">
-            <a class="nav-link text-white" asp-area="" asp-controller="Courses" asp-action="TeacherCourse">Teacher</a>
-        </li>*@
+                                <a class="nav-link text-white" asp-area="" asp-controller="Courses" asp-action="TeacherCourse">Teacher</a>
+                            </li>*@
+                        @*<li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Users" asp-action="Index">Test</a>
+                        </li>*@
                         <li class="nav-item">
                             @if (User.Identity.IsAuthenticated)
                             {

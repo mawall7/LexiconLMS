@@ -1,29 +1,29 @@
-﻿@model IEnumerable<LMS.Core.Entities.Activity>
-
+﻿@model IEnumerable<ActivitiesViewModel>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Activities";
 }
 
-<h1>Index</h1>
-@*@if (User.IsInRole("Teacher"))
-{*@
+<h1>Activities</h1>
+@if (User.IsInRole("Teacher"))
+{
 
 <p>
-    <a class="btn btn-primary float-right" asp-action="Create" >Add Activity</a>
-    
+    <a class="btn btn-primary float-right" asp-action="Create" asp-route-id="">Add Activity</a>
+
 </p>
-@*}*@
+}
+
+<a asp-action="Create" asp-route-id="item.id" class=" button-btn-success"></a>
 <table class="table">
     <thead>
+        
         <tr>
-            <a asp-action="Create" asp-route-id="item.id" class=" button-btn-primary"></a>
-            
+
+
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.StartTime)
             </th>
@@ -31,26 +31,21 @@
                 @Html.DisplayNameFor(model => model.EndTime)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Module)
+                @Html.DisplayNameFor(model => model.Description)
             </th>
-            
-            <th>
-                @Html.DisplayNameFor(model => model.ActivityType)
-                
-                
-            </th>
+
+
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.StartTime)
             </td>
@@ -58,17 +53,16 @@
                 @Html.DisplayFor(modelItem => item.EndTime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Module.Id)
+                @Html.DisplayFor(modelItem => item.Description)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ActivityType.Id)
-            </td>
+
+
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>

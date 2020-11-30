@@ -48,28 +48,57 @@
                         <div class="col-4">
                             <div class="collapse multi-collapse" id="courseList-@item.Id">
 
-                                <div class="">
-                                    @foreach (var modules in item.Modules)
-                                    {
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <dt class=" btn btn-secondary my-1 px-4 btn-block " >
+                            <div class="card card-body">
+                                @foreach (var modules in item.Modules)
+                                {
+                                    <dl class="row">
+                                        <dt class="col-sm-12 btn btn-secondary" data-toggle="collapse" href="#moduleList-@item.Modules" role="button" aria-expanded="false" aria-controls="collapseExample">
 
-                                                    @Html.DisplayFor(v => modules.Name)
-                                                    @*@Html.DisplayFor(m => modules.StartDate) - @Html.DisplayFor(m => modules.EndDate)*@
-                                                    @*<p>
-                                        <a asp-area="" asp-controller="Modules" asp-action="Details2" asp-route-id="@modules.Id">See Module</a>
-                                    </p>*@
-                                                </dt>
-                                            </div>
-                                        </div>
+                                            @Html.DisplayFor(v => modules.Name)
+                                            @Html.DisplayFor(m => modules.StartDate) - @Html.DisplayFor(m => modules.EndDate)
+                                            <p>
+                                                <a asp-area="" asp-controller="Modules" asp-action="Details2" asp-route-id="@modules.Id">See Module</a>
+                                                <a asp-area="" asp-controller="Modules" asp-action="Edit" asp-route-id="@modules.Id">Edit</a>
+                                                <a asp-area="" asp-controller="Modules" asp-action="Delete" asp-route-id="@modules.Id">Delete</a>
+                                                <a asp-area="" asp-controller="Activities" asp-action="index" asp-route-id="@modules.Id">Activities</a>
+                                            </p>
+                                        </dt>
 
+                                    </dl>
+                                    <div class="collapse multi-collapse" id="courseList-@modules.Id">
 
+                                        <div class="card card-body">
+                                            @foreach (var activities in modules.Activities)
+                                            {
+                                                <dl class="row">
+                                                    <dt class="col-sm-12 btn btn-info" data-toggle="collapse" href="#moduleList-@modules.Activities" role="button" aria-expanded="false" aria-controls="collapseExample">
 
-                                    }
+                                                        @Html.DisplayFor(v => activities.Name)
+                                                        @Html.DisplayFor(m => activities.StartTime) - @Html.DisplayFor(m => activities.EndTime)
+                                                        <p>
+                                                            @*<a asp-area="" asp-controller="Modules" asp-action="Details2" asp-route-id="@activities.Id">See Module</a>*@
+                                                            <a asp-area="" asp-controller="Activities" asp-action="Edit" asp-route-id="@activities.Id">Edit</a>
+                                                            <a asp-area="" asp-controller="Activities" asp-action="Delete" asp-route-id="@activities.Id">Delete</a>
+                                                            @*<a asp-area="" asp-controller="Activities" asp-action="index" asp-route-id="@activities.Id">Activities</a>*@
+                                                        </p>
+                                                    </dt>
 
+                                                </dl>
 
-                                </div>
+                                            }
+                                        </div><!-- End collapse -->
+                                    </div>
+                                }
+                                <p id="createajax"></p>
+
+                                <p>
+                                    <a asp-controller="Modules" asp-action="Create" class="btn btn-info"
+                                       data-ajax="true"
+                                       data-ajax-method="GET"
+                                       data-ajax-update="#createajax"
+                                       data-ajax-mode="replace"> Add new module</a>
+                                </p>
+                            </div>
 
                             </div><!-- End collapse -->
                         </div><!-- End col -->
@@ -86,7 +115,27 @@
                             </div>
                         </div>
                     </div>
-                
+
+                    <div class="col">
+                        <div class="collapse multi-collapse" id="moduleList-@item.Modules">
+
+                            <div class="card card-body">
+
+                                <p class="text-dark">Activities</p>
+                                @*<p>Lorem Ipsum fjdsakjkfasffsda</p>
+                                <p>Lorem Ipsum fjdsakjkfasffsda</p>
+                                <p>Lorem Ipsum fjdsakjkfasffsda</p>
+                                <p>Lorem Ipsum fjdsakjkfasffsda</p>
+                                <p>Lorem Ipsum fjdsakjkfasffsda</p>
+                                <p>Lorem Ipsum fjdsakjkfasffsda</p>
+                                <p>Lorem Ipsum fjdsakjkfasffsda</p>*@
+                                @*<partial name="ActivitiesPartial" model="new ActivitiesViewModel { Activities = }"/>*@
+                                //@*<partial name="ActivitiesPartial" model="@item.CourseDetails" />*@
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
 
             </td>
             
