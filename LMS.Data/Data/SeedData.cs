@@ -24,7 +24,7 @@ namespace LMS.Data.Data {
 
                 // ---------------------------------------Courses  SeedData----------------------------------------
                if (context.Courses.Any()) return;
-              
+              else
                {
                     context.Courses.RemoveRange(context.Courses);
                     context.SaveChanges();
@@ -243,7 +243,7 @@ namespace LMS.Data.Data {
                     LastName = "Svensson",
                     // TimeOfRegistration = DateTime.Now
                 };
-
+                
                 var addTeacherResult = await userManger.CreateAsync(teacher, teacherPW);
 
                 if (!addTeacherResult.Succeeded) throw new Exception(string.Join("\n", addTeacherResult.Errors));
