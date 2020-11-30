@@ -80,10 +80,11 @@
                                                     </dt>
 
                                                 </dl>
-
+                                                //ADD HERE ADD NEW ACTIVITY
                                             }
                                         </div><!-- End collapse -->
                                     </div>
+                                    
                                 }
                                 <p id="createajax"></p>
 
@@ -94,6 +95,7 @@
                                        data-ajax-update="#createajax"
                                        data-ajax-mode="replace"> Add new module</a>
                                 </p>
+
                             </div>
 
                         </div><!-- End collapse -->
@@ -108,6 +110,21 @@
                             </div>
                         </div>
                     </div>
+                    @*@foreach (var modules in item.Modules)
+                    {
+
+
+                    <div class="col">
+                        <div class="collapse multi-collapse" id="courseList-@modules.Id">
+
+                            <div class="card card-body">
+
+                                <p class="text-dark">Module Details</p>
+                                <partial name="ModulePartial" model="@modules.Name" />
+                            </div>
+                        </div>
+                    </div>
+                    }*@
 
                     <div class="col">
                         <div class="collapse multi-collapse" id="moduleList-@item.Modules">
@@ -116,12 +133,12 @@
 
                                 <p class="text-dark">Activities</p>
                                 @*<p>Lorem Ipsum fjdsakjkfasffsda</p>
-                                <p>Lorem Ipsum fjdsakjkfasffsda</p>
-                                <p>Lorem Ipsum fjdsakjkfasffsda</p>
-                                <p>Lorem Ipsum fjdsakjkfasffsda</p>
-                                <p>Lorem Ipsum fjdsakjkfasffsda</p>
-                                <p>Lorem Ipsum fjdsakjkfasffsda</p>
-                                <p>Lorem Ipsum fjdsakjkfasffsda</p>*@
+                    <p>Lorem Ipsum fjdsakjkfasffsda</p>
+                    <p>Lorem Ipsum fjdsakjkfasffsda</p>
+                    <p>Lorem Ipsum fjdsakjkfasffsda</p>
+                    <p>Lorem Ipsum fjdsakjkfasffsda</p>
+                    <p>Lorem Ipsum fjdsakjkfasffsda</p>
+                    <p>Lorem Ipsum fjdsakjkfasffsda</p>*@
                                 @*<partial name="ActivitiesPartial" model="new ActivitiesViewModel { Activities = }"/>*@
                                 //@*<partial name="ActivitiesPartial" model="@item.CourseDetails" />*@
                             </div>
