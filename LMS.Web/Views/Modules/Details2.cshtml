@@ -59,22 +59,9 @@
             <tr>
 
                 <td>
-                    @*<p>
-                            <a class="btn btn-primary" data-toggle="collapse" href="#studentCourse-@item.Id" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                @Html.DisplayFor(modelItem => item.Name) : @Html.DisplayFor(modelItem => item.StartDate) - @Html.DisplayFor(modelItem => item.EndDate)
-                            </a>
-
-                        </p>*@
                     <div class="row">
                         <div class="col">
-                            @*<div class="collapse multi-collapse" id="studentCourse-@item.Id">*@
-                               
-
-
-
-
-                                @*@foreach (var moduleName in item.Activities)
-                                {*@
+   ç
 
                             <div class="card card-body">
                                 <p class="text-black-50">Activity:</p>
@@ -89,7 +76,6 @@
                             </div>
                                     
 
-                                @*}*@
 
 
                             @*</div>*@<!-- End collapse -->
@@ -97,34 +83,13 @@
                         <div class="col">
                             <div class="collapse multi-collapse" id="studentCourse-@item.Id">
 
-
-
-                                @*@foreach (var moduleName in item.Activities)
-                                {
-                                    <div class="card card-body">
-                                        <p class="text-black-50">Description:</p>
-                                        @Html.DisplayFor(m => moduleName.Description)
-
-                                    </div>
-
-                                    <br />
-
-                                }*@
-
-
-
-
                             </div><!-- End collapse -->
                         </div><!-- End col -->
                     </div>
 
 
                 </td>
-                @*<td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                    </td>*@
+    
             </tr>
         }
     </tbody>
