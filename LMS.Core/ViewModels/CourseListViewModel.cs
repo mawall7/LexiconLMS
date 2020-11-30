@@ -32,5 +32,6 @@ namespace LMS.Core.ViewModels
         public ICollection<Module> Modules { get; set; }
         public ICollection<Activity> Activities { get; set; }
         public CourseDetailsViewModel CourseDetails { get; set; }
+        public ModuleDetailsViewModel ModuleDetails { get; set; }
     }
 }

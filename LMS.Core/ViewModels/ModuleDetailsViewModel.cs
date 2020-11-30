@@ -12,7 +12,7 @@ namespace LMS.Core.ViewModels
         public int Id { get; set; }
 
 
-        [DisplayName("Course Name")]
+        [DisplayName("Module Name")]
         public string Name { get; set; }
 
         public string Description { get; set; }

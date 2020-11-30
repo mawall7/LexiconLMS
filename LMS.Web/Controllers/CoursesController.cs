@@ -108,6 +108,12 @@ namespace LMS.Web.Controllers
                         Description = c.Description,
                         StartDate = c.StartDate,
                         EndDate = c.EndDate
+                    },
+                    ModuleDetails=new ModuleDetailsViewModel
+                    {
+                        Description = c.Description,
+                        StartDate = c.StartDate,
+                        EndDate = c.EndDate
                     }
 
                     

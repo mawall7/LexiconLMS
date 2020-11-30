@@ -48,7 +48,7 @@
                                 @foreach (var modules in item.Modules)
                                 {
                                     <dl class="row">
-                                        <dt class="col-sm-12 btn btn-secondary">
+                                        <dt class="col-sm-12 btn btn-secondary" data-toggle="collapse" href="#moduleList-@item.Modules" role="button" aria-expanded="false" aria-controls="collapseExample">
 
                                             @Html.DisplayFor(v => modules.Name)
                                             @Html.DisplayFor(m => modules.StartDate) - @Html.DisplayFor(m => modules.EndDate)
@@ -56,13 +56,11 @@
                                                 <a asp-area="" asp-controller="Modules" asp-action="Details2" asp-route-id="@modules.Id">See Module</a>
                                                 <a asp-area="" asp-controller="Modules" asp-action="Edit" asp-route-id="@modules.Id">Edit</a>
                                                 <a asp-area="" asp-controller="Modules" asp-action="Delete" asp-route-id="@modules.Id">Delete</a>
-                                            </p>
-
-                                        </dt>
-
-                                    </dl>
-                                  
-
+                                                <a asp-area="" asp-controller="Activities" asp-action="index" asp-route-id="@modules.Id">Activities</a>
+                                             </p>
+                                         </dt>
+ 
+                                     </dl>
 
                                 }
                                 <p id="createajax"></p>
@@ -85,6 +83,25 @@
 
                                 <p class="text-dark">Course Details</p>
                                 <partial name="DetailsPartial" model="@item.CourseDetails" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="collapse multi-collapse" id="moduleList-@item.Modules">
+
+                            <div class="card card-body">
+
+                                <p class="text-dark">Activities</p>
+                                @*<p>Lorem Ipsum fjdsakjkfasffsda</p>
+                                <p>Lorem Ipsum fjdsakjkfasffsda</p>
+                                <p>Lorem Ipsum fjdsakjkfasffsda</p>
+                                <p>Lorem Ipsum fjdsakjkfasffsda</p>
+                                <p>Lorem Ipsum fjdsakjkfasffsda</p>
+                                <p>Lorem Ipsum fjdsakjkfasffsda</p>
+                                <p>Lorem Ipsum fjdsakjkfasffsda</p>*@
+                                @*<partial name="ActivitiesPartial" model="new ActivitiesViewModel { Activities = }"/>*@
+                                //@*<partial name="ActivitiesPartial" model="@item.CourseDetails" />*@
                             </div>
                         </div>
                     </div>
