@@ -92,7 +92,7 @@ namespace LMS.Web.Controllers
         }
 
         // GET: CourseList
-        //[Authorize(Roles = "Teacher")]
+        [Authorize(Roles = "Teacher")]
         public async Task<IActionResult> CourseList()
         {
             
@@ -151,7 +151,7 @@ namespace LMS.Web.Controllers
         }
 
         // GET: Courses/Create
-       // [Authorize(Roles ="Teacher")]
+        [Authorize(Roles ="Teacher")]
         public IActionResult Create() {
             return View();
         }
@@ -161,7 +161,7 @@ namespace LMS.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       // [Authorize(Roles ="Teacher")]
+        [Authorize(Roles ="Teacher")]
         public async Task<IActionResult> Create(CreateCourseViewModel createCourseViewModel)
         {
 
@@ -176,7 +176,7 @@ namespace LMS.Web.Controllers
         }
 
         // GET: Courses/Edit/5
-      // [Authorize(Roles ="Teacher")]
+       [Authorize(Roles ="Teacher")]
         public async Task<IActionResult> Edit(int? id) {
             if (id == null)
             {
@@ -196,7 +196,7 @@ namespace LMS.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-      //  [Authorize(Roles ="Teacher")]
+        [Authorize(Roles ="Teacher")]
         public async Task<IActionResult> Edit(int id, EditCourseViewModel viewModel) {
             if (id != viewModel.Id)
             {
@@ -228,7 +228,7 @@ namespace LMS.Web.Controllers
         }
 
         // GET: Courses/Delete/5
-      //  [Authorize(Roles ="Teacher")]
+        [Authorize(Roles ="Teacher")]
         public async Task<IActionResult> Delete(int? id) {
             if (id == null)
             {
@@ -248,7 +248,7 @@ namespace LMS.Web.Controllers
         // POST: Courses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-       // [Authorize(Roles ="Teacher")]
+        [Authorize(Roles ="Teacher")]
         public async Task<IActionResult> DeleteConfirmed(int id) {
             var course = await _context.Courses.FindAsync(id);
             _context.Courses.Remove(course);
