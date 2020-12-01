@@ -57,11 +57,34 @@
                                                 <a asp-area="" asp-controller="Modules" asp-action="Edit" asp-route-id="@modules.Id">Edit</a>
                                                 <a asp-area="" asp-controller="Modules" asp-action="Delete" asp-route-id="@modules.Id">Delete</a>
                                                 <a asp-area="" asp-controller="Activities" asp-action="index" asp-route-id="@modules.Id">Activities</a>
-                                             </p>
-                                         </dt>
- 
-                                     </dl>
+                                            </p>
+                                        </dt>
 
+                                    </dl>
+                                    <div class="collapse multi-collapse" id="courseList-@modules.Id">
+
+                                        <div class="card card-body">
+                                            @foreach (var activities in modules.Activities)
+                                            {
+                                                <dl class="row">
+                                                    <dt class="col-sm-12 btn btn-info" data-toggle="collapse" href="#moduleList-@modules.Activities" role="button" aria-expanded="false" aria-controls="collapseExample">
+
+                                                        @Html.DisplayFor(v => activities.Name)
+                                                        @Html.DisplayFor(m => activities.StartTime) - @Html.DisplayFor(m => activities.EndTime)
+                                                        <p>
+                                                            @*<a asp-area="" asp-controller="Modules" asp-action="Details2" asp-route-id="@activities.Id">See Module</a>*@
+                                                            <a asp-area="" asp-controller="Activities" asp-action="Edit" asp-route-id="@activities.Id">Edit</a>
+                                                            <a asp-area="" asp-controller="Activities" asp-action="Delete" asp-route-id="@activities.Id">Delete</a>
+                                                            @*<a asp-area="" asp-controller="Activities" asp-action="index" asp-route-id="@activities.Id">Activities</a>*@
+                                                        </p>
+                                                    </dt>
+
+                                                </dl>
+                                                //ADD HERE ADD NEW ACTIVITY
+                                            }
+                                        </div><!-- End collapse -->
+                                    </div>
+                                    
                                 }
                                 <p id="createajax"></p>
 
@@ -72,6 +95,7 @@
                                        data-ajax-update="#createajax"
                                        data-ajax-mode="replace"> Add new module</a>
                                 </p>
+
                             </div>
 
                         </div><!-- End collapse -->
@@ -86,6 +110,21 @@
                             </div>
                         </div>
                     </div>
+                    @*@foreach (var modules in item.Modules)
+                    {
+
+
+                    <div class="col">
+                        <div class="collapse multi-collapse" id="courseList-@modules.Id">
+
+                            <div class="card card-body">
+
+                                <p class="text-dark">Module Details</p>
+                                <partial name="ModulePartial" model="@modules.Name" />
+                            </div>
+                        </div>
+                    </div>
+                    }*@
 
                     <div class="col">
                         <div class="collapse multi-collapse" id="moduleList-@item.Modules">
@@ -94,12 +133,12 @@
 
                                 <p class="text-dark">Activities</p>
                                 @*<p>Lorem Ipsum fjdsakjkfasffsda</p>
-                                <p>Lorem Ipsum fjdsakjkfasffsda</p>
-                                <p>Lorem Ipsum fjdsakjkfasffsda</p>
-                                <p>Lorem Ipsum fjdsakjkfasffsda</p>
-                                <p>Lorem Ipsum fjdsakjkfasffsda</p>
-                                <p>Lorem Ipsum fjdsakjkfasffsda</p>
-                                <p>Lorem Ipsum fjdsakjkfasffsda</p>*@
+                    <p>Lorem Ipsum fjdsakjkfasffsda</p>
+                    <p>Lorem Ipsum fjdsakjkfasffsda</p>
+                    <p>Lorem Ipsum fjdsakjkfasffsda</p>
+                    <p>Lorem Ipsum fjdsakjkfasffsda</p>
+                    <p>Lorem Ipsum fjdsakjkfasffsda</p>
+                    <p>Lorem Ipsum fjdsakjkfasffsda</p>*@
                                 @*<partial name="ActivitiesPartial" model="new ActivitiesViewModel { Activities = }"/>*@
                                 //@*<partial name="ActivitiesPartial" model="@item.CourseDetails" />*@
                             </div>
