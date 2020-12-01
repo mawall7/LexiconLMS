@@ -24,12 +24,12 @@ namespace LMS.Core.Entities
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
+        public Course Course { get; set; }
 
         //Foreign Key
         public int CourseId { get; set; }
         //Navigation property
         public ICollection<Activity> Activities { get; set; }
-        public Course Course { get; set; }
 
         //public ICollection<ApplicationUserModule> AttendedMembers { get; set; }
         //public ICollection<Document> Documents { get; set; }

@@ -108,6 +108,7 @@ namespace LMS.Web.Controllers
                     Activities = c.Activities,
                     CourseDetails = new CourseDetailsViewModel
                     {
+                        Id = c.Id,
                         Description = c.Description,
                         StartDate = c.StartDate,
                         EndDate = c.EndDate
@@ -348,7 +349,20 @@ namespace LMS.Web.Controllers
             return View(model);
         }
 
-        
+
+
+        public async Task<IActionResult> Select() {
+            var courses = await _context.Courses.Select(p => new Course { Name = p.Name }).ToListAsync();
+            ViewBag.CourseName = courses;
+                return View(courses);
+
+        }
+
+
+
+
+
+
 
     }
 }

@@ -45,7 +45,7 @@ namespace LMS.Web.Controllers
 
 
             var model = _context.Activities
-                .Where(a => a.ModuleId == Id)
+
                 .Select(a => new ActivitiesViewModel
                 {
                     Name = a.Name,
@@ -56,14 +56,14 @@ namespace LMS.Web.Controllers
                     //ModuleId = a.ModuleId, ?
                     //ActivityTypeId = a.ActivityTypeId,
                     ActivityTypeName = a.ActivityType.Name
-                }).ToList();
+                });  /*.Where(a => a.ModuleId == Id)*/
                 
                 
             
              
             
 
-            return View(model);
+            return View(model.ToList());
           
         }
 

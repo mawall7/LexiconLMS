@@ -27,5 +27,7 @@ namespace LMS.Core.Entities
         // Navigation property
         public Module Module { get; set; }
         public ActivityType ActivityType { get; set; }
+        public ICollection<Document> Documents { get; set; }
+
     }
 }

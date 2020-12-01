@@ -23,22 +23,23 @@ namespace LMS.Data.Data {
 
                  
                 // ---------------------------------------Courses  SeedData----------------------------------------
-                if (context.Courses.Any())
-                {
-                    context.ActivityTypes.RemoveRange(context.ActivityTypes);
+               if (context.Courses.Any()) return;
+              else
+               {
+                    context.Courses.RemoveRange(context.Courses);
                     context.SaveChanges();
                 }
-
+            
 
                 var courses = new List<Course>();
 
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 5; i++)
                 {
                     var course = new Course
                     {
 
                         Name = fake.Music.Genre(),
-                        Description = fake.Hacker.Verb(),
+                        Description = fake.Lorem.Sentence(),
                         StartDate = DateTime.Now.AddDays(fake.Random.Int(-2, 2)),
                         EndDate = DateTime.Now.AddMonths(fake.Random.Int(2, 1))
                     };
@@ -52,6 +53,35 @@ namespace LMS.Data.Data {
                 await context.SaveChangesAsync();
 
 
+
+                // ---------------------------------------Users  SeedData----------------------------------------
+
+              
+
+
+                var aspNetUsers = new List<ApplicationUser>();
+
+                for (int i = 0; i < 10; i++)
+                {
+                    var APPUser = new ApplicationUser
+                    {
+
+                        FirstName = fake.Name.FirstName(),
+                        LastName = fake.Name.LastName(),
+                        Address = fake.Address.FullAddress() ,
+                        Email = fake.Internet.Email(),
+                        Phone = fake.Phone.PhoneNumber(),
+                        CourseId = courses[fake.Random.Int(1, courses.Count) - 1].Id,
+                        
+                    };
+
+                    aspNetUsers.Add(APPUser);
+                }
+
+
+
+                await context.AddRangeAsync(aspNetUsers);
+                await context.SaveChangesAsync();
 
 
                 // ---------------------------------------ActivityType  SeedData----------------------------------------
@@ -97,7 +127,7 @@ namespace LMS.Data.Data {
                     {
 
                         Name = fake.Music.Genre(),
-                        Description = fake.Hacker.Verb(),
+                        Description = fake.Lorem.Sentence(),
                         StartDate = DateTime.Now.AddDays(fake.Random.Int(-2, 2)),
                         EndDate = DateTime.Now.AddMonths(fake.Random.Int(3, 4)),
                         CourseId = courses[fake.Random.Int(1,courses.Count) - 1].Id
@@ -127,7 +157,7 @@ namespace LMS.Data.Data {
                     {
 
                         Name = fake.Music.Genre(),
-                        Description = fake.Hacker.Verb(),
+                        Description = fake.Lorem.Sentence(),
                         StartTime = DateTime.Now.AddDays(fake.Random.Int(0, 2)),
                         EndTime = DateTime.Now.AddDays(fake.Random.Int(2, 4)),
                         ActivityTypeId = activityTypes[fake.Random.Int(1, activityTypes.Count) - 1].Id,
@@ -144,6 +174,39 @@ namespace LMS.Data.Data {
                 await context.AddRangeAsync(activities);
                 await context.SaveChangesAsync();
 
+                // ---------------------------------------Dokument  SeedData----------------------------------------
+                if (context.Documents.Any())
+                {
+                    context.Documents.RemoveRange(context.Documents);
+                    context.SaveChanges();
+                }
+
+
+                var documents = new List<Document>();
+
+                for (int i = 0; i < 10; i++)
+                {
+                    var document = new Document
+                    {
+
+                        Name = fake.Music.Genre(),
+                        Description = fake.Lorem.Sentence() ,
+                        DateCreated = DateTime.Now.AddDays(fake.Random.Int(-2, 2)),
+                        CourseId = courses[fake.Random.Int(1, courses.Count) - 1].Id,
+                        ApplicationUserId = aspNetUsers[fake.Random.Int(1, aspNetUsers.Count) - 1].Id,
+                        ActivityId = activities[fake.Random.Int(1, activities.Count) - 1].Id,
+                        Path = fake.Image.PicsumUrl(),
+                        ModuleId = modules[fake.Random.Int(1, modules.Count) - 1].Id
+
+                    };
+
+                    documents.Add(document);
+                }
+
+
+
+                await context.AddRangeAsync(documents);
+                await context.SaveChangesAsync();
 
 
 
@@ -166,7 +229,7 @@ namespace LMS.Data.Data {
 
                 }
 
-                var teacherEmail = "teacher@lms.se";
+                var teacherEmail = "teacher@lms.se"; // LexiconLms20?
 
                 var foundUser = await userManger.FindByEmailAsync(teacherEmail);
 
@@ -180,7 +243,7 @@ namespace LMS.Data.Data {
                     LastName = "Svensson",
                     // TimeOfRegistration = DateTime.Now
                 };
-
+                
                 var addTeacherResult = await userManger.CreateAsync(teacher, teacherPW);
 
                 if (!addTeacherResult.Succeeded) throw new Exception(string.Join("\n", addTeacherResult.Errors));

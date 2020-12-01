@@ -2,21 +2,27 @@
 @{
     ViewData["Title"] = "Activities";
 }
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+
+
+
+
 
 <h1>Activities</h1>
 @if (User.IsInRole("Teacher"))
 {
 
-<p>
-    <a class="btn btn-primary float-right" asp-action="Create" asp-route-id="">Add Activity</a>
+    <p>
+        <a class="btn btn-primary float-right" asp-action="Create" asp-route-id="">Add Activity</a>
 
-</p>
+    </p>
 }
 
 <a asp-action="Create" asp-route-id="item.id" class=" button-btn-success"></a>
 <table class="table">
     <thead>
-        
+
         <tr>
 
 
@@ -41,28 +47,43 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.StartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
 
 
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+                <td>
+                    <div class="row">
+                        <div class="col-12">
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </div>
+                        <div class="col-12">
+
+                            <a asp-action="ActivityListMaterial" asp-controller="Documents" asp-route-id="@item.Id" class="documentLink m-auto btn btn-primary text-light border border-dark clear float-right">Document</a>
+                        </div>
+                        @if (User.IsInRole("Teacher"))
+                        {
+                            <div class="col-12">
+
+                                <a asp-action="Create" asp-route-param2="Activity" asp-controller="Documents" asp-route-param="@item.Id" class=" float-right  m-auto fas fa-folder-plus ">Add Document</a><br /><br /><br />
+                            </div>
+                        }
+                        </div>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
