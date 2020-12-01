@@ -17,7 +17,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th></th>
+         
         </tr>
     </thead>
 
@@ -51,8 +51,8 @@
                             <div class="card card-body">
                                 @foreach (var modules in item.Modules)
                                 {
-                                    <dl class="row">
-                                        <dt class="col-sm-12 btn btn-secondary" data-toggle="collapse" href="#moduleList-@item.Modules" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    <dl class="">
+                                        <dt class=" btn btn-secondary" data-toggle="collapse" href="#moduleList-@item.Modules" role="button" aria-expanded="false" aria-controls="collapseExample">
 
                                             @Html.DisplayFor(v => modules.Name)
                                             @Html.DisplayFor(m => modules.StartDate) - @Html.DisplayFor(m => modules.EndDate)
@@ -70,7 +70,7 @@
                                         <div class="card card-body">
                                             @foreach (var activities in modules.Activities)
                                             {
-                                                <dl class="row">
+                                                <dl class="">
                                                     <dt class="col-sm-12 btn btn-info" data-toggle="collapse" href="#moduleList-@modules.Activities" role="button" aria-expanded="false" aria-controls="collapseExample">
 
                                                         @Html.DisplayFor(v => activities.Name)
@@ -135,7 +135,7 @@
                         </div>
                     </div>
 
-                </div>
+              
 
             </td>
             

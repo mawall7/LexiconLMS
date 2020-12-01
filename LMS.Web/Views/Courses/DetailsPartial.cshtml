@@ -1,11 +1,17 @@
-﻿@model LMS.Core.ViewModels.CourseDetailsViewModel
+﻿@using Microsoft.AspNetCore.Identity
+@model LMS.Core.ViewModels.CourseDetailsViewModel
+@inject UserManager<ApplicationUser> UserManager
 
-<a asp-action="CoursesListMaterial" asp-controller="Documents" asp-route-id="@Model.Id"  class="documentLink m-auto btn btn-primary text-light border border-dark float-right">Document</a>
+
+<a asp-action="CoursesListMaterial" asp-controller="Documents" asp-route-id="@Model.Id" class="documentLink m-auto btn btn-primary text-light border border-dark float-right">Document</a>
 
 @*<a class="documentLink m-auto btn btn-primary text-light border border-dark float-right" asp-action="CourseMainPageDocument" asp-controller="Documents" asp-route-id="@Model.Id">Document</a>*@
 <br />
 <br />
-<a asp-action="Create" asp-controller="Documents" asp-route-param="@Model.Id" class="float-right m-auto">Add New Document</a>
+@if (User.IsInRole("Teacher"))
+{
+<a asp-action="Create" asp-controller="Documents" asp-route-param="@Model.Id" asp-route-param2="Course" class="float-right m-auto fas fa-folder-plus">Add Document</a>
+}
 <br />
 <table class="table">
 

@@ -6,101 +6,111 @@
     ViewData["Title"] = "Details2";
 }
 
-<h1>Details</h1>
 
+<div class="row">
+    <div class="col-12">
 
+        <a asp-action="ModuleListMaterial" asp-controller="Documents" asp-route-id="@Model.Id" class="documentLink m-auto btn btn-primary text-light border border-dark clear float-right">Document</a>
+    </div>
+    @if (User.IsInRole("Teacher"))
+    {
+        <div class="col-12">
 
-
-<style>
-    .btn-primary {
-        color: #fff;
-        background-color: #1b6ec2;
-        border-color: #1861ac;
-        width: 100%;
+            <a asp-action="Create" asp-route-param2="Module" asp-controller="Documents" asp-route-param="@Model.Id" class=" float-right  m-auto fas fa-folder-plus ">Add Document</a><br /><br /><br />
+        </div>
     }
+    </div>
 
-    a.btn.btn-primary {
-        color: #fff;
-        background-color: #1b6ec2;
-        border-color: #1861ac;
-        width: 100%;
-    }
-</style>
-<table class="table">
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.StartDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.StartDate)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.EndDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.EndDate)
-        </dd>
-    </dl>
-    <tbody>
-        @foreach (var item in Model.Activities)
-        {
-            <tr>
-
-                <td>
-                    <div class="row">
-                        <div class="col">
-   
-
-                            <div class="card card-body">
-                                <p class="text-black-50">Activity:</p>
-                                @Html.DisplayFor(m => item.Name) ||
-
-                                <br />
-                                @Html.DisplayFor(m => item.StartTime) - @Html.DisplayFor(m => item.EndTime)
-                                <br />
-                                <p>
-                                    <a asp-area="" asp-controller="Activities" asp-action="Details" asp-route-id="@item.Id">See Activity</a>
-                                </p>
-                            </div>
-                                    
-
-
-
-                            @*</div>*@<!-- End collapse -->
-                        </div><!-- End col -->
-                        <div class="col">
-                            <div class="collapse multi-collapse" id="studentCourse-@item.Id">
-
-                            </div><!-- End collapse -->
-                        </div><!-- End col -->
-                    </div>
-
-
-                </td>
-    
-            </tr>
+    <style>
+        .btn-primary {
+            color: #fff;
+            background-color: #1b6ec2;
+            border-color: #1861ac;
+            /*width: 100%;*/
         }
-    </tbody>
-</table>
+
+        a.btn.btn-primary {
+            color: #fff;
+            background-color: #1b6ec2;
+            border-color: #1861ac;
+            /* width: 100%;*/
+        }
+    </style>
+    <table class="table">
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.StartDate)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.StartDate)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.EndDate)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.EndDate)
+            </dd>
+        </dl>
+        <tbody>
+            @foreach (var item in Model.Activities)
+            {
+                <tr>
+
+                    <td>
+                        <div class="row">
+                            <div class="col">
+
+
+                                <div class="card card-body">
+                                    <p class="text-black-50">Activity:</p>
+                                    @Html.DisplayFor(m => item.Name) ||
+
+                                    <br />
+                                    @Html.DisplayFor(m => item.StartTime) - @Html.DisplayFor(m => item.EndTime)
+                                    <br />
+                                    <p>
+                                        <a asp-area="" asp-controller="Activities" asp-action="Details" asp-route-id="@item.Id">See Activity</a>
+                                    </p>
+                                </div>
+
+
+
+
+                                @*</div>*@<!-- End collapse -->
+                            </div><!-- End col -->
+                            <div class="col">
+                                <div class="collapse multi-collapse" id="studentCourse-@item.Id">
+
+                                </div><!-- End collapse -->
+                            </div><!-- End col -->
+                        </div>
+
+
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
 
 
 
 
 
 
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>

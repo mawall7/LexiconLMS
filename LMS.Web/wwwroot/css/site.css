@@ -100,3 +100,6 @@ body {
     width: 800px;
     overflow-y: auto;
 }
+.clear{
+    clear:both;
+}

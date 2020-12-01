@@ -104,14 +104,22 @@ namespace LMS.Web.Controllers {
 
         // GET: Documents/Create
         //[Authorize(Roles = "Teacher")]
-        public IActionResult Create(int? param ) {
+        public IActionResult Create(int? param, string? param2) {
             ViewData["ActivityId"] = new SelectList(db.Activities, "Id", "Id");
             ViewData["ApplicationUserId"] = new SelectList(db.Users, "Id", "Id");
             ViewData["ApplicationUserFirstName"] = new SelectList(db.Users, "FirstName", "FirstName");
             ViewData["CourseId"] = new SelectList(db.Courses, "Id", "Id");
-            ViewData["ModuleId"] = new SelectList(db.Modules, "Id", "Id");
-            
-            var model = new Document { CourseId = param };
+            ViewData["var model"] = new SelectList(db.Modules, "Id", "Id");
+
+            Document model = null;
+
+            if (param2 == "Course") {  model = new Document { CourseId = param }; }
+            else
+            if (param2 == "Module") {  model = new Document { ModuleId = param }; }
+            else
+            if (param2 == "Activity") {  model = new Document { ActivityId = param }; }
+              
+           
             return View(model);
         }
 
@@ -331,18 +339,66 @@ namespace LMS.Web.Controllers {
                 //  }).Where(i => Documents.Contains(i.CourseId)); //i.CourseId
             }).Where(i => i.CourseId == id);
 
-            return View("CoursesListMaterial", await model.ToListAsync()); //FirstOrDefaultAsync(m => m.Id == id);
+            return View("DocumentDemo", await model.ToListAsync()); //FirstOrDefaultAsync(m => m.Id == id);
         }
 
 
 
-        /******************************* FileUpload******************************/
-
-        
+        /******************************* ModuleListMaterial******************************/
 
 
-            
-          
+        public async Task<ActionResult> ModuleListMaterial(int? id) {
+            var model = db.Documents.Include(e => e.ApplicationUser).Include(e => e.Module).Select(p => new DocumentViewModel
+            {
+                Id = p.Id,
+                Name = p.Name,
+                ModuleName = p.Module.Name,
+                ModuleId = p.Module.Id,
+
+                ApplicationUserFirstName = p.ApplicationUser.FirstName,
+                ApplicationUserLastName = p.ApplicationUser.LastName,
+                DateCreated = p.DateCreated,
+                StartDate = p.Module.StartDate,
+                EndDate = p.Module.EndDate,
+               
+               
+            }).Where(i => i.ModuleId == id);
+
+            return View("DocumentDemo", await model.ToListAsync()); //FirstOrDefaultAsync(m => m.Id == id);
+        }
+
+
+
+        /******************************* ActivityListMaterial******************************/
+
+
+        public async Task<ActionResult> ActivityListMaterial(int? id) {
+            var model = db.Documents.Include(e => e.ApplicationUser).Include(e => e.Module).Select(p => new DocumentViewModel
+            {
+                Id = p.Id,
+                Name = p.Name,
+                ActivityName = p.Activity.Name,
+                ActivityId = p.Activity.Id,
+                ModuleId = p.Module.Id,
+                ApplicationUserFirstName = p.ApplicationUser.FirstName,
+                ApplicationUserLastName = p.ApplicationUser.LastName,
+                DateCreated = p.DateCreated,
+                StartTime = p.Activity.StartTime,
+                EndTime = p.Activity.EndTime,
+
+
+            }).Where(i => i.ActivityId == id);
+
+            return View("DocumentDemo", await model.ToListAsync()); 
+        }
+
+
+
+
+
+
+
+
 
 
 
