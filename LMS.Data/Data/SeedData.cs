@@ -114,7 +114,7 @@ namespace LMS.Data.Data {
                 // ---------------------------------------Module  SeedData----------------------------------------
                 if (context.Modules.Any())
                 {
-                    context.Modules.RemoveRange(context.Modules);
+                   // context.Modules.RemoveRange(context.Modules);
                     context.SaveChanges();
                 }
 

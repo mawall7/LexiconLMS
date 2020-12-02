@@ -8,11 +8,15 @@
 document.querySelector(this.#courseNamelist).addEventListener("select", assighn());
 
 
-function assighn() {
-    var name = document.querySelector(this.#courseNamelist).value;
-    var result = (document.querySelector(this.#dictionary).value)[name];
-    var demo = document.querySelector("courseId").setAttribute("value", result);
-    document.querySelector(this.#demo).innerHTML = demo;
+function removeFormModule() {
+    document.querySelector('#formModule').remove();
+}
+function removeFormActivity() {
+    document.querySelector('#formActivity').remove();
+}
+
+function remoteForm() {
+    $('#createForm').remove();
 }
 
 

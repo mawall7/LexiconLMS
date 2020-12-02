@@ -43,16 +43,16 @@
                                         @foreach (var moduleName in item.Activities)
                                         {
 
-                                            <div class="card card-body">
-                                                <p class="text-black-50">Activity:</p>
-                                                <h4> @Html.DisplayFor(m => moduleName.Name)</h4>
+                                        <div class="card card-body">
+                                            <p class="text-black-50">Activity:</p>
+                                            <h4> @Html.DisplayFor(m => moduleName.Name)</h4>
 
-                                                @Html.DisplayFor(m => moduleName.StartTime) - @Html.DisplayFor(m => moduleName.EndTime)
+                                            @Html.DisplayFor(m => moduleName.StartTime) - @Html.DisplayFor(m => moduleName.EndTime)
 
-                                                <p class="text-black-50">Description:</p>
-                                                @Html.DisplayFor(m => moduleName.Description)
-
-                                            </div>
+                                            <p class="text-black-50">Description:</p>
+                                            @Html.DisplayFor(m => moduleName.Description)
+                                            <a asp-area="" asp-controller="Activities" asp-action="Details" asp-route-id="@moduleName.Id">See Activity</a>
+                                        </div>
 
                                             <br />
 

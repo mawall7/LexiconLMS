@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using LMS.Data.Data;
 using LMS.Core.Entities;
 using AutoMapper;
+using LMS.Web.Services;
 
 namespace LMS.Web
 {
@@ -40,6 +41,8 @@ namespace LMS.Web
 
             // Add AutoMapper
             services.AddAutoMapper(typeof(MapperProfile));
+            services.AddScoped<IActivityTypeSelectServices, ActivityTypeSelectServices>();
+            services.AddScoped<IModuleSelectService, ModuleSelectService>();
 
         }
 

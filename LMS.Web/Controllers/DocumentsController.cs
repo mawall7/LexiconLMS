@@ -373,7 +373,7 @@ namespace LMS.Web.Controllers {
 
 
         public async Task<ActionResult> ActivityListMaterial(int? id) {
-            var model = db.Documents.Include(e => e.ApplicationUser).Include(e => e.Module).Select(p => new DocumentViewModel
+            var model = db.Documents.Include(e => e.ApplicationUser).Include(e => e.Activity).Select(p => new DocumentViewModel
             {
                 Id = p.Id,
                 Name = p.Name,
