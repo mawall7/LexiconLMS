@@ -191,13 +191,10 @@ namespace LMS.Web.Controllers
 
             var activity = await _context.Activities.FindAsync(id);
             
-            if (activity == null)
-            {
-                return NotFound();
-            }
+            
 
             ViewData["ActivityTypeName"] = new SelectList(_context.Set<ActivityType>(), "Id", "Name"); //don't remove
-            
+
             return View(activity);
         }
 
