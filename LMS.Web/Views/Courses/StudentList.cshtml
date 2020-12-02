@@ -1,0 +1,36 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@model StudentCourseViewModel
+
+@{
+    ViewData["Title"] = "Student List";
+}
+
+<style>
+    .h5 {
+        font-size: smaller;
+    }
+</style>
+<table class="table">
+    
+    <tbody>
+        <tr>
+            <td>
+                
+                    <div class="">
+                        <div class="card card-body w-100 p3">
+                            <p class="text-black-50">CLASSMATES:</p>
+                            @foreach (var student in Model.AttendingStudents)
+                            {
+                                @Html.DisplayFor(s => student.FullName) 
+                                <a asp-action="Edit" asp-route-id="@student.Id">Edit</a>
+                            }
+
+                        </div>
+                    </div>
+              
+            </td>
+        </tr>
+
+    </tbody>
+</table>
