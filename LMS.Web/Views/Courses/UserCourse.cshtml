@@ -18,8 +18,13 @@
             <th>
                 @Html.DisplayNameFor(model => model.Name) : <h4> @Html.DisplayFor(model => model.Name) </h4>
                 <h5>@Html.DisplayFor(model => model.StartDate) - @Html.DisplayFor(model => model.EndDate)</h5>
+                <a asp-action="CourseListMaterial" asp-controller="Documents" asp-route-id="@Model.Id" class="documentLink m-auto btn btn-primary text-light border border-dark clear float-right">Document</a>
             </th>
             <th class="text-dark">@Html.DisplayFor(model => model.ApplicationUser.FullName)   </th>
+            
+
+                
+            
         </tr>
     </thead>
     <tbody>
@@ -30,12 +35,16 @@
                         @foreach (var item in Model.Modules)
                         {
 
-                            <p>
-                                <a class="btn btn-primary  w-100 p3" data-toggle="collapse" href="#studentCourse-@item.Id" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                    @Html.DisplayFor(modelItem => item.Name) : @Html.DisplayFor(modelItem => item.StartDate) - @Html.DisplayFor(modelItem => item.EndDate)
-                                </a>
+                        <p>
+                            <a class="btn btn-primary  w-100 p3" data-toggle="collapse" href="#studentCourse-@item.Id" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                @Html.DisplayFor(modelItem => item.Name) : @Html.DisplayFor(modelItem => item.StartDate) - @Html.DisplayFor(modelItem => item.EndDate)
+                            </a>
+                            
 
-                            </p>
+                                <a asp-action="ModuleListMaterial" asp-controller="Documents" asp-route-id="@item.Id" class="documentLink m-auto btn btn-primary text-light border border-dark clear float-right">Document</a>
+                            
+                            
+                        </p>
                             <div class="row">
                                 <div class="">
                                     <div class="collapse multi-collapse" id="studentCourse-@item.Id">
