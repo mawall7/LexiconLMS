@@ -279,5 +279,34 @@ namespace LMS.Web.Controllers
         {
             return _context.Activities.Any(e => e.Id == id);
         }
+
+
+        public async Task<IActionResult> HomeWork() {
+            //var item = UserManager.GetUsersInRoleAsync("Student");
+            var model = _context.Activities.Select(P => P.Name == "Home Work");
+         
+
+
+
+            return View();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

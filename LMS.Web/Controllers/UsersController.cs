@@ -71,20 +71,11 @@ namespace LMS.Web.Controllers
             }
             return false;
         }
-        //public async Task<IActionResult> OnGetAsync(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        
 
-        //    var model = await _context.UserRoles;
 
-        //    if (model == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(model);
-        //}
+
+
+
     }
 }
