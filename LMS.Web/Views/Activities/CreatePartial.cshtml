@@ -1,0 +1,63 @@
+﻿@model LMS.Core.Entities.Activity
+@inject LMS.Web.Services.IActivityTypeSelectServices activityTypeService
+@inject LMS.Web.Services.IModuleSelectService moduleService
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form id="formActivity" asp-action="Create"
+              data-ajax="true"
+              data-ajax-metod="POST"
+              data-ajax-mode="after"
+              data-ajax-update="#activity"
+              data-ajax-success="removeFormActivity"
+              data-ajax-failure="fail">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+          
+            <div class="form-group">
+                <label asp-for="ModuleId" class="control-label">Select Module</label>
+                <select asp-items="@await moduleService.GetModuleAsync(Model.Module.CourseId)" asp-for="ModuleId" class="form-control"></select>
+                <span asp-validation-for="ModuleId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StartTime" class="control-label"></label>
+                <input asp-for="StartTime" class="form-control" />
+                <span asp-validation-for="StartTime" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EndTime" class="control-label"></label>
+                <input asp-for="EndTime" class="form-control" />
+                <span asp-validation-for="EndTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ActivityTypeId" class="control-label">ActivityType</label>
+                <select asp-items="@await activityTypeService.GetActivityTypeAsync()" asp-for="ActivityTypeId" class="form-control"></select>
+                <span asp-validation-for="ActivityTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-info" />
+                @*<h6 class="d-inline-block">|</h6>
+            <input type="button" value="Cancel" onclick="location.href='@Url.Action("Index", "Activities", new {id=Model.ModuleId })'" class="btn btn-info " style="border-color:transparent" />*@
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

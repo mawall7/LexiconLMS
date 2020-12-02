@@ -72,10 +72,14 @@ namespace LMS.Web.Controllers
 
         // GET: Modules/Create
         [Authorize(Roles = "Teacher")]
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
             if (Request.IsAjax())
-                return PartialView("CreatePartial");
+            {
+                var module = new Module { CourseId = id };
+                return PartialView("CreatePartial", module);
+
+            }
             return View();
         }
 
@@ -85,7 +89,7 @@ namespace LMS.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher")]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate,CourseId")] Module @module)
+        public async Task<IActionResult> Create([Bind("Name,Description,StartDate,EndDate,CourseId")] Module @module)
         {
             if (ModelState.IsValid)
             {
@@ -99,7 +103,8 @@ namespace LMS.Web.Controllers
                         Id = module.Id,
                         Name = module.Name,
                         StartDate = module.StartDate,
-                        EndDate = module.EndDate
+                        EndDate = module.EndDate,  
+                        
 
                     };
 

@@ -17,5 +17,11 @@ namespace LMS.Core.Entities {
         //Navigation property
         public Course Course { get; set; }
         public ICollection<Document> Dokuments { get; set; }
+        // public ICollection<Document> Documents { get; set; }
+
+        // AttendedCourse
+        public ICollection<ApplicationUserCourse> AttendedCourse { get; set; }
+
+
     }
 }
