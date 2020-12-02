@@ -61,6 +61,7 @@ namespace LMS.Web.Controllers
             var model = await _context.Courses
                .Include(c => c.Modules)
                .ThenInclude(c => c.Activities)
+               .ThenInclude(c => c.Documents)
                .Select(d => new StudentCourseViewModel
                {
                    Id = d.Id,
@@ -69,6 +70,7 @@ namespace LMS.Web.Controllers
                    EndDate = d.EndDate,
                    Modules = d.Modules,
                    Activities = d.Activities,
+                   Documents = d.Documents,
                    AttendingStudents = d.ApplicationUsers
 
                })
@@ -89,7 +91,7 @@ namespace LMS.Web.Controllers
         }
 
         // GET: CourseList
-        //[Authorize(Roles = "Teacher")]
+        [Authorize(Roles = "Teacher")]
         public async Task<IActionResult> CourseList()
         {
             
@@ -97,14 +99,17 @@ namespace LMS.Web.Controllers
             var model = await _context.Courses
                 .Include(c => c.Modules)
                 .ThenInclude(c => c.Activities)
+                .ThenInclude(c => c.Documents)
                 .Select(c => new CourseListViewModel
                 {
                     Id = c.Id,
                     Name = c.Name,
                     Modules = c.Modules,
                     Activities = c.Activities,
+                    Documents=c.Documents,
                     CourseDetails = new CourseDetailsViewModel
                     {
+                        Id = c.Id,
                         Description = c.Description,
                         StartDate = c.StartDate,
                         EndDate = c.EndDate
@@ -148,7 +153,7 @@ namespace LMS.Web.Controllers
         }
 
         // GET: Courses/Create
-       // [Authorize(Roles ="Teacher")]
+        [Authorize(Roles ="Teacher")]
         public IActionResult Create() {
             return View();
         }
@@ -158,7 +163,7 @@ namespace LMS.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       // [Authorize(Roles ="Teacher")]
+        [Authorize(Roles ="Teacher")]
         public async Task<IActionResult> Create(CreateCourseViewModel createCourseViewModel)
         {
 
@@ -173,7 +178,7 @@ namespace LMS.Web.Controllers
         }
 
         // GET: Courses/Edit/5
-      // [Authorize(Roles ="Teacher")]
+       [Authorize(Roles ="Teacher")]
         public async Task<IActionResult> Edit(int? id) {
             if (id == null)
             {
@@ -193,7 +198,7 @@ namespace LMS.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-      //  [Authorize(Roles ="Teacher")]
+        [Authorize(Roles ="Teacher")]
         public async Task<IActionResult> Edit(int id, EditCourseViewModel viewModel) {
             if (id != viewModel.Id)
             {
@@ -225,7 +230,7 @@ namespace LMS.Web.Controllers
         }
 
         // GET: Courses/Delete/5
-      //  [Authorize(Roles ="Teacher")]
+        [Authorize(Roles ="Teacher")]
         public async Task<IActionResult> Delete(int? id) {
             if (id == null)
             {
@@ -245,7 +250,7 @@ namespace LMS.Web.Controllers
         // POST: Courses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-       // [Authorize(Roles ="Teacher")]
+        [Authorize(Roles ="Teacher")]
         public async Task<IActionResult> DeleteConfirmed(int id) {
             var course = await _context.Courses.FindAsync(id);
             _context.Courses.Remove(course);
@@ -345,7 +350,20 @@ namespace LMS.Web.Controllers
             return View(model);
         }
 
-        
+
+
+        public async Task<IActionResult> Select() {
+            var courses = await _context.Courses.Select(p => new Course { Name = p.Name }).ToListAsync();
+            ViewBag.CourseName = courses;
+                return View(courses);
+
+        }
+
+
+
+
+
+
 
     }
 }

@@ -45,7 +45,7 @@ namespace LMS.Web.Controllers
 
 
             var model = _context.Activities
-                .Where(a => a.ModuleId == Id)
+
                 .Select(a => new ActivitiesViewModel
                 {
                     Name = a.Name,

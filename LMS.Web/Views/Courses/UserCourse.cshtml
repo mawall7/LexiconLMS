@@ -25,8 +25,8 @@
     <tbody>
         <tr>
             <td>
-                <div class="row">
-                    <div class="col-sm-10">
+                <div class="">
+                    <div class="">
                         @foreach (var item in Model.Modules)
                         {
 
@@ -37,22 +37,22 @@
 
                             </p>
                             <div class="row">
-                                <div class="col">
+                                <div class="">
                                     <div class="collapse multi-collapse" id="studentCourse-@item.Id">
 
                                         @foreach (var moduleName in item.Activities)
                                         {
 
-                                            <div class="card card-body">
-                                                <p class="text-black-50">Activity:</p>
-                                                <h4> @Html.DisplayFor(m => moduleName.Name)</h4>
+                                        <div class="card card-body">
+                                            <p class="text-black-50">Activity:</p>
+                                            <h4> @Html.DisplayFor(m => moduleName.Name)</h4>
 
-                                                @Html.DisplayFor(m => moduleName.StartTime) - @Html.DisplayFor(m => moduleName.EndTime)
+                                            @Html.DisplayFor(m => moduleName.StartTime) - @Html.DisplayFor(m => moduleName.EndTime)
 
-                                                <p class="text-black-50">Description:</p>
-                                                @Html.DisplayFor(m => moduleName.Description)
-
-                                            </div>
+                                            <p class="text-black-50">Description:</p>
+                                            @Html.DisplayFor(m => moduleName.Description)
+                                            <a asp-area="" asp-controller="Activities" asp-action="Details" asp-route-id="@moduleName.Id">See Activity</a>
+                                        </div>
 
                                             <br />
 
@@ -66,7 +66,7 @@
 
                         }
                     </div>
-                    <div class="col.sm-2">
+                    <div class="">
                         <div class="card card-body w-100 p3">
                             <p class="text-black-50">CLASSMATES:</p>
                             @foreach (var student in Model.AttendingStudents)

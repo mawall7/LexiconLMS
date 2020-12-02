@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using LMS.Data.Data;
 using Microsoft.Extensions.DependencyInjection;
-
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -26,13 +25,13 @@ namespace LMS.Web
 
                 var config = services.GetRequiredService<IConfiguration>();
 
-                // var teacherPW = "LmsLexicon20?";//config["teacherPW"];
-                //teacherPW saved in user-secret teacherPW = LmsLexicon20?
+                //var teacherPW = "LmsLexicon20?";
                 var teacherPW = config["teacherPW"];
-
+                //teacherPW saved in user-secret teacherPW = LmsLexicon20?
+               
                 try
                 { 
-                   SeedData.InitializeAsync(services, teacherPW).Wait();
+                   //SeedData.InitializeAsync(services, teacherPW).Wait();
                 }
                 catch (Exception e)
                 {

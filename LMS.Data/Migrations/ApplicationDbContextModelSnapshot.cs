@@ -227,6 +227,50 @@ namespace LMS.Data.Migrations
                     b.ToTable("Courses");
                 });
 
+            modelBuilder.Entity("LMS.Core.Entities.Document", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("ActivityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ModuleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Path")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActivityId");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("ModuleId");
+
+                    b.ToTable("Documents");
+                });
+
             modelBuilder.Entity("LMS.Core.Entities.Module", b =>
                 {
                     b.Property<int>("Id")
@@ -447,6 +491,25 @@ namespace LMS.Data.Migrations
                         .HasForeignKey("ModuleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("LMS.Core.Entities.Document", b =>
+                {
+                    b.HasOne("LMS.Core.Entities.Activity", "Activity")
+                        .WithMany("Documents")
+                        .HasForeignKey("ActivityId");
+
+                    b.HasOne("LMS.Core.Entities.ApplicationUser", "ApplicationUser")
+                        .WithMany("Dokuments")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("LMS.Core.Entities.Course", "Course")
+                        .WithMany("Documents")
+                        .HasForeignKey("CourseId");
+
+                    b.HasOne("LMS.Core.Entities.Module", "Module")
+                        .WithMany()
+                        .HasForeignKey("ModuleId");
                 });
 
             modelBuilder.Entity("LMS.Core.Entities.Module", b =>

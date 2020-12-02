@@ -34,6 +34,7 @@ namespace LMS.Core.Entities
         public ICollection<ApplicationUser> ApplicationUsers { get; set; }
         public ICollection<Module> Modules { get; set; }
         public ICollection<Activity> Activities { get; set; }
+        public ICollection<Document> Documents { get; set; }
 
         // AttendedCourse
         public ICollection<ApplicationUserCourse> AttendedCourse { get; set; }

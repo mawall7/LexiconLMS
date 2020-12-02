@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - LEXICON LMS</title>
@@ -18,6 +18,8 @@
     </style>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">  @*Fatma to Add sympols*@
+
 
 </head>
 <body>
@@ -37,29 +39,33 @@
 
 
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Courses" asp-action="CourseList">Course</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="Courses" asp-action="CourseList">Courses</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Modules" asp-action="Index">Module</a>
-                            </li>
+                            @*<li class="nav-item">
+                <a class="nav-link text-white" asp-area="" asp-controller="Modules" asp-action="Index">Module</a>
+            </li>*@
 
 
+                            @*<li class="nav-item">
+                <a class="nav-link text-white" asp-area="" asp-controller="Activities" asp-action="Edit">Activity</a>
+            </li>*@
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Activities" asp-action="Edit">Activity</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="Courses" asp-action="CourseList">Student information</a>
                             </li>
                         }
+                        else if (User.IsInRole("Student"))
+                        {
 
-                       
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Courses" asp-action="UserCourse">Courses</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="Courses" asp-action="UserCourse">Course</a>
                             </li>
-                        
+                        }
                         @*<li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Courses" asp-action="TeacherCourse">Teacher</a>
-                            </li>*@
+            <a class="nav-link text-white" asp-area="" asp-controller="Courses" asp-action="TeacherCourse">Teacher</a>
+        </li>*@
                         @*<li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Users" asp-action="Index">Test</a>
-                        </li>*@
+            <a class="nav-link text-white" asp-area="" asp-controller="Users" asp-action="Index">Test</a>
+        </li>*@
                         <li class="nav-item">
                             @if (User.Identity.IsAuthenticated)
                             {
