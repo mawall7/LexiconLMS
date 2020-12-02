@@ -47,7 +47,7 @@
                     <div class="row">
                         <div class="col">
                             @*<div class="col-4">*@
-                            <div class="collapse multi-collapse" id="courseList-@item.Id">
+                            <div @*class="collapse multi-collapse"*@ id="courseList-@item.Id">
 
                                 <div class="card card-body">
                                     @foreach (var modules in item.Modules)
@@ -61,7 +61,7 @@
                                             </dt>
 
                                         </dl>
-                                        <div class="collapse multi-collapse" id="courseList-@modules.Id">
+                                        <div @*class="collapse multi-collapse"*@ id="courseList-@modules.Id">
 
                                             <div class="card card-body">
                                                 @foreach (var activities in modules.Activities)
@@ -134,7 +134,7 @@
                         </div><!-- End col -->
                         @*</div>*@
                         <div class="col">
-                            <div class="collapse multi-collapse " id="courseList-@item.Id">
+                            <div @*class="collapse multi-collapse "*@ id="courseList-@item.Id">
                                 <div class="card card-body">
                                     @*<div class="col">*@
 
@@ -149,7 +149,7 @@
 
 
                             <div class="col">
-                                <div class="collapse multi-collapse" id="courseList-@modules.Id" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                <div @*class="collapse multi-collapse"*@ id="courseList-@modules.Id" role="button" aria-expanded="false" aria-controls="collapseExample">
                                     @*class="col-sm-12 btn btn-secondary" data-toggle="collapse" href="#moduleList-@item.Modules" role="button" aria-expanded="false" aria-controls="collapseExample"*@
                                     <div class="card card-body">
 
@@ -193,12 +193,12 @@
                             </div>
                         }
 
-                        <div class="col">
-                            <div class="collapse multi-collapse" id="moduleList-@item.Modules">
+                        <!--<div class="col">
+                            <div--> @*class="collapse multi-collapse"*@ <!--id="moduleList-@item.Modules">
 
                                 <div class="card card-body">
 
-                                    <p class="text-dark">Activities</p>
+                                    <p class="text-dark">Activities</p>-->
                                     @*<p>Lorem Ipsum fjdsakjkfasffsda</p>
                     <p>Lorem Ipsum fjdsakjkfasffsda</p>
                     <p>Lorem Ipsum fjdsakjkfasffsda</p>
@@ -207,10 +207,10 @@
                     <p>Lorem Ipsum fjdsakjkfasffsda</p>
                     <p>Lorem Ipsum fjdsakjkfasffsda</p>*@
                                     @*<partial name="ActivitiesPartial" model="new ActivitiesViewModel { Activities = }"/>*@
-                                    //@*<partial name="ActivitiesPartial" model="@item.CourseDetails" />*@
-                                </div>
+                                    <!--//-->@*<partial name="ActivitiesPartial" model="@item.CourseDetails" />*@
+                                <!--</div>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
 
 
