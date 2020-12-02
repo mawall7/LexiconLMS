@@ -9,7 +9,7 @@ using LMS.Core.Entities;
 using LMS.Data.Data;
 using Microsoft.AspNetCore.Identity;
 using LMS.Core.ViewModels;
-
+using LMS.Web.Extensions;
 
 namespace LMS.Web.Controllers
 {
@@ -22,8 +22,8 @@ namespace LMS.Web.Controllers
         {
             _context = context;
             UserManager = userManager;
-            
-         }
+
+        }
         //public int SaveTest { get; set; }
         // GET: Activities
         //public async Task<IActionResult> Index2()
@@ -39,7 +39,7 @@ namespace LMS.Web.Controllers
 
         public async Task<IActionResult> Index(int? Id) // Erase! = 1 when theres a link from CourseListView for a modules 
         {
-           // SaveTest = 1;
+            // SaveTest = 1;
             if (Id == null)
                 return NotFound();
 
@@ -56,15 +56,15 @@ namespace LMS.Web.Controllers
                     //ModuleId = a.ModuleId, ?
                     //ActivityTypeId = a.ActivityTypeId,
                     ActivityTypeName = a.ActivityType.Name
-                });  /*.Where(a => a.ModuleId == Id)*/
-                
-                
-            
-             
-            
+                }).ToList();
 
-            return View(model.ToList());
-          
+
+
+
+
+
+            return View(model);
+
         }
 
 
@@ -120,16 +120,28 @@ namespace LMS.Web.Controllers
             return View(@activity);
 
         }
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
-            //for now it creates only for first module in modules table EF 
-            var ModuleId = _context.Modules.Select(a=> a.Id).FirstOrDefault();
-            
+            if (Request.IsAjax())
+            {
+                var activity = new Activity
+                {
+                    Module = new Module
+                    {
+                        CourseId = id
+                    }
+                };
+                return PartialView("CreatePartial", activity);
+            }
+            return View();
+            ////for now it creates only for first module in modules table EF 
+            //var ModuleId = _context.Modules.Select(a=> a.Id).FirstOrDefault();
 
-            ViewData["ActivityTypeName"] = new SelectList(_context.Set<ActivityType>(), "Id", "Name"); //don't remove
-            var model = new Activity { ModuleId = ModuleId };
 
-            return View(model);
+            //ViewData["ActivityTypeName"] = new SelectList(_context.Set<ActivityType>(), "Id", "Name"); //don't remove
+            //var model = new Activity { ModuleId = ModuleId };
+
+            //return View(model);
         }
 
         // POST: Activities/Create
@@ -137,37 +149,64 @@ namespace LMS.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,StartTime,EndTime,ModuleId,ActivityTypeId")] Activity activity)
+        public async Task<IActionResult> Create([Bind("Name,Description,StartTime,EndTime,ModuleId,ActivityTypeId")] Activity @activity)
         {
 
-            if (_context.Activities.Any(a => a.Name == activity.Name && a.ModuleId == activity.ModuleId && a.StartTime == activity.StartTime) == false)
-                {
+            //if (_context.Activities.Any(a => a.Name == activity.Name && a.ModuleId == activity.ModuleId && a.StartTime == activity.StartTime) == false)
+            //    {
 
-                if (ModelState.IsValid)
+            //    if (ModelState.IsValid)
+            //    {
+            //        /* var activity = new Activity {
+            //             Description = Description}*/
+            //        activity = new Activity {
+            //            Name = activity.Name,
+            //            ActivityTypeId = activity.ActivityTypeId,
+            //            Description = activity.Description,
+            //            StartTime = activity.StartTime,
+            //            EndTime = activity.EndTime,
+            //            ModuleId = activity.ModuleId,
+            //            // ActivityType =
+            //        };
+            //        _context.Activities.Add(activity);
+
+            //        await _context.SaveChangesAsync();
+            //        return RedirectToAction("Index", new {id=activity.ModuleId }); //returns to Index with moduleid to show activities in the module
+            //    }
+            //}
+            ////if an activity allready exist
+            //// ViewData["ActivityTypeId"] = new SelectList(_context.Set<ActivityType>(), "Id", "Id", activity.ActivityTypeId);
+            //ViewData["ActivityTypeName"] = new SelectList(_context.Set<ActivityType>(), "Id", "Name"); //don't remove            
+            //ViewData["ModuleId"] = new SelectList(_context.Set<Module>(), "Id", "Id", activity.ModuleId);
+            //ViewData["Exists"] = "This Activity allready exists!"; //Use Remote istället? 
+            // return View(activity);//return RedirectToAction(nameof(Create));<p>@Html.Raw(ViewData["Exists"])</p>
+
+
+            if (ModelState.IsValid)
+            {
+                _context.Add(@activity);
+                await _context.SaveChangesAsync();
+
+                if (Request.IsAjax())
                 {
-                    /* var activity = new Activity {
-                         Description = Description}*/
-                    activity = new Activity {
+                    var model = new ActivitiesViewModel
+                    {
+                        Id = activity.Id,
                         Name = activity.Name,
-                        ActivityTypeId = activity.ActivityTypeId,
                         Description = activity.Description,
                         StartTime = activity.StartTime,
                         EndTime = activity.EndTime,
                         ModuleId = activity.ModuleId,
-                        // ActivityType =
-                    };
-                    _context.Activities.Add(activity);
+                        ActivityTypeId = activity.ActivityTypeId
 
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction("Index", new {id=activity.ModuleId }); //returns to Index with moduleid to show activities in the module
+                    };
+
+                    return PartialView("ActivityPartial", model);
                 }
+
+                return RedirectToAction(nameof(Index));
             }
-            //if an activity allready exist
-            // ViewData["ActivityTypeId"] = new SelectList(_context.Set<ActivityType>(), "Id", "Id", activity.ActivityTypeId);
-            ViewData["ActivityTypeName"] = new SelectList(_context.Set<ActivityType>(), "Id", "Name"); //don't remove            
-            ViewData["ModuleId"] = new SelectList(_context.Set<Module>(), "Id", "Id", activity.ModuleId);
-            ViewData["Exists"] = "This Activity allready exists!"; //Use Remote istället? 
-             return View(activity);//return RedirectToAction(nameof(Create));<p>@Html.Raw(ViewData["Exists"])</p>
+            return View(@activity);
         }
 
         // GET: Activities/Edit/5
@@ -179,14 +218,14 @@ namespace LMS.Web.Controllers
             }
 
             var activity = await _context.Activities.FindAsync(id);
-            
+
             if (activity == null)
             {
                 return NotFound();
             }
 
             ViewData["ActivityTypeName"] = new SelectList(_context.Set<ActivityType>(), "Id", "Name"); //don't remove
-            
+
             return View(activity);
         }
 
@@ -195,11 +234,11 @@ namespace LMS.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id,[Bind("Id, Name,Description,StartTime,EndTime,ModuleId,ActivityTypeId")] Activity activity)
+        public async Task<IActionResult> Edit(int? id, [Bind("Id, Name,Description,StartTime,EndTime,ModuleId,ActivityTypeId")] Activity activity)
         {
-           
+
             bool hit = _context.Activities.Any(a => a.Id == id);
-                
+
             if (id == null)
             {
                 return NotFound();

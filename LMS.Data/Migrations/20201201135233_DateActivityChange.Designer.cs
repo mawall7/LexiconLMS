@@ -4,14 +4,16 @@ using LMS.Data.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LMS.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201201135233_DateActivityChange")]
+    partial class DateActivityChange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -225,50 +227,6 @@ namespace LMS.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Courses");
-                });
-
-            modelBuilder.Entity("LMS.Core.Entities.Document", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("ActivityId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int?>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ModuleId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Path")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ActivityId");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("ModuleId");
-
-                    b.ToTable("Documents");
                 });
 
             modelBuilder.Entity("LMS.Core.Entities.Module", b =>
@@ -491,25 +449,6 @@ namespace LMS.Data.Migrations
                         .HasForeignKey("ModuleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("LMS.Core.Entities.Document", b =>
-                {
-                    b.HasOne("LMS.Core.Entities.Activity", "Activity")
-                        .WithMany("Documents")
-                        .HasForeignKey("ActivityId");
-
-                    b.HasOne("LMS.Core.Entities.ApplicationUser", "ApplicationUser")
-                        .WithMany("Dokuments")
-                        .HasForeignKey("ApplicationUserId");
-
-                    b.HasOne("LMS.Core.Entities.Course", "Course")
-                        .WithMany("Documents")
-                        .HasForeignKey("CourseId");
-
-                    b.HasOne("LMS.Core.Entities.Module", "Module")
-                        .WithMany()
-                        .HasForeignKey("ModuleId");
                 });
 
             modelBuilder.Entity("LMS.Core.Entities.Module", b =>
