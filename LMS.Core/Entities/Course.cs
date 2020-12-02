@@ -34,6 +34,7 @@ namespace LMS.Core.Entities
         public ICollection<ApplicationUser> ApplicationUsers { get; set; }
         public ICollection<Module> Modules { get; set; }
         public ICollection<Activity> Activities { get; set; }
+        public ICollection<Document> Documents { get; set; }
 
         //Navigation property
         // kopplingstabell i UserCourse, vilka studenter deltar i kursen
