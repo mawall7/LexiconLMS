@@ -56,13 +56,8 @@
                                             <dt class=" col-sm-12 btn btn-secondary" data-toggle="collapse" href="#moduleList-@item.Modules" role="button" aria-expanded="false" aria-controls="collapseExample">
 
                                                 @Html.DisplayFor(v => modules.Name)
-                                                @Html.DisplayFor(m => modules.StartDate) - @Html.DisplayFor(m => modules.EndDate)
-                                                <p>
-                                                    @*<a asp-area="" asp-controller="Modules" asp-action="Details2" asp-route-id="@modules.Id">See Module</a>*@
-                                                    <a asp-area="" asp-controller="Modules" asp-action="Edit" asp-route-id="@modules.Id">Edit</a>
-                                                    <a asp-area="" asp-controller="Modules" asp-action="Delete" asp-route-id="@modules.Id">Delete</a>
-                                                    @*<a asp-area="" asp-controller="Activities" asp-action="index" asp-route-id="@modules.Id">Activities</a>*@
-                                                </p>
+                                                @*@Html.DisplayFor(m => modules.StartDate) - @Html.DisplayFor(m => modules.EndDate)*@
+                                               
                                             </dt>
 
                                         </dl>
@@ -72,16 +67,22 @@
                                                 @foreach (var activities in modules.Activities)
                                                 {
                                                     <dl class="row">
-                                                        <dt class="col-sm-12 btn btn-info" data-toggle="collapse" href="#moduleList-@modules.Activities" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                        <dt class="col-sm-12 btn btn-info" data-toggle="collapse" href="#moduleList-@modules.Activities" aria-expanded="false" aria-controls="collapseExample">
 
-                                                            @Html.DisplayFor(v => activities.Name)
+                                                            <a asp-area="" asp-controller="Activities" asp-action="Details" asp-route-id="@activities.Id">
+                                                                @Html.DisplayFor(v => activities.Name)
+                                                            </a>
                                                             @*@Html.DisplayFor(m => activities.StartTime) - @Html.DisplayFor(m => activities.EndTime)*@
-                                                            <p>
+                                                            @*<p>*@
                                                                 @*<a asp-area="" asp-controller="Modules" asp-action="Details2" asp-route-id="@activities.Id">See Module</a>*@
-                                                                <a asp-area="" asp-controller="Activities" asp-action="Edit" asp-route-id="@activities.Id">Edit</a>
+                                                                @*<a asp-area="" asp-controller="Activities" asp-action="Edit" asp-route-id="@activities.Id">Edit</a>
                                                                 <a asp-area="" asp-controller="Activities" asp-action="Delete" asp-route-id="@activities.Id">Delete</a>
-                                                                <a asp-area="" asp-controller="Activities" asp-action="Details" asp-route-id="@activities.Id">See Activity</a>
-                                                            </p>
+                                                                <a asp-area="" asp-controller="Activities" asp-action="Details" asp-route-id="@activities.Id">See Activity</a>*@
+                                                            @*</p>*@
+
+
+                                                           
+
                                                         </dt>
 
                                                     </dl>
@@ -151,6 +152,24 @@
                                         <p>
                                             EndDate: @modules.EndDate
                                         </p>
+                                        <p>
+                                            @*<a asp-area="" asp-controller="Modules" asp-action="Details2" asp-route-id="@modules.Id">See Module</a>*@
+                                            <a asp-area="" asp-controller="Modules" asp-action="Edit" asp-route-id="@modules.Id">Edit</a>
+                                            <a asp-area="" asp-controller="Modules" asp-action="Delete" asp-route-id="@modules.Id">Delete</a>
+                                            @*<a asp-area="" asp-controller="Activities" asp-action="index" asp-route-id="@modules.Id">Activities</a>*@
+                                        </p>
+                                        <div class="col-12">
+
+                                            <a asp-action="ModuleListMaterial" asp-controller="Documents" asp-route-id="@modules.Id" class="documentLink m-auto btn btn-primary text-light border border-dark clear float-right">Document</a>
+                                        </div>
+                                        @if (User.IsInRole("Teacher"))
+                                        {
+                                            <div class="col-12">
+
+                                                <a asp-action="Create" asp-route-param2="Module" asp-controller="Documents" asp-route-param="@modules.Id" class=" float-right  m-auto fas fa-folder-plus ">Add Document</a><br /><br /><br />
+                                            </div>
+                                        }
+
 
                                         @*<partial name="DetailsPartial" model="@item.ModuleDetails" />*@
                                     </div>
