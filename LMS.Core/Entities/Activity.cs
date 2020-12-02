@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace LMS.Core.Entities
 {
@@ -16,9 +15,15 @@ namespace LMS.Core.Entities
         public string Description { get; set; }
 
         [Required]
+        [DisplayName("Start Time")]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:yyyy:MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartTime { get; set; }
 
         [Required]
+        [DisplayName("End Time")]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:yyyy:MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime EndTime { get; set; }
 
         // Foreign key

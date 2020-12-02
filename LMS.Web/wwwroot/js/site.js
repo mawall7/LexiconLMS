@@ -8,9 +8,13 @@ $(document).ready(function () {
     })
 })
 
-function clearForm() {
-    $('.clear').val('');
+function removeFormModule() {
+    document.querySelector('#formModule').remove();
 }
+function removeFormActivity() {
+    document.querySelector('#formActivity').remove();
+}
+
 function remoteForm() {
     $('#createForm').remove();
 }

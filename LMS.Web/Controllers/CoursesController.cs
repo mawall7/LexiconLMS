@@ -219,7 +219,7 @@ namespace LMS.Web.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(CourseList));
             }
             return View(viewModel);
         }
@@ -250,7 +250,7 @@ namespace LMS.Web.Controllers
             var course = await _context.Courses.FindAsync(id);
             _context.Courses.Remove(course);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(CourseList));
         }
 
         private bool CourseExists(int id)
