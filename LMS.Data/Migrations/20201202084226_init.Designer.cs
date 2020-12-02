@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201130140949_init")]
+    [Migration("20201202084226_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -476,7 +476,7 @@ namespace LMS.Data.Migrations
                         .HasForeignKey("ApplicationUserId");
 
                     b.HasOne("LMS.Core.Entities.Course", "Course")
-                        .WithMany()
+                        .WithMany("Documents")
                         .HasForeignKey("CourseId");
 
                     b.HasOne("LMS.Core.Entities.Module", "Module")

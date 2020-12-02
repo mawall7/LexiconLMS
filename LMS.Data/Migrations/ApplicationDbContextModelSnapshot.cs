@@ -474,7 +474,7 @@ namespace LMS.Data.Migrations
                         .HasForeignKey("ApplicationUserId");
 
                     b.HasOne("LMS.Core.Entities.Course", "Course")
-                        .WithMany()
+                        .WithMany("Documents")
                         .HasForeignKey("CourseId");
 
                     b.HasOne("LMS.Core.Entities.Module", "Module")

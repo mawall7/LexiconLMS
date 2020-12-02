@@ -64,6 +64,7 @@ namespace LMS.Web.Controllers
             var model = await _context.Courses
                .Include(c => c.Modules)
                .ThenInclude(c => c.Activities)
+               .ThenInclude(c => c.Documents)
                .Select(d => new StudentCourseViewModel
                {
                    Id = d.Id,
@@ -72,6 +73,7 @@ namespace LMS.Web.Controllers
                    EndDate = d.EndDate,
                    Modules = d.Modules,
                    Activities = d.Activities,
+                   Documents = d.Documents,
                    AttendingStudents = d.ApplicationUsers
 
                })
@@ -100,12 +102,14 @@ namespace LMS.Web.Controllers
             var model = await _context.Courses
                 .Include(c => c.Modules)
                 .ThenInclude(c => c.Activities)
+                .ThenInclude(c => c.Documents)
                 .Select(c => new CourseListViewModel
                 {
                     Id = c.Id,
                     Name = c.Name,
                     Modules = c.Modules,
                     Activities = c.Activities,
+                    Documents=c.Documents,
                     CourseDetails = new CourseDetailsViewModel
                     {
                         Id = c.Id,
