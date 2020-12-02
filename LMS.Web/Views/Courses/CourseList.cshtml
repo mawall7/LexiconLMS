@@ -52,12 +52,12 @@
 
                                             @Html.DisplayFor(v => modules.Name)
                                             @Html.DisplayFor(m => modules.StartDate) - @Html.DisplayFor(m => modules.EndDate)
-                                            <p>
+                                            
                                                 <a asp-area="" asp-controller="Modules" asp-action="Details2" asp-route-id="@modules.Id">See Module</a>
                                                 <a asp-area="" asp-controller="Modules" asp-action="Edit" asp-route-id="@modules.Id">Edit</a>
                                                 <a asp-area="" asp-controller="Modules" asp-action="Delete" asp-route-id="@modules.Id">Delete</a>
                                                 <a asp-area="" asp-controller="Activities" asp-action="index" asp-route-id="@modules.Id">Activities</a>
-                                            </p>
+                                            
                                         </dt>
 
                                     </dl>
@@ -71,12 +71,12 @@
 
                                                         @Html.DisplayFor(v => activities.Name)
                                                         @Html.DisplayFor(m => activities.StartTime) - @Html.DisplayFor(m => activities.EndTime)
-                                                        <p>
+                                                        
                                                             @*<a asp-area="" asp-controller="Modules" asp-action="Details2" asp-route-id="@activities.Id">See Module</a>*@
                                                             <a asp-area="" asp-controller="Activities" asp-action="Edit" asp-route-id="@activities.Id">Edit</a>
                                                             <a asp-area="" asp-controller="Activities" asp-action="Delete" asp-route-id="@activities.Id">Delete</a>
                                                             @*<a asp-area="" asp-controller="Activities" asp-action="index" asp-route-id="@activities.Id">Activities</a>*@
-                                                        </p>
+                                                        
                                                     </dt>
 
                                                 </dl>
@@ -126,24 +126,7 @@
                     </div>
                     }*@
 
-                    <div class="col">
-                        <div class="collapse multi-collapse" id="moduleList-@item.Modules">
-
-                            <div class="card card-body">
-
-                                <p class="text-dark">Activities</p>
-                                @*<p>Lorem Ipsum fjdsakjkfasffsda</p>
-                    <p>Lorem Ipsum fjdsakjkfasffsda</p>
-                    <p>Lorem Ipsum fjdsakjkfasffsda</p>
-                    <p>Lorem Ipsum fjdsakjkfasffsda</p>
-                    <p>Lorem Ipsum fjdsakjkfasffsda</p>
-                    <p>Lorem Ipsum fjdsakjkfasffsda</p>
-                    <p>Lorem Ipsum fjdsakjkfasffsda</p>*@
-                                @*<partial name="ActivitiesPartial" model="new ActivitiesViewModel { Activities = }"/>*@
-                                //@*<partial name="ActivitiesPartial" model="@item.CourseDetails" />*@
-                            </div>
-                        </div>
-                    </div>
+                   
 
                 </div>
 
