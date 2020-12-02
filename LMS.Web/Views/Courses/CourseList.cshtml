@@ -102,16 +102,32 @@
                         </div>*@
 
                                     }
-                                    <p id="createajax"></p>
+                                    <div>
+                                        <p id="createajax-@item.Id"></p>
 
-                                    <p>
-                                        <a asp-controller="Modules" asp-action="Create" class="btn btn-info"
-                                           data-ajax="true"
-                                           data-ajax-method="GET"
-                                           data-ajax-update="#createajax"
-                                           data-ajax-mode="replace"> Add new module</a>
-                                    </p>
+                                        <p>
+                                            <a asp-controller="Modules" asp-action="Create" asp-route-id="@item.Id" class="btn btn-info"
+                                               data-ajax="true"
+                                               data-ajax-method="GET"
+                                               data-ajax-update="#createajax-@item.Id"
+                                               data-ajax-mode="replace">
+                                                Add new module
+                                            </a>
+                                        </p>
+                                    </div>
+                                    <div class="activity-create-btn">
+                                        <p id="createActivity-@item.Id"></p>
 
+                                        <p>
+                                            <a asp-controller="Activities" asp-action="Create" asp-route-id="@item.Id" class="btn btn-info"
+                                               data-ajax="true"
+                                               data-ajax-method="GET"
+                                               data-ajax-update="#createActivity-@item.Id"
+                                               data-ajax-mode="replace">
+                                                Add new Activity
+                                            </a>
+                                        </p>
+                                    </div>
                                 </div>
 
                             </div><!-- End collapse -->
