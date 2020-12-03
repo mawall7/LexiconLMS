@@ -359,6 +359,17 @@ namespace LMS.Web.Controllers
 
         }
 
+        public async Task<IActionResult> StudentList()
+        {
+
+            //Get user
+            var user = await UserManager.GetUserAsync(User);
+
+            if (user is null)
+            {
+                //redirect to a "Login or reister"-page if not logged in
+                return RedirectToAction(nameof(Index));
+                //return BadRequest();
         public async Task<IActionResult> StudentStatistics() {
             //var item = UserManager.GetUsersInRoleAsync("Student");
             var model =  _context.Courses.Select(P => new CourseViewModel
@@ -376,6 +387,40 @@ namespace LMS.Web.Controllers
         }
 
 
+            }
+
+            //Student course Information
+            var model = await _context.Courses
+               .Include(c => c.Modules)
+               .ThenInclude(c => c.Activities)
+               .ThenInclude(c => c.Documents)
+               .Select(d => new StudentCourseViewModel
+               {
+                   Id = d.Id,
+                   Name = d.Name,
+                   StartDate = d.StartDate,
+                   EndDate = d.EndDate,
+                   Modules = d.Modules,
+                   Activities = d.Activities,
+                   Documents = d.Documents,
+                   AttendingStudents = d.ApplicationUsers
+
+               })
+               //.OrderBy()
+               .FirstOrDefaultAsync();
+
+
+            if (model == null)
+            {
+                //redirect to a "Welcome Student"-page if not logged in
+                return RedirectToAction(nameof(Index));
+                //return BadRequest();
+
+            }
+            return View(model);
+
+
+        }
 
 
 
