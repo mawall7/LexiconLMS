@@ -109,18 +109,7 @@ namespace LMS.Web.Controllers
 
         public async Task<IActionResult> Details(int? id)
         {
-            /*  try
-              {
-                  var x = SaveTest / 2;
-              }
-              catch (DivideByZeroException x)
-              {
-                  return NotFound();
-              }
-              if (id == null)
-              {
-                  return NotFound();
-              }*/
+          
 
             var @activity = await _context.Activities.FirstOrDefaultAsync(m => m.Id == id);
             //.FirstorDefaultAsync(m => m.Id == id);

@@ -359,7 +359,52 @@ namespace LMS.Web.Controllers
 
         }
 
+        public async Task<IActionResult> StudentList()
+        {
 
+            //Get user
+            var user = await UserManager.GetUserAsync(User);
+
+            if (user is null)
+            {
+                //redirect to a "Login or reister"-page if not logged in
+                return RedirectToAction(nameof(Index));
+                //return BadRequest();
+
+            }
+
+            //Student course Information
+            var model = await _context.Courses
+               .Include(c => c.Modules)
+               .ThenInclude(c => c.Activities)
+               .ThenInclude(c => c.Documents)
+               .Select(d => new StudentCourseViewModel
+               {
+                   Id = d.Id,
+                   Name = d.Name,
+                   StartDate = d.StartDate,
+                   EndDate = d.EndDate,
+                   Modules = d.Modules,
+                   Activities = d.Activities,
+                   Documents = d.Documents,
+                   AttendingStudents = d.ApplicationUsers
+
+               })
+               //.OrderBy()
+               .FirstOrDefaultAsync();
+
+
+            if (model == null)
+            {
+                //redirect to a "Welcome Student"-page if not logged in
+                return RedirectToAction(nameof(Index));
+                //return BadRequest();
+
+            }
+            return View(model);
+
+
+        }
 
 
 
