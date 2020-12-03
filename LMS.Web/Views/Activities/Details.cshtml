@@ -12,12 +12,14 @@
 </div>
 <div class="row">
     <div class="col-12">
-     
 
-            @*<a asp-action="Create" asp-route-param2="Activity" asp-controller="Documents" asp-route-param="@Model.Id" class=" float-right  m-auto fas fa-folder-plus ">Add Document</a>*@
+        @if (User.IsInRole("Teacher"))
+        {
 
-        
-    </div>
+            <a asp-action="Create" asp-route-param2="Activity" asp-controller="Documents" asp-route-param="@Model.Id" class=" float-right  m-auto fas fa-folder-plus ">Add Document</a>
+
+        }
+        </div>
 </div>
 <div>
     @*<h4>Activity</h4>*@

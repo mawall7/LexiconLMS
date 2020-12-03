@@ -27,6 +27,7 @@ namespace LMS.Web.Models.ViewModels {
         public DateTime DateCreated { get; set; }
 
         public string ApplicationUserFirstName { get; set; }
+        public string ApplicationUser { get; set; }
         public string ApplicationUserLastName { get; set; }
         [Display(Name = "Created by")]
         public string ApplicationUserFullName => $"{ApplicationUserFirstName} {ApplicationUserLastName}";

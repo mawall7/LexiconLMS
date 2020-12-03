@@ -66,7 +66,7 @@
                         <td>
                             @foreach (var c in item.Attendents)
                             {
-                                @if (await UserManager.IsInRoleAsync(c, "Student"))
+                                @if (await UserManager.IsInRoleAsync(c, "Teacher"))
                                 {
                           
                                     <p>@c.FullName</p>
