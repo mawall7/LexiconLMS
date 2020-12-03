@@ -37,9 +37,9 @@
                                 @Html.DisplayFor(modelItem => item.Name)
                             </a>
 
-                            <div class="course-btn-ed">
-                                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            <div class="">
+                                <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                                <a class="btn btn-info" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                             </div>
                         </p>
                     </div>
@@ -126,6 +126,7 @@
 
                                     <p class="text-dark">Course Details</p>
                                     <partial name="DetailsPartial" model="@item.CourseDetails" />
+                                    
                                 </div>
                             </div>
                         </div>
