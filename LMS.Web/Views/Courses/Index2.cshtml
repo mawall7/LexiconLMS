@@ -9,23 +9,23 @@
 
 <h1>Stusent statistics</h1>
 
-<p>
 
-
+    
     <table class="table">
         <thead>
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.Name)
                 </th>
-                @*<th>
-            Number of Students
-        </th>*@
+
+                <th>
+                    Number of Students
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Attendents)
                 </th>
                 <th>
-                      Home Work
+                    Teacher
                 </th>
 
 
@@ -39,9 +39,9 @@
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
 
-                    @*<td class="CourseName">
+                    <td class="CourseName">
                         @Html.DisplayFor(modelItem => item.Attendents.Count)
-                    </td>*@
+                    </td>
 
 
                     <td>
@@ -50,14 +50,31 @@
                             @if (!await UserManager.IsInRoleAsync(c, "Student"))
                             {
 
-                              <p>@c.FullName</p>
+<p>@c.FullName</p>
         }
                         }
-                        </td>
-<td>
-    <a asp-controller="Activities" asp-action="HomeWork">hm</a>
-</td>
 
+
+                        </td>
+                     
+
+
+
+
+
+
+                        <td>
+                            @foreach (var c in item.Attendents)
+                            {
+                                @if (await UserManager.IsInRoleAsync(c, "Student"))
+                                {
+                          
+                                    <p>@c.FullName</p>
+                                }
+                            }
+
+
+                        </td>
 
 
                         </tr>

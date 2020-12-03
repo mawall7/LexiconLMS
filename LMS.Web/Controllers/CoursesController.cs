@@ -365,7 +365,7 @@ namespace LMS.Web.Controllers
             {
                 Id = P.Id,
                 Name = P.Name,
-                Attendents = P.ApplicationUsers,
+                Attendents = P.ApplicationUsers
                 //Attendents = P.ApplicationUsers.Where(a=>  UserManager.IsInRoleAsync(a, "Student") == true)
                
             });
