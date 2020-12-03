@@ -389,7 +389,7 @@ namespace LMS.Web.Controllers {
 
             }).Where(i => i.ActivityId == id);
 
-            return View("DocumentDemo", await model.ToListAsync()); 
+            return View("DocumentDemo - Activity", await model.ToListAsync()); 
         }
 
 

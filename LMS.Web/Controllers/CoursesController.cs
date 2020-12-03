@@ -359,6 +359,22 @@ namespace LMS.Web.Controllers
 
         }
 
+        public async Task<IActionResult> StudentStatistics() {
+            //var item = UserManager.GetUsersInRoleAsync("Student");
+            var model =  _context.Courses.Select(P => new CourseViewModel
+            {
+                Id = P.Id,
+                Name = P.Name,
+                Attendents = P.ApplicationUsers
+                //Attendents = P.ApplicationUsers.Where(a=>  UserManager.IsInRoleAsync(a, "Student") == true)
+               
+            });
+
+
+
+            return View("Index2",  model.ToList());
+        }
+
 
 
 
