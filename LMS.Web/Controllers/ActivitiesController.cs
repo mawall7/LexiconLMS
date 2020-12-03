@@ -10,6 +10,7 @@ using LMS.Data.Data;
 using Microsoft.AspNetCore.Identity;
 using LMS.Core.ViewModels;
 using LMS.Web.Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LMS.Web.Controllers
 {
@@ -131,6 +132,7 @@ namespace LMS.Web.Controllers
             return View(@activity);
 
         }
+        [Authorize(Roles = "Teacher")]
         public IActionResult Create(int id)
         {
             if (Request.IsAjax())
@@ -160,6 +162,7 @@ namespace LMS.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
         public async Task<IActionResult> Create([Bind("Name,Description,StartTime,EndTime,ModuleId,ActivityTypeId")] Activity @activity)
         {
 
@@ -208,7 +211,7 @@ namespace LMS.Web.Controllers
                         StartTime = activity.StartTime,
                         EndTime = activity.EndTime,
                         ModuleId = activity.ModuleId,
-                        ActivityTypeId = activity.ActivityTypeId
+                     //   ActivityTypeId = activity.ActivityTypeId
 
                     };
 

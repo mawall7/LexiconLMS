@@ -1,22 +1,20 @@
-﻿using System;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using LMS.Core.Entities;
+using LMS.Data.Data;
+using LMS.Web.Models.ViewModels;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using LMS.Core.Entities;
-using LMS.Data.Data;
-using LMS.Web.Models.ViewModels;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-using Microsoft.AspNetCore.Authorization;
+using System.Threading.Tasks;
 
-namespace LMS.Web.Controllers {
+namespace LMS.Web.Controllers
+{
     public class DocumentsController : Controller {
         private readonly ApplicationDbContext db;
         private readonly UserManager<ApplicationUser> userManager;
