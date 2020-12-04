@@ -3,7 +3,24 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome to Lexicon</h1>
-    <h2>Please Login </h2>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to Lexicon</h1><br /><br />
+
+
 </div>
+@if (User.Identity.IsAuthenticated)
+{
+    @if (!User.IsInRole("Teacher"))
+
+    {
+        <h4>
+            Next Assignment:
+
+
+        </h4>
+        <h4 id="viewComponent" class="p-2">
+            @await Component.InvokeAsync("Activity")
+        </h4>
+
+
+        }
+    }

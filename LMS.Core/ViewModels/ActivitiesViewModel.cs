@@ -15,6 +15,7 @@ namespace LMS.Core.ViewModels
         public String Description { get; set; }
 
         public int ModuleId { get; set; }
+        public string ModuleName { get; set; }
         
         public string ActivityTypeName { get; set; }
         // Uncomment 

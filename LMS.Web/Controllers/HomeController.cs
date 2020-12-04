@@ -32,6 +32,14 @@ namespace LMS.Web.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+
+ 
+        }
+
+
+
+        public IActionResult Schedule() {
+            return View("Schedule/Default.cshtml");
         }
     }
 }

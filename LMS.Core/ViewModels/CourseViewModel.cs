@@ -23,6 +23,6 @@ namespace LMS.Core.ViewModels
 
         public Course Course { get; set; }
         public ICollection<Module> Modules { get; set; }
-
+       
     }
 }

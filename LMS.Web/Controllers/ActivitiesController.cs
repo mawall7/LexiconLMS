@@ -307,5 +307,60 @@ namespace LMS.Web.Controllers
         {
             return _context.Activities.Any(e => e.Id == id);
         }
+
+
+        public async Task<IActionResult> HomeWork() {
+            //var item = UserManager.GetUsersInRoleAsync("Student");
+            var model = _context.Activities.Select(P => P.Name == "Home Work");
+         
+
+
+
+            return View();
+        }
+
+
+
+
+
+
+
+
+        public async Task<IActionResult> DaedLine(int? Id) 
+       {
+
+
+            var model = _context.Activities
+
+                .Select(a => new ActivitiesViewModel
+                {
+                   
+                    Id = a.Id,
+                    StartTime = a.StartTime,
+                    EndTime = a.EndTime,
+                    ActivityTypeName = a.ActivityType.Name,
+                    ModuleName = a.Module.Name
+                }).Where(e => e.ModuleName == "Home Work").FirstOrDefault();
+
+
+
+
+
+
+            return View("DeadLine", model);
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }
