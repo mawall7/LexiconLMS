@@ -141,7 +141,13 @@ body {
     width: 800px;
     overflow-y: auto;
 }
-
-.clear {
-    clear: both;
+.clear{
+    clear:both;
 }
+/********/
+#viewComponent{
+    border:thin;
+    font-size:small;
+    background-color:grey;
+}
+/****************************************************************************************************************************************/

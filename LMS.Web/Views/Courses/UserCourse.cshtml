@@ -61,7 +61,7 @@
                                             <p class="text-black-50">Description:</p>
                                             @Html.DisplayFor(m => moduleName.Description)
                                             <a asp-area="" asp-controller="Activities" asp-action="Details" asp-route-id="@moduleName.Id">See Activity</a>
-                                            <div class="col-12">
+                                            @*<div class="col-12">
 
                                                 <a asp-action="ActivityListMaterial" asp-controller="Documents" asp-route-id="@moduleName.Id" class="documentLink m-auto btn btn-primary text-light border border-dark clear float-right">Document</a>
                                             </div>
@@ -69,7 +69,7 @@
                                                 <div class="col-12">
 
                                                     <a asp-action="Create" asp-route-param2="Module" asp-controller="Documents" asp-route-param="@moduleName.Id" class=" float-right  m-auto fas fa-folder-plus ">Add Document</a><br /><br /><br />
-                                                </div>
+                                                </div>*@
                                             
                                         </div>
 

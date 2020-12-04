@@ -17,6 +17,7 @@ namespace LMS.Web.Models.ViewModels {
         [Display(Name = "Course Name")]
         public string? CourseName { get; set; }
         public string? ModuleName { get; set; }
+        public Module Module { get; set; }
         public string? ActivityName { get; set; }
         public int? ModuleNumber { get; set; }
         public int? ActivityNumber { get; set; }
@@ -27,6 +28,7 @@ namespace LMS.Web.Models.ViewModels {
         public DateTime DateCreated { get; set; }
 
         public string ApplicationUserFirstName { get; set; }
+        public string ApplicationUser { get; set; }
         public string ApplicationUserLastName { get; set; }
         [Display(Name = "Created by")]
         public string ApplicationUserFullName => $"{ApplicationUserFirstName} {ApplicationUserLastName}";

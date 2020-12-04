@@ -1,0 +1,91 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+
+@model IEnumerable<LMS.Web.Models.ViewModels.DocumentViewModel>
+@*
+        <p>
+    <a asp-action="Create" asp-route-id= "@Model.CourseId" >Add New Document</a>
+        </p>*@
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.DateCreated)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationUserFullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndTime)
+            </th>
+            @if (!User.IsInRole("Teacher"))
+            {
+
+                <th>
+                    Upload Document
+                </th>
+            }
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+
+            @*@if (!UserManager.IsInRoleAsync(item.ApplicationUser, "Teacher") {*@
+
+            <tr>
+
+
+                <td>
+
+                <a asp-action = "RaedTextFile" asp-route-id ="@item.Id" > @Html.DisplayFor(modelItem => item.Name) </a >
+
+
+                </td>
+
+
+                <td>
+                @Html.DisplayFor(modelItem => item.DateCreated)
+                </td>
+
+
+                <td>
+                @Html.DisplayFor(modelItem => item.ApplicationUserFullName)
+                </td>
+
+                <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+                </td>
+
+                <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+                </td>
+
+                <td>
+                    @if (item.ActivityName == "Home Work" & !User.IsInRole("Teacher"))
+                    {
+                        <a asp-action="Create" asp-route-param2="Activity" asp-controller="Documents" asp-route-param="@item.Id*55" class="float-right m-auto fas fa-folder-plus">Upload home work</a>
+
+                    }
+                </td>
+
+                @*<td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </td>*@
+            </tr>
+        }
+    </tbody>
+</table>

@@ -370,6 +370,22 @@ namespace LMS.Web.Controllers
                 //redirect to a "Login or reister"-page if not logged in
                 return RedirectToAction(nameof(Index));
                 //return BadRequest();
+         async Task<IActionResult> StudentStatistics() {
+            //var item = UserManager.GetUsersInRoleAsync("Student");
+            var model =  _context.Courses.Select(P => new CourseViewModel
+            {
+                Id = P.Id,
+                Name = P.Name,
+                Attendents = P.ApplicationUsers
+                //Attendents = P.ApplicationUsers.Where(a=>  UserManager.IsInRoleAsync(a, "Student") == true)
+               
+            });
+
+
+
+            return View("Index2",  model.ToList());
+        }
+
 
             }
 

@@ -7,3 +7,19 @@
     @*<h2>Please Login </h2>
     <a class="nav-link fas fa-user" asp-area="Identity" asp-page="/Account/Login"></a>*@
 </div>
+@if (!User.IsInRole("Teacher"))
+
+{
+    <h4>
+        Next Assignment:
+
+        
+    </h4>
+    <h4 id="viewComponent" class="p-2">
+        @await Component.InvokeAsync("Activity") 
+
+    </h4>
+      
+
+   
+}

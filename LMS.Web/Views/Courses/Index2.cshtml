@@ -1,0 +1,84 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@model IEnumerable<LMS.Core.ViewModels.CourseViewModel>
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Stusent statistics</h1>
+
+
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+
+                <th>
+                    Number of Students
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Attendents)
+                </th>
+                <th>
+                    Teacher
+                </th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="CourseName">
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+
+                    <td class="CourseName">
+                        @Html.DisplayFor(modelItem => item.Attendents.Count)
+                    </td>
+
+
+                    <td>
+                        @foreach (var c in item.Attendents)
+                        {
+                            @if (!await UserManager.IsInRoleAsync(c, "Student"))
+                            {
+
+<p>@c.FullName</p>
+        }
+                        }
+
+
+                        </td>
+                     
+
+
+
+
+
+
+                        <td>
+                            @foreach (var c in item.Attendents)
+                            {
+                                @if (await UserManager.IsInRoleAsync(c, "Teacher"))
+                                {
+                          
+                                    <p>@c.FullName</p>
+                                }
+                            }
+
+
+                        </td>
+
+
+                        </tr>
+                    }
+            </tbody>
+            </table>
+

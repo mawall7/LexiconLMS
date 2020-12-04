@@ -22,9 +22,9 @@ namespace LMS.Core.Entities
         public DateTime StartTime { get; set; }
 
         [Required]
-        [DisplayName("End Time")]
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:yyyy:MM-dd}", ApplyFormatInEditMode = true)]
+        [DisplayName("DeadLine")]
         public DateTime EndTime { get; set; }
 
         // Foreign key

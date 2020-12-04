@@ -45,11 +45,7 @@ namespace LMS.Web.Controllers
         }
 
 
-
-
-
-
-
+            
         public ActionResult RaedTextFile(int id) {
             var dbPath = db.Documents.Select(p => new Document { Id = p.Id, Path = p.Path }).Where(i => i.Id == id);
 
@@ -101,7 +97,7 @@ namespace LMS.Web.Controllers
         }
 
         // GET: Documents/Create
-        //[Authorize(Roles = "Teacher")]
+       
         public IActionResult Create(int? param, string? param2) {
             ViewData["ActivityId"] = new SelectList(db.Activities, "Id", "Id");
             ViewData["ApplicationUserId"] = new SelectList(db.Users, "Id", "Id");
@@ -179,11 +175,12 @@ namespace LMS.Web.Controllers
                 db.Add(document);
                 await db.SaveChangesAsync();
 
-               
-                
 
 
-                return  RedirectToAction("CourseList", "Courses");
+
+                return RedirectToAction("Index", "Home");
+
+                //return RedirectToAction("CourseList", "Courses");
             }
             // return View(document);
             return RedirectToAction("Index", "Home");
@@ -387,7 +384,7 @@ namespace LMS.Web.Controllers
 
             }).Where(i => i.ActivityId == id);
 
-            return View("DocumentDemo", await model.ToListAsync()); 
+            return View("DocumentDemo - Activity", await model.ToListAsync()); 
         }
 
 

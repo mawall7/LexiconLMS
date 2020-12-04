@@ -162,7 +162,8 @@ namespace LMS.Web.Areas.Identity.Pages.Account {
 
 
 
-                if (Input.role == "0") Input.Password = "LmsLexicon20?";
+                if (Input.role == "0") Input.Password = "LexiconLms20?";
+               else if (Input.role == "1") Input.Password = "123QWEasdzxc.";
                 var result = await _userManager.CreateAsync(user, Input.Password);
                
                

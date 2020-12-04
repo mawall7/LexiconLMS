@@ -175,6 +175,30 @@ namespace LMS.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ApplicationUserCourse",
+                columns: table => new
+                {
+                    CourseId = table.Column<int>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ApplicationUserCourse", x => new { x.ApplicationUserId, x.CourseId });
+                    table.ForeignKey(
+                        name: "FK_ApplicationUserCourse_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ApplicationUserCourse_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ApplicationUserModule",
                 columns: table => new
                 {
@@ -345,6 +369,11 @@ namespace LMS.Data.Migrations
                 column: "ModuleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ApplicationUserCourse_CourseId",
+                table: "ApplicationUserCourse",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ApplicationUserModule_ApplicationUserId",
                 table: "ApplicationUserModule",
                 column: "ApplicationUserId");
@@ -431,6 +460,9 @@ namespace LMS.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ApplicationUserCourse");
+
             migrationBuilder.DropTable(
                 name: "ApplicationUserModule");
 
