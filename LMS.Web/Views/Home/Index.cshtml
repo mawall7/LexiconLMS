@@ -7,19 +7,20 @@
 
 
 </div>
-@if (!User.IsInRole("Teacher"))
-
+@if (User.Identity.IsAuthenticated)
 {
-    <h4>
-        Next Assignment:
+    @if (!User.IsInRole("Teacher"))
 
-        
-    </h4>
-    <h4 id="viewComponent" class="p-2">
-        @await Component.InvokeAsync("Activity") 
+    {
+        <h4>
+            Next Assignment:
 
-    </h4>
-      
 
-   
-}
+        </h4>
+        <h4 id="viewComponent" class="p-2">
+            @await Component.InvokeAsync("Activity")
+        </h4>
+
+
+        }
+    }

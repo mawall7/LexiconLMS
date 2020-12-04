@@ -73,9 +73,11 @@
                 </td>
 
                 <td>
+                 
+                            
                     @if (item.ActivityName == "Home Work" & !User.IsInRole("Teacher"))
                     {
-                        <a asp-action="Create" asp-route-param2="Activity" asp-controller="Documents" asp-route-param="@item.Id*55" class="float-right m-auto fas fa-folder-plus">Upload home work</a>
+                    <a asp-action="Create" asp-route-param2="Activity" asp-controller="Documents" asp-route-param="@item.Id*55" class="float-right m-auto fas fa-folder-plus">Upload home work</a>
 
                     }
                 </td>
