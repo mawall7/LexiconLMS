@@ -198,7 +198,7 @@ namespace LMS.Web.Controllers
             var @module = await _context.Modules.FindAsync(id);
             _context.Modules.Remove(@module);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("CourseList", "Courses");
         }
 
         private bool ModuleExists(int id)

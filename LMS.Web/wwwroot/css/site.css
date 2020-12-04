@@ -2,86 +2,125 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+    color: #0366d6;
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
-  
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
+
 .course-btn .btn-primary {
     width: 50% !important;
 }
+
 .course-btn-ed .btn-warning, .course-btn-ed .btn-danger {
     background-color: lightblue !important;
     border-color: lightblue !important;
     color: black !important;
 }
-.course-btn-ed{
+
+.course-btn-ed {
     display: none;
 }
+
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     color: #fff;
     background-color: #1b6ec2;
     border-color: #1861ac;
 }
+
 .course-section {
     position: relative;
-       
 }
+
 .course-btn-ed {
     position: absolute;
     top: 0px;
     right: 320px;
-    
+}
+/* Custom styles*/
+
+.welcome h1 {
+    padding-top: 175px !important;
     
 }
+a.nav-link.fas.fa-user {
+    font-size: 50px;
+    color: black;
+}
+.welcome .btn-primary{
+    background-color: black !important;
+    color:white !important;
+    border: none !important;
+}
+
+.login {
+    background-color: lightblue !important;
+    border-radius: 3px !important;
+}
+
+    .login h1 {
+        color: white !important;
+    }
+
+    .login .btn-primary {
+        padding: 2px 25px !important;
+    }
+
+    .login a {
+        color: black !important;
+    }
+    footer{
+        text-align: center;
+    }
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
     font-size: 14px;
 }
+
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
 }
 /*Course Styles*/
 
@@ -92,14 +131,17 @@ body {
     white-space: nowrap;
     line-height: 60px; /* Vertically center the text there */
 }
-#CourseDocumentButton{
-    display:none;
+
+#CourseDocumentButton {
+    display: none;
 }
+
 .partialViewWrapper {
     height: 220px;
     width: 800px;
     overflow-y: auto;
 }
-.clear{
-    clear:both;
+
+.clear {
+    clear: both;
 }

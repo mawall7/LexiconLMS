@@ -5,7 +5,7 @@
 
 
 
-document.querySelector(this.#courseNamelist).addEventListener("select", assighn());
+//document.querySelector(this.#courseNamelist).addEventListener("select", assighn());
 
 
 function removeFormModule() {

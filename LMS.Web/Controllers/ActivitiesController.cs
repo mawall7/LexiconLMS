@@ -136,14 +136,7 @@ namespace LMS.Web.Controllers
                 return PartialView("CreatePartial", activity);
             }
             return View();
-            ////for now it creates only for first module in modules table EF 
-            //var ModuleId = _context.Modules.Select(a=> a.Id).FirstOrDefault();
-
-
-            //ViewData["ActivityTypeName"] = new SelectList(_context.Set<ActivityType>(), "Id", "Name"); //don't remove
-            //var model = new Activity { ModuleId = ModuleId };
-
-            //return View(model);
+            
         }
 
         // POST: Activities/Create
@@ -154,36 +147,6 @@ namespace LMS.Web.Controllers
         [Authorize(Roles = "Teacher")]
         public async Task<IActionResult> Create([Bind("Name,Description,StartTime,EndTime,ModuleId,ActivityTypeId")] Activity @activity)
         {
-
-            //if (_context.Activities.Any(a => a.Name == activity.Name && a.ModuleId == activity.ModuleId && a.StartTime == activity.StartTime) == false)
-            //    {
-
-            //    if (ModelState.IsValid)
-            //    {
-            //        /* var activity = new Activity {
-            //             Description = Description}*/
-            //        activity = new Activity {
-            //            Name = activity.Name,
-            //            ActivityTypeId = activity.ActivityTypeId,
-            //            Description = activity.Description,
-            //            StartTime = activity.StartTime,
-            //            EndTime = activity.EndTime,
-            //            ModuleId = activity.ModuleId,
-            //            // ActivityType =
-            //        };
-            //        _context.Activities.Add(activity);
-
-            //        await _context.SaveChangesAsync();
-            //        return RedirectToAction("Index", new {id=activity.ModuleId }); //returns to Index with moduleid to show activities in the module
-            //    }
-            //}
-            ////if an activity allready exist
-            //// ViewData["ActivityTypeId"] = new SelectList(_context.Set<ActivityType>(), "Id", "Id", activity.ActivityTypeId);
-            //ViewData["ActivityTypeName"] = new SelectList(_context.Set<ActivityType>(), "Id", "Name"); //don't remove            
-            //ViewData["ModuleId"] = new SelectList(_context.Set<Module>(), "Id", "Id", activity.ModuleId);
-            //ViewData["Exists"] = "This Activity allready exists!"; //Use Remote istället? 
-            // return View(activity);//return RedirectToAction(nameof(Create));<p>@Html.Raw(ViewData["Exists"])</p>
-
 
             if (ModelState.IsValid)
             {
@@ -211,6 +174,8 @@ namespace LMS.Web.Controllers
             }
             return View(@activity);
         }
+       
+       
 
         // GET: Activities/Edit/5
         public async Task<IActionResult> Edit(int? id)  //activity id
@@ -303,7 +268,7 @@ namespace LMS.Web.Controllers
             var activity = await _context.Activities.FindAsync(id);
             _context.Activities.Remove(activity);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("CourseList", "Courses");
         }
 
         private bool ActivityExists(int id)
