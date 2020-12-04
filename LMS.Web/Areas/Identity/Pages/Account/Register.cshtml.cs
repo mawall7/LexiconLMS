@@ -14,9 +14,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using LMS.Data.Data;
+using LMS.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
+using LMS.Data.Data;
 
 namespace LMS.Web.Areas.Identity.Pages.Account {
     [AllowAnonymous]
