@@ -110,14 +110,14 @@ namespace LMS.Web.Controllers
         {
           
 
-            var @activity = await _context.Activities.FirstOrDefaultAsync(m => m.Id == id);
+            var activity = await _context.Activities.Include(a=> a.ActivityType).FirstOrDefaultAsync(m => m.Id == id);
             //.FirstorDefaultAsync(m => m.Id == id);
-            if (activity == null)
+            if (@activity == null) 
             {
                 return NotFound();
             }
 
-            return View(@activity);
+            return View(@activity); 
 
         }
         public IActionResult Create(int id)
@@ -210,14 +210,14 @@ namespace LMS.Web.Controllers
         }
 
         // GET: Activities/Edit/5
-        public async Task<IActionResult> Edit(int? id)  //activity id
+        public async Task<IActionResult> Edit(int? Id)  //activity id
         {
-            if (id == null)
+            if (Id == null)
             {
                 return NotFound();
             }
 
-            var activity = await _context.Activities.FindAsync(id);
+            var activity = await _context.Activities.FindAsync(Id);
 
             if (activity == null)
             {
@@ -263,8 +263,8 @@ namespace LMS.Web.Controllers
                 }
 
 
-
-                return RedirectToAction("Index", new { id = activity.ModuleId });
+                return RedirectToAction("CourseList", "Courses");
+                //return RedirectToAction("Index", new { id = activity.ModuleId });
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ActivityTypeName"] = new SelectList(_context.Set<ActivityType>(), "Id", "Name");
