@@ -326,6 +326,32 @@ namespace LMS.Web.Controllers
 
 
 
+        public async Task<IActionResult> DaedLine(int? Id) 
+       {
+
+
+            var model = _context.Activities
+
+                .Select(a => new ActivitiesViewModel
+                {
+                   
+                    Id = a.Id,
+                    StartTime = a.StartTime,
+                    EndTime = a.EndTime,
+                    ActivityTypeName = a.ActivityType.Name,
+                    ModuleName = a.Module.Name
+                }).Where(e => e.ModuleName == "Home Work").FirstOrDefault();
+
+
+
+
+
+
+            return View("DeadLine", model);
+
+        }
+
+
 
 
 
