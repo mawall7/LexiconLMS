@@ -26,7 +26,7 @@ namespace LMS.Web.Areas.Identity.Pages.Account
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<ApplicationUser> userManager,
+        UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
@@ -46,6 +46,12 @@ namespace LMS.Web.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            //Soile
+            //Add Firstname and lastname to the Register page
+            [Required]
+            public string FirstName { get; set; }
+            [Required]
+            public string LastName { get; set; }
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
